@@ -3,6 +3,7 @@ import AppContainer from './presenter';
 
 const mapStateToProps = (state) => {
   const { user } = state;
+
   return {
     isLoggedIn: user.isLoggedIn
   };
