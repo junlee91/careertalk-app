@@ -8,7 +8,7 @@
 
 // Initial State
 const initialState = {
-  isLoggedIn: false,
+  isLoggedIn: true, // set TRUE for development
 };
 
 // Reducer
