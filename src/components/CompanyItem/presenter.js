@@ -2,6 +2,7 @@ import React from 'react';
 import {
   View, Text, Image, TouchableOpacity
 } from 'react-native';
+import { Badge } from 'react-native-elements';
 
 import { Card, CardSection } from '../commons';
 
@@ -21,6 +22,11 @@ const CompanyItem = (props) => {
             <TouchableOpacity onPress={() => navigateTo('companyDetail')}>
               <View style={styles.companyContentStyle}>
                 <Text style={styles.companyNameTextStyle}>{company.name}</Text>
+              </View>
+              <View style={{ flexDirection: 'row', marginBottom: 3, marginTop: 3 }}>
+                <Badge containerStyle={{ marginLeft: 5, marginRight: 5, backgroundColor: '#487eb0' }} />
+                <Badge containerStyle={{ marginLeft: 5, marginRight: 5, backgroundColor: '#e1b12c' }} />
+                <Badge containerStyle={{ marginLeft: 5, marginRight: 5, backgroundColor: '#0097e6' }} />
               </View>
             </TouchableOpacity>
           </CardSection>
