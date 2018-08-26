@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
 
-import CompanyDetail from '../CompanyDetail';
+import CompanyItem from '../CompanyItem';
 
 const CompanyList = (props) => {
   const { company } = props;
@@ -9,7 +9,7 @@ const CompanyList = (props) => {
   return (
     <ScrollView>
       {company.map(c => (
-        <CompanyDetail key={c.id} company={c} />
+        <CompanyItem key={c.id} company={c} />
       ))}
     </ScrollView>
   );
