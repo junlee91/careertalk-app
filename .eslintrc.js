@@ -22,5 +22,10 @@ module.exports = {
     "react/prefer-stateless-function": 0,
     "no-use-before-define": 0,
     "react/prop-types": 0,
+    "no-shadow": 0,
+    "react/no-unused-state": 0,
+    "react/destructuring-assignment": 0,
+    "global-require": 0,
+    "import/prefer-default-export": 0,
   },
 };
