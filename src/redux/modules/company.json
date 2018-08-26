@@ -4,8 +4,9 @@
     "name": "Google",
     "hiring": ["FT, INT"],
     "majors": ["CS, CompE, ECE"],
-    "degrees": ["BS, MS, PhD"],
-    "visasponser": "true"
+    "degrees": ["BS"],
+    "visasponser": true,
+    "logo_sm": "https://media.licdn.com/dms/image/C4D0BAQHiNSL4Or29cg/company-logo_200_200/0?e=1543449600&v=beta&t=8okGawpgslMAMiktuxgQd4MCusHonc7qpLyHrut83oQ"
   },
   {
     "id": "2",
@@ -13,14 +14,16 @@
     "hiring": ["FT"],
     "majors": ["CS, CompE"],
     "degrees": ["BS, MS, PhD"],
-    "visasponser": "true"
+    "visasponser": true,
+    "logo_sm": "https://media.licdn.com/dms/image/C4D0BAQEko6uLz7XylA/company-logo_200_200/0?e=1543449600&v=beta&t=NCcYYRMPkoBjNolSA1v1OPtgmcT5O2sEkzvef4B7VFQ"
   },
   {
     "id": "3",
     "name": "Amazon",
     "hiring": ["FT, INT"],
     "majors": ["CS, CompE"],
-    "degrees": ["BS, MS, PhD"],
-    "visasponser": "true"
+    "degrees": ["BS, MS"],
+    "visasponser": false,
+    "logo_sm": "https://media.licdn.com/dms/image/C4D0BAQHi-82ItMq_9g/company-logo_200_200/0?e=1543449600&v=beta&t=T9wqHasi1ou5iLXVcPAiP54bSVZ0YN-1UZU1zQNP8RI"
   }
 ]
