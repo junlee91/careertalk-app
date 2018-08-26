@@ -1,6 +1,21 @@
-import React from 'react';
-import { Text } from 'react-native';
+import { connect } from 'react-redux';
+import Container from './container';
+import { actionCreators as userActions } from '../../redux/modules/user';
 
-const CompanyList = () => <Text>Company List</Text>;
+const mapStateToProps = (state) => {
+  const {
+    user: { company }
+  } = state;
 
-export default CompanyList;
+  return {
+    company
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  getCompanyList: () => {
+    dispatch(userActions.getCompanyList());
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Container);
