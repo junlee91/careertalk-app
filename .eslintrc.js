@@ -37,5 +37,6 @@ module.exports = {
     "react/destructuring-assignment": 0,
     "global-require": 0,
     "import/prefer-default-export": 0,
+    "object-curly-newline": 0,
   },
 };

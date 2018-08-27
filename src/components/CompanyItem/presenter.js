@@ -1,10 +1,7 @@
 import React from 'react';
-import {
-  View, Text, Image, TouchableOpacity
-} from 'react-native';
-import { Badge } from 'react-native-elements';
+import { View, TouchableOpacity, Text } from 'react-native';
 
-import { Card, CardSection } from '../commons';
+import { Card, CardSection, Label, LogoImage } from '../commons';
 
 const CompanyItem = (props) => {
   const { company, navigateTo } = props;
@@ -14,7 +11,7 @@ const CompanyItem = (props) => {
       <View style={styles.companyItemStyle}>
         <View style={{ flex: 1 }}>
           <CardSection>
-            <Image source={require('../../img/google.png')} style={styles.imgStyle} />
+            <LogoImage {...company} />
           </CardSection>
         </View>
         <View style={{ flex: 4 }}>
@@ -24,9 +21,7 @@ const CompanyItem = (props) => {
                 <Text style={styles.companyNameTextStyle}>{company.name}</Text>
               </View>
               <View style={{ flexDirection: 'row', marginBottom: 3, marginTop: 3 }}>
-                <Badge containerStyle={{ marginLeft: 5, marginRight: 5, backgroundColor: '#487eb0' }} />
-                <Badge containerStyle={{ marginLeft: 5, marginRight: 5, backgroundColor: '#e1b12c' }} />
-                <Badge containerStyle={{ marginLeft: 5, marginRight: 5, backgroundColor: '#0097e6' }} />
+                <Label {...company} />
               </View>
             </TouchableOpacity>
           </CardSection>
@@ -44,17 +39,14 @@ const CompanyItem = (props) => {
 };
 
 const styles = {
-  imgStyle: {
-    height: 50,
-    width: 50
-  },
   companyItemStyle: {
     flex: 1,
     flexDirection: 'row'
   },
   companyNameTextStyle: {
     height: 30,
-    fontSize: 15
+    fontSize: 22,
+    fontFamily: 'Avenir Next'
   }
 };
 
