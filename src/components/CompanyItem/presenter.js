@@ -16,27 +16,35 @@ const CompanyItem = (props) => {
         </View>
         <View style={{ flex: 4 }}>
           <CardSection>
-            <TouchableOpacity onPress={() => navigateTo('companyDetail')}>
-              <View style={styles.companyContentStyle}>
-                <Text style={styles.companyNameTextStyle}>{company.name}</Text>
-              </View>
-              <View style={{ flexDirection: 'row', marginBottom: 3, marginTop: 3 }}>
-                <Label {...company} />
-              </View>
-            </TouchableOpacity>
+            <EmployerField company={company} navigate={navigateTo} />
           </CardSection>
         </View>
         <View style={{ flex: 1 }}>
           <CardSection>
-            <TouchableOpacity>
-              <Text>Add</Text>
-            </TouchableOpacity>
+            <AddIcon />
           </CardSection>
         </View>
       </View>
     </Card>
   );
 };
+
+const EmployerField = props => (
+  <TouchableOpacity onPress={() => props.navigate('companyDetail')}>
+    <View style={styles.companyContentStyle}>
+      <Text style={styles.companyNameTextStyle}>{props.company.name}</Text>
+    </View>
+    <View style={styles.labelContentStyle}>
+      <Label {...props.company} />
+    </View>
+  </TouchableOpacity>
+);
+
+const AddIcon = () => (
+  <TouchableOpacity>
+    <Text>Add</Text>
+  </TouchableOpacity>
+);
 
 const styles = {
   companyItemStyle: {
@@ -47,6 +55,11 @@ const styles = {
     height: 30,
     fontSize: 22,
     fontFamily: 'Avenir Next'
+  },
+  labelContentStyle: {
+    flexDirection: 'row',
+    marginBottom: 3,
+    marginTop: 3
   }
 };
 
