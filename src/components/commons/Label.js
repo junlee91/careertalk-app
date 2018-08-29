@@ -10,7 +10,7 @@ const Label = (props) => {
     <Fragment>
       <Badge value={hiring} containerStyle={{ marginRight: 5, backgroundColor: '#487eb0' }} />
       <Badge value={degrees} containerStyle={{ marginRight: 5, backgroundColor: '#e1b12c' }} />
-      {sponsor && <Badge value="F1" containerStyle={{ marginRight: 5, backgroundColor: '#0097e6' }} />}
+      {sponsor && <Badge value="F1" containerStyle={{ marginRight: 5, backgroundColor: '#1abc9c' }} />}
     </Fragment>
   );
 };

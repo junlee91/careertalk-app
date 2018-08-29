@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 
-import { Card, CardSection, Label, LogoImage } from '../commons';
+import { Card, CardSection, Label, LogoImage, FavButton } from '../commons';
 
 const CompanyItem = (props) => {
-  const { company, navigateTo } = props;
+  const { company } = props;
 
   return (
     <Card>
@@ -16,12 +16,12 @@ const CompanyItem = (props) => {
         </View>
         <View style={{ flex: 4 }}>
           <CardSection>
-            <EmployerField company={company} navigate={navigateTo} />
+            <EmployerField {...props} />
           </CardSection>
         </View>
         <View style={{ flex: 1 }}>
           <CardSection>
-            <AddIcon />
+            <AddIcon {...props} />
           </CardSection>
         </View>
       </View>
@@ -30,7 +30,7 @@ const CompanyItem = (props) => {
 };
 
 const EmployerField = props => (
-  <TouchableOpacity onPress={() => props.navigate('companyDetail')}>
+  <TouchableOpacity onPress={() => props.navigateTo('companyDetail')}>
     <View style={styles.companyContentStyle}>
       <Text style={styles.companyNameTextStyle}>{props.company.name}</Text>
     </View>
@@ -40,9 +40,9 @@ const EmployerField = props => (
   </TouchableOpacity>
 );
 
-const AddIcon = () => (
-  <TouchableOpacity>
-    <Text>Add</Text>
+const AddIcon = props => (
+  <TouchableOpacity onPressOut={props.handleLike}>
+    <FavButton isLiked={props.isLiked} />
   </TouchableOpacity>
 );
 
