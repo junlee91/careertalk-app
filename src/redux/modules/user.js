@@ -1,5 +1,5 @@
 // Imports
-import company from './company.json';
+import company from './company2.json';
 
 // Actions
 const SET_COMPANY = 'SET_COMPANY';

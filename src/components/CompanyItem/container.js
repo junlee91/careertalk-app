@@ -8,6 +8,14 @@ class Container extends Component {
     isLiked: false
   };
 
+  componentDidMount() {
+    const { company } = this.props;
+
+    this.setState({
+      company
+    });
+  }
+
   _navigateTo = (key) => {
     const { company } = this.props;
     const params = { companyInfo: company };
@@ -16,7 +24,9 @@ class Container extends Component {
   };
 
   _handleLike = () => {
-    const { isLiked } = this.state;
+    const { isLiked, company } = this.state;
+
+    console.log(`Just liked ${company.id}!!`);
 
     this.setState({
       isLiked: !isLiked

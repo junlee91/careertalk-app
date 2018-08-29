@@ -4,11 +4,11 @@ import { ScrollView } from 'react-native';
 import CompanyItem from '../CompanyItem';
 
 const CompanyList = (props) => {
-  const { company } = props;
+  const { company: { Company } } = props;
 
   return (
     <ScrollView>
-      {company.map(c => (
+      {Company.map(c => (
         <CompanyItem key={c.id} company={c} />
       ))}
     </ScrollView>

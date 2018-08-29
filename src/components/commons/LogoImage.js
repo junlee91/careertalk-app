@@ -4,7 +4,11 @@ import { Image } from 'react-native';
 
 const LogoImage = props => (
   <FadeIn>
-    <Image source={{ uri: props.logo_sm }} style={styles.imgStyle} />
+    <Image
+      source={{ uri: `https://logo.clearbit.com/${props.company_url}/` }}
+      style={styles.imgStyle}
+      defaultSource={require('../../img/no_img.png')}
+    />
   </FadeIn>
 );
 

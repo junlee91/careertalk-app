@@ -58,6 +58,7 @@ const styles = {
   },
   labelContentStyle: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     marginBottom: 3,
     marginTop: 3
   }
