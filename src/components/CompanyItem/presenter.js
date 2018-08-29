@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 
-import { Card, CardSection, Label, LogoImage } from '../commons';
+import { Card, CardSection, Label, LogoImage, FavButton } from '../commons';
 
 const CompanyItem = (props) => {
-  const { company, navigateTo } = props;
+  const { company } = props;
 
   return (
     <Card>
@@ -16,27 +16,35 @@ const CompanyItem = (props) => {
         </View>
         <View style={{ flex: 4 }}>
           <CardSection>
-            <TouchableOpacity onPress={() => navigateTo('companyDetail')}>
-              <View style={styles.companyContentStyle}>
-                <Text style={styles.companyNameTextStyle}>{company.name}</Text>
-              </View>
-              <View style={{ flexDirection: 'row', marginBottom: 3, marginTop: 3 }}>
-                <Label {...company} />
-              </View>
-            </TouchableOpacity>
+            <EmployerField {...props} />
           </CardSection>
         </View>
         <View style={{ flex: 1 }}>
           <CardSection>
-            <TouchableOpacity>
-              <Text>Add</Text>
-            </TouchableOpacity>
+            <AddIcon {...props} />
           </CardSection>
         </View>
       </View>
     </Card>
   );
 };
+
+const EmployerField = props => (
+  <TouchableOpacity onPress={() => props.navigateTo('companyDetail')}>
+    <View style={styles.companyContentStyle}>
+      <Text style={styles.companyNameTextStyle}>{props.company.name}</Text>
+    </View>
+    <View style={styles.labelContentStyle}>
+      <Label {...props.company} />
+    </View>
+  </TouchableOpacity>
+);
+
+const AddIcon = props => (
+  <TouchableOpacity onPressOut={props.handleLike}>
+    <FavButton isLiked={props.isLiked} />
+  </TouchableOpacity>
+);
 
 const styles = {
   companyItemStyle: {
@@ -47,6 +55,12 @@ const styles = {
     height: 30,
     fontSize: 22,
     fontFamily: 'Avenir Next'
+  },
+  labelContentStyle: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginBottom: 3,
+    marginTop: 3
   }
 };
 

@@ -14,7 +14,6 @@ module.exports = {
     "react"
   ],
   "rules": {
-    'max-len': ["warn", 160],
     'func-names': 0,
     'prefer-arrow-callback': 0,
     'new-cap': 0,
