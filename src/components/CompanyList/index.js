@@ -3,18 +3,20 @@ import Container from './container';
 import { actionCreators as userActions } from '../../redux/modules/user';
 
 const mapStateToProps = (state) => {
-  const {
-    user: { company }
-  } = state;
+  const { user: { company, fairs } } = state;
 
   return {
-    company
+    company,
+    fairs
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   getCompanyList: () => {
     dispatch(userActions.getCompanyList());
+  },
+  getFairs: () => {
+    dispatch(userActions.getFairs());
   }
 });
 
