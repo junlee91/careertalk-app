@@ -3,6 +3,7 @@ import company from './company2.json';
 
 // Actions
 const SET_COMPANY = 'SET_COMPANY';
+const SET_FAIRS = 'SET_FAIRS';
 
 // Action Creators
 function setCompanyList(company) {
@@ -12,12 +13,32 @@ function setCompanyList(company) {
   };
 }
 
+function setFairs(fairs) {
+  return {
+    type: SET_FAIRS,
+    fairs
+  };
+}
+
 // API Actions
 function getCompanyList() {
   return (dispatch) => {
     setTimeout(() => {
       dispatch(setCompanyList(company));
     }, 1500); // wait 1.5 seconds for fetching the data
+  };
+}
+
+function getFairs() {
+  return (dispatch) => {
+    return fetch('https://enigmatic-shore-88931.herokuapp.com/careerfairs', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(json => dispatch(setFairs(json)));
   };
 }
 
@@ -31,6 +52,8 @@ function reducer(state = initialState, action) {
   switch (action.type) {
     case SET_COMPANY:
       return applySetCompany(state, action);
+    case SET_FAIRS:
+      return applySetFairs(state, action);
     default:
       return state;
   }
@@ -46,9 +69,19 @@ function applySetCompany(state, action) {
   };
 }
 
+function applySetFairs(state, action) {
+  const { fairs } = action;
+
+  return {
+    ...state,
+    fairs
+  };
+}
+
 // Exports
 const actionCreators = {
   getCompanyList,
+  getFairs,
 };
 
 export { actionCreators };
