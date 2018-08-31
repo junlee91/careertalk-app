@@ -13,7 +13,6 @@ class Container extends Component {
 
   componentDidMount() {
     const { getFairs } = this.props;
-    console.log(getFairs);
     getFairs();
   }
 
@@ -27,7 +26,6 @@ class Container extends Component {
   }
 
   render() {
-    console.log(this.state.fairs);
     const { loading } = this.state;
     return <Fragment>{loading ? <Spinner size="large" /> : <FairList {...this.state} />}</Fragment>;
   }

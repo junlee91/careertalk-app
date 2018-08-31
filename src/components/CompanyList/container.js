@@ -12,9 +12,8 @@ class Container extends Component {
   }
 
   componentDidMount() {
-    const { getCompanyList } = this.props;
-
-    getCompanyList();
+    const { getCompanyList, fair_id } = this.props;
+    getCompanyList(fair_id);
   }
 
   componentWillReceiveProps(nextProps) {

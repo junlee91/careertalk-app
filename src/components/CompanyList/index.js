@@ -4,7 +4,7 @@ import { actionCreators as userActions } from '../../redux/modules/user';
 
 const mapStateToProps = (state) => {
   const { user: { company, fairs } } = state;
-
+  
   return {
     company,
     fairs
@@ -12,8 +12,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  getCompanyList: () => {
-    dispatch(userActions.getCompanyList());
+  getCompanyList: (fair_id) => {
+    dispatch(userActions.getCompanyList(fair_id));
   },
   getFairs: () => {
     dispatch(userActions.getFairs());
