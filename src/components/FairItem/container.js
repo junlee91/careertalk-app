@@ -17,14 +17,12 @@ class Container extends Component {
 
   _navigateTo = (key) => {
     const { fair } = this.props;
-    const params = { fair_id: fair.id };
-
-    Actions.push(key, params);
+    const param = { fair_id: fair.id };
+    Actions.push(key, param);
   };
 
   _handleLike = () => {
     const { isLiked, company } = this.state;
-    console.log(`Just liked ${company.id}`);
 
     this.setState({
       isLiked: !isLiked
@@ -37,6 +35,7 @@ class Container extends Component {
       <FairItem
         {...this.state}
         fair={fair}
+        navigateTo={this._navigateTo}
       />
     );
   }

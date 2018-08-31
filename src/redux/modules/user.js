@@ -21,11 +21,17 @@ function setFairs(fairs) {
 }
 
 // API Actions
-function getCompanyList() {
+function getCompanyList(fair_id) {
+  console.log(fair_id);
   return (dispatch) => {
-    setTimeout(() => {
-      dispatch(setCompanyList(company));
-    }, 1500); // wait 1.5 seconds for fetching the data
+    return fetch(`https://enigmatic-shore-88931.herokuapp.com/${fair_id}/companies`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(json => dispatch(setCompanyList(json)));
   };
 }
 

@@ -5,14 +5,21 @@ import { Card, CardSection, Label, LogoImage, FavButton } from '../commons';
 
 const FairItem = (props) => {
   const { fair } = props;
-
   return (
     <Card>
       <CardSection>
-        <Text>{fair.name}</Text>
+        <FairHeader {...props} />
       </CardSection>
     </Card>
   );
 };
+
+const FairHeader = props => (
+  <TouchableOpacity onPress={() => props.navigateTo('companyList', props.fair.id)}>
+    <View>
+      <Text>{props.fair.name}</Text>
+    </View>
+  </TouchableOpacity>
+);
 
 export default FairItem;
