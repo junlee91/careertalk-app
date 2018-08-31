@@ -1,5 +1,4 @@
 // Imports
-import company from './company2.json';
 
 // Actions
 const SET_COMPANY = 'SET_COMPANY';
@@ -22,7 +21,6 @@ function setFairs(fairs) {
 
 // API Actions
 function getCompanyList(fair_id) {
-  console.log(fair_id);
   return (dispatch) => {
     return fetch(`https://enigmatic-shore-88931.herokuapp.com/${fair_id}/companies`, {
       method: 'GET',
