@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollView, Text } from 'react-native';
+import FairItem from '../FairItem';
 
 const FairList = (props) => {
   const { fairs: { Careerfair } } = props;
@@ -7,7 +8,7 @@ const FairList = (props) => {
   return (
     <ScrollView>
       {Careerfair.map(f => (
-        <Text>{f.name}</Text>
+        <FairItem key={f.id} fair={f} />
       ))}
     </ScrollView>
   );
