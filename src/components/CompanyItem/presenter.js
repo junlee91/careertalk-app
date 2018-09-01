@@ -32,7 +32,9 @@ const CompanyItem = (props) => {
 const EmployerField = props => (
   <TouchableOpacity onPress={() => props.navigateTo('companyDetail')}>
     <View style={styles.companyContentStyle}>
-      <Text style={styles.companyNameTextStyle}>{props.company.name}</Text>
+      <Text style={styles.companyNameTextStyle} numberOfLines={1} ellipsizeMode="tail">
+        {props.company.name}
+      </Text>
     </View>
     <View style={styles.labelContentStyle}>
       <Label {...props.company} />
@@ -50,7 +52,7 @@ const styles = {
   companyContentStyle: {},
   companyItemStyle: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   companyNameTextStyle: {
     height: 30,
