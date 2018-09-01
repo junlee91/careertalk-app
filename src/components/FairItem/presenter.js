@@ -1,10 +1,9 @@
 import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 
-import { Card, CardSection, Label, LogoImage, FavButton } from '../commons';
+import { Card, CardSection } from '../commons';
 
 const FairItem = (props) => {
-  const { fair } = props;
   return (
     <Card>
       <CardSection>

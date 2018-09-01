@@ -21,14 +21,6 @@ class Container extends Component {
     Actions.push(key, param);
   };
 
-  _handleLike = () => {
-    const { isLiked, company } = this.state;
-
-    this.setState({
-      isLiked: !isLiked
-    });
-  };
-
   render() {
     const { fair } = this.props;
     return (

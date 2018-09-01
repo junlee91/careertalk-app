@@ -9,9 +9,9 @@ const CompanyItem = (props) => {
   return (
     <Card>
       <View style={styles.companyItemStyle}>
-        <View style={{ flex: 1 }}>
+        <View>
           <CardSection>
-            <LogoImage {...company} />
+            <LogoImage {...company} size="small" />
           </CardSection>
         </View>
         <View style={{ flex: 4 }}>
@@ -47,18 +47,22 @@ const AddIcon = props => (
 );
 
 const styles = {
+  companyContentStyle: {
+    marginLeft: 3,
+  },
   companyItemStyle: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   companyNameTextStyle: {
     height: 30,
-    fontSize: 22,
+    fontSize: 20,
     fontFamily: 'Avenir Next'
   },
   labelContentStyle: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    marginLeft: 3,
     marginBottom: 3,
     marginTop: 3
   }
