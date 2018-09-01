@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Divider } from 'react-native-elements';
 import styled from 'styled-components';
 
 import { LogoImage } from '../commons';
@@ -14,6 +13,7 @@ const CompanyDetail = (props) => {
       <InfoBox>
         <View style={styles.titleContent}>
           <LogoImage {...companyInfo} size="medium" />
+          <Text style={styles.titleTextStyle}>{companyInfo.name}</Text>
         </View>
       </InfoBox>
       <InfoBox>
@@ -49,6 +49,12 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     alignItems: 'center',
   },
+  titleTextStyle: {
+    padding: 5,
+    height: 30,
+    fontSize: 20,
+    fontFamily: 'Avenir Next'
+  }
 });
 
 export default CompanyDetail;

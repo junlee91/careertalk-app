@@ -18,7 +18,7 @@ function getSize(size) {
 const LogoImage = (props) => {
   const size = getSize(props.size);
   const imgStyle = size === 64 ? styles.imgStyleSmall : styles.imgStyleMedium;
-  const uri = `https://logo.clearbit.com/${props.company_url}?size=${size}`;
+  const uri = `https://logo.clearbit.com/${props.company_url}`;
 
   return (
     <FadeIn>
@@ -43,6 +43,13 @@ const styles = {
     width: 128,
     alignSelf: 'center',
     resizeMode: 'stretch',
+    borderWidth: 0.5,
+    borderRadius: 2,
+    borderColor: '#b2bec3',
+    shadowColor: '#8395a7',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
   }
 };
 
