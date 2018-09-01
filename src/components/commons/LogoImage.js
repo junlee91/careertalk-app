@@ -18,12 +18,11 @@ function getSize(size) {
 const LogoImage = (props) => {
   const size = getSize(props.size);
   const imgStyle = size === 64 ? styles.imgStyleSmall : styles.imgStyleMedium;
-  const uri = `https://logo.clearbit.com/${props.company_url}`;
 
   return (
     <FadeIn>
       <Image
-        source={{ uri }}
+        source={{ uri: `https://logo.clearbit.com/${props.company_url}?size=${size}` }}
         style={imgStyle}
         defaultSource={require('../../img/no_img.png')}
       />
@@ -33,10 +32,8 @@ const LogoImage = (props) => {
 
 const styles = {
   imgStyleSmall: {
-    height: 64,
-    width: 64,
-    alignSelf: 'center',
-    resizeMode: 'stretch',
+    height: 51,
+    width: 51,
   },
   imgStyleMedium: {
     height: 128,

@@ -9,17 +9,17 @@ const CompanyItem = (props) => {
   return (
     <Card>
       <View style={styles.companyItemStyle}>
-        <View style={{ width: '20%' }}>
+        <View style={{ flex: 1 }}>
           <CardSection>
             <LogoImage {...company} size="small" />
           </CardSection>
         </View>
-        <View style={{ width: '70%' }}>
+        <View style={{ flex: 4 }}>
           <CardSection>
             <EmployerField {...props} />
           </CardSection>
         </View>
-        <View style={{ width: '10%' }}>
+        <View style={{ flex: 1 }}>
           <CardSection>
             <AddIcon {...props} />
           </CardSection>
