@@ -9,17 +9,17 @@ const CompanyItem = (props) => {
   return (
     <Card>
       <View style={styles.companyItemStyle}>
-        <View>
+        <View style={{ width: '20%' }}>
           <CardSection>
             <LogoImage {...company} size="small" />
           </CardSection>
         </View>
-        <View style={{ flex: 4 }}>
+        <View style={{ width: '70%' }}>
           <CardSection>
             <EmployerField {...props} />
           </CardSection>
         </View>
-        <View style={{ flex: 1 }}>
+        <View style={{ width: '10%' }}>
           <CardSection>
             <AddIcon {...props} />
           </CardSection>
@@ -32,7 +32,9 @@ const CompanyItem = (props) => {
 const EmployerField = props => (
   <TouchableOpacity onPress={() => props.navigateTo('companyDetail')}>
     <View style={styles.companyContentStyle}>
-      <Text style={styles.companyNameTextStyle}>{props.company.name}</Text>
+      <Text style={styles.companyNameTextStyle} numberOfLines={1} ellipsizeMode="tail">
+        {props.company.name}
+      </Text>
     </View>
     <View style={styles.labelContentStyle}>
       <Label {...props.company} />
@@ -47,12 +49,10 @@ const AddIcon = props => (
 );
 
 const styles = {
-  companyContentStyle: {
-    marginLeft: 3,
-  },
+  companyContentStyle: {},
   companyItemStyle: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   companyNameTextStyle: {
     height: 30,
@@ -62,7 +62,6 @@ const styles = {
   labelContentStyle: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginLeft: 3,
     marginBottom: 3,
     marginTop: 3
   }
