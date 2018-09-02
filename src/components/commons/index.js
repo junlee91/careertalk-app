@@ -4,3 +4,4 @@ export * from './Spinner';
 export * from './LogoImage';
 export * from './Label';
 export * from './FavButton';
+export * from './Box';

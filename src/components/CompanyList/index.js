@@ -4,7 +4,6 @@ import { actionCreators as userActions } from '../../redux/modules/user';
 
 const mapStateToProps = (state) => {
   const { user: { company, fairs } } = state;
-  
   return {
     company,
     fairs

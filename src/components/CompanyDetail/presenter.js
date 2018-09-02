@@ -1,15 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import styled from 'styled-components';
+import { Icon } from 'react-native-elements';
 
-import { LogoImage } from '../commons';
-
+import { LogoImage, InfoBox } from '../commons';
 
 const CompanyDetail = (props) => {
-  const { companyInfo } = props;
+  const { companyInfo, date } = props;
 
   return (
-    <Container>
+    <View style={styles.container}>
       <InfoBox>
         <View style={styles.titleContent}>
           <LogoImage {...companyInfo} size="medium" />
@@ -17,37 +16,47 @@ const CompanyDetail = (props) => {
         </View>
       </InfoBox>
       <InfoBox>
-        <Text>Event Info.</Text>
+        <EventInfo {...companyInfo} date={date} />
       </InfoBox>
       <InfoBox>
-        <Text>Detail Info.</Text>
+        <DetailInfo />
       </InfoBox>
       <InfoBox>
         <Text>Actions</Text>
       </InfoBox>
-    </Container>
+    </View>
   );
 };
 
-const Container = styled.View`
-  display: flex;
-  flex-direction: column;
-`;
+const EventInfo = (props) => {
+  const eventDate = `${props.date.month}/${props.date.day}/${props.date.year}`;
+  return (
+    <View>
+      <View style={{ flexDirection: 'row', alignItems: 'center', padding: 5 }}>
+        <Icon name="calendar" type="entypo" />
+        <Text style={{ marginLeft: 20, letterSpacing: 1 }}>{eventDate}</Text>
+      </View>
+      <Text style={{ padding: 2 }}>{props.fair}</Text>
+    </View>
+  );
+};
 
-const InfoBox = styled.View`
-  border: 1px solid #e6e6e6;
-  background-color: white;
-  box-shadow: 0 8px 38px rgba(209, 209, 209, 0.445);
-  border-radius: 5px;
-  padding: 15px;
-  display: flex;
-`;
+const DetailInfo = () => {
+  return (
+    <View>
+      <Text>Detail Info.</Text>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'column'
+  },
   titleContent: {
     paddingHorizontal: 15,
     paddingVertical: 15,
-    alignItems: 'center',
+    alignItems: 'center'
   },
   titleTextStyle: {
     padding: 5,
