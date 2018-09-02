@@ -21,4 +21,22 @@ const FairHeader = props => (
   </TouchableOpacity>
 );
 
+const styles = {
+  companyItemStyle: {
+    flex: 1,
+    flexDirection: 'row'
+  },
+  companyNameTextStyle: {
+    height: 30,
+    fontSize: 20,
+    fontFamily: 'Avenir Next'
+  },
+  labelContentStyle: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginBottom: 3,
+    marginTop: 3
+  }
+};
+
 export default FairItem;
