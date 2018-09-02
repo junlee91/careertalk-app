@@ -6,6 +6,14 @@ import { Actions } from 'react-native-router-flux';
 
 import Container from './container';
 
+const mapStateToProps = (state) => {
+  const { user: { fairs, favorites } } = state;
+  return {
+    fairs,
+    favorites,
+  };
+};
+
 export const ProfileIcon = () => {
   return (
     <TouchableOpacity onPressOut={() => Actions.push('profile')}>
@@ -14,4 +22,4 @@ export const ProfileIcon = () => {
   );
 };
 
-export default connect()(Container);
+export default connect(mapStateToProps)(Container);

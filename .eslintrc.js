@@ -39,5 +39,6 @@ module.exports = {
     "object-curly-newline": 0,
     "arrow-body-style": 0,
     "no-undef": 0,
+    "react/no-array-index-key": 0,
   },
 };
