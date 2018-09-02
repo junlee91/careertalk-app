@@ -3,6 +3,8 @@
 // Actions
 const SET_COMPANY = 'SET_COMPANY';
 const SET_FAIRS = 'SET_FAIRS';
+const SET_LIKE = 'SET_LIKE';
+const SET_UNLIKE = 'SET_UNLIKE';
 
 // Action Creators
 function setCompanyList(company) {
@@ -16,6 +18,20 @@ function setFairs(fairs) {
   return {
     type: SET_FAIRS,
     fairs
+  };
+}
+
+function setLikeCompany(cmpId) {
+  return {
+    type: SET_LIKE,
+    cmpId
+  };
+}
+
+function setUnlikeCompany(cmpId) {
+  return {
+    type: SET_UNLIKE,
+    cmpId
   };
 }
 
@@ -46,9 +62,22 @@ function getFairs() {
   };
 }
 
+function likeCompany(cmpId) {
+  return (dispatch) => {
+    return dispatch(setLikeCompany(cmpId));
+  };
+}
+
+function unlikeCompany(cmpId) {
+  return (dispatch) => {
+    return dispatch(setUnlikeCompany(cmpId));
+  };
+}
+
 // Initial State
 const initialState = {
-  isLoggedIn: true // set TRUE for development
+  isLoggedIn: true, // set TRUE for development
+  favorites: [],
 };
 
 // Reducer
@@ -58,6 +87,10 @@ function reducer(state = initialState, action) {
       return applySetCompany(state, action);
     case SET_FAIRS:
       return applySetFairs(state, action);
+    case SET_LIKE:
+      return applyLikeCompany(state, action);
+    case SET_UNLIKE:
+      return applyUnlikeCompany(state, action);
     default:
       return state;
   }
@@ -82,10 +115,26 @@ function applySetFairs(state, action) {
   };
 }
 
+function applyLikeCompany(state, action) {
+  return {
+    ...state,
+    favorites: [...state.favorites, action.cmpId]
+  };
+}
+
+function applyUnlikeCompany(state, action) {
+  return {
+    ...state,
+    favorites: state.favorites.filter(item => item !== action.cmpId)
+  };
+}
+
 // Exports
 const actionCreators = {
   getCompanyList,
   getFairs,
+  likeCompany,
+  unlikeCompany,
 };
 
 export { actionCreators };

@@ -4,20 +4,30 @@ import { Actions } from 'react-native-router-flux';
 import CompanyItem from './presenter';
 
 class Container extends Component {
-  state = {
-    isLiked: false
-  };
-
   componentDidMount() {
-    const { company } = this.props;
+    const { company, favorites } = this.props;
+    const isLiked = favorites.includes(company.id);
 
     this.setState({
-      company
+      company,
+      isLiked,
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { favorites } = nextProps;
+    const { company } = this.state;
+    const isLiked = favorites.includes(company.id);
+
+    if (isLiked !== this.state.isLiked) {
+      this.setState({
+        isLiked
+      });
+    }
+  }
+
   _navigateTo = (key) => {
-    const { company } = this.props;
+    const { company } = this.state;
     const params = { companyInfo: company };
 
     Actions.push(key, params);
@@ -25,8 +35,13 @@ class Container extends Component {
 
   _handleLike = () => {
     const { isLiked, company } = this.state;
+    const { likeCompany, unlikeCompany } = this.props;
 
-    console.log(`Just liked ${company.id}!!`);
+    if (!isLiked) {
+      likeCompany(company.id);
+    } else {
+      unlikeCompany(company.id);
+    }
 
     this.setState({
       isLiked: !isLiked

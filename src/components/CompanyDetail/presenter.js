@@ -27,7 +27,7 @@ const CompanyDetail = (props) => {
         <TouchableOpacity onPressOut={props.handleLike}>
           <View style={styles.actionButton}>
             <Text style={{ paddingHorizontal: 10, fontFamily: 'Avenir Next' }}>
-              Add to Favorite
+              {props.isLiked ? 'Delete from List' : 'Add to Favorite'}
             </Text>
             <FavButton isLiked={props.isLiked} />
           </View>
