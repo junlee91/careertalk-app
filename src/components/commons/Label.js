@@ -29,4 +29,14 @@ const Label = (props) => {
   );
 };
 
-export { Label };
+const Tag = (props) => {
+  return (
+    <Badge
+      value={props.type}
+      containerStyle={{ marginVertical: 1, marginHorizontal: 5, backgroundColor: props.color }}
+      textStyle={{ fontSize: 15 }}
+    />
+  );
+};
+
+export { Label, Tag };

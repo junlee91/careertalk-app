@@ -9,4 +9,12 @@ const InfoBox = styled.View`
   display: flex;
 `;
 
-export { InfoBox };
+const BottomInfoBox = styled.View`
+  border: 1px solid #b2bec3;
+  background-color: #dfe6e9;
+  padding: 15px;
+  display: flex;
+  height: 10%;
+`;
+
+export { InfoBox, BottomInfoBox };
