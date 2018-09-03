@@ -19,7 +19,12 @@ const Profile = (props) => {
       <ScrollView>
         <InfoBox>
           {filteredFairs
-            && filteredFairs.map((fair, index) => <FairsList key={index} fair={fair} />)}
+            && filteredFairs.map((fair, index) => {
+              if (fair.length) {
+                return <FairsList key={index} fair={fair} />;
+              }
+              return null;
+            })}
         </InfoBox>
       </ScrollView>
     </View>
@@ -48,11 +53,11 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   userNameField: {
-    marginHorizontal: 15,
+    marginHorizontal: 15
   },
   fairNameText: {
     fontSize: 17,
-    padding: 5,
+    padding: 5
   }
 });
 

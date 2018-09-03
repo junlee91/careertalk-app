@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Profile from './presenter';
 
 class Container extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      filteredFairs: []
+    };
+  }
+
   componentDidMount() {
     this._setComponentState(this.props);
   }
@@ -27,7 +34,8 @@ class Container extends React.Component {
   }
 
   render() {
-    return <Profile {...this.state} />;
+    const { filteredFairs } = this.state;
+    return <Fragment>{filteredFairs && <Profile {...this.state} />}</Fragment>;
   }
 }
 
