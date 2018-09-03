@@ -4,7 +4,11 @@ import CompanyDetail from './presenter';
 
 class Container extends Component {
   componentWillMount() {
-    const { fairs: { Careerfair }, companyInfo, favorites } = this.props;
+    const {
+      fairs: { Careerfair },
+      companyInfo,
+      favorites
+    } = this.props;
     const fair = Careerfair.filter(fair => fair.id === companyInfo.fair_id);
     const { start_date_min } = fair[0];
     const isLiked = favorites.includes(companyInfo.id);
@@ -13,6 +17,7 @@ class Container extends Component {
       date: start_date_min,
       companyInfo,
       isLiked,
+      isEditting: false
     });
   }
 
@@ -31,8 +36,32 @@ class Container extends Component {
     });
   };
 
+  _handleEdit = () => {
+    const { isEditting } = this.state;
+
+    if (!isEditting) {
+      this.setState({
+        isEditting: true
+      });
+    }
+  };
+
+  _handleSave = () => {
+    this.setState({
+      isEditting: false
+    });
+  }
+
   render() {
-    return <CompanyDetail {...this.state} {...this.props} handleLike={this._handleLike} />;
+    return (
+      <CompanyDetail
+        {...this.state}
+        {...this.props}
+        handleLike={this._handleLike}
+        handleEdit={this._handleEdit}
+        handleSave={this._handleSave}
+      />
+    );
   }
 }
 

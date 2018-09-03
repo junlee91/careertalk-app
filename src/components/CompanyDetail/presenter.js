@@ -1,11 +1,20 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Linking,
+  TextInput
+} from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { LogoImage, InfoBox, BottomInfoBox, Tag, FavButton } from '../commons';
+import { LogoImage, InfoBox, BottomInfoBox, Tag, FavButton, EditIcon } from '../commons';
 
 const CompanyDetail = (props) => {
   const { companyInfo, date } = props;
+  console.log(props);
 
   return (
     <View style={styles.container}>
@@ -14,6 +23,28 @@ const CompanyDetail = (props) => {
           <View style={styles.titleContent}>
             <LogoImage {...companyInfo} size="medium" />
             <Text style={styles.titleTextStyle}>{companyInfo.name}</Text>
+          </View>
+        </InfoBox>
+        <InfoBox>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View
+              style={props.isEditting ? styles.textAreaContainer : styles.textAreaDisabledContainer}
+            >
+              <TextInput
+                style={styles.textArea}
+                underlineColorAndroid="transparent"
+                placeholder="Make note"
+                placeholderTextColor="grey"
+                numberOfLines={10}
+                multiline
+                onChangeText={() => props.handleEdit()}
+              />
+            </View>
+            {props.isEditting && (
+              <TouchableOpacity onPressOut={props.handleSave}>
+                <EditIcon />
+              </TouchableOpacity>
+            )}
           </View>
         </InfoBox>
         <InfoBox>
@@ -48,7 +79,10 @@ const EventInfo = (props) => {
         <Text style={{ marginLeft: 20 }}>{date}</Text>
       </View>
       <Text style={styles.textStyle}>{props.fair}</Text>
-      <Text style={styles.hrefTextStyle} onPress={() => Linking.openURL(`http://${props.company_url}`)}>
+      <Text
+        style={styles.hrefTextStyle}
+        onPress={() => Linking.openURL(`http://${props.company_url}`)}
+      >
         http://
         {props.company_url}
       </Text>
@@ -104,7 +138,7 @@ const styles = StyleSheet.create({
   hrefTextStyle: {
     paddingVertical: 2,
     fontFamily: 'Avenir Next',
-    color: 'blue',
+    color: 'blue'
   },
   detailTextStyle: {
     paddingVertical: 3,
@@ -121,6 +155,19 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     paddingVertical: 1
+  },
+  textAreaContainer: {
+    borderColor: '#bdc3c7',
+    borderWidth: 1,
+    padding: 5,
+    minWidth: '90%'
+  },
+  textAreaDisabledContainer: {
+    padding: 5,
+    minWidth: '90%'
+  },
+  textArea: {
+    justifyContent: 'flex-start'
   }
 });
 
