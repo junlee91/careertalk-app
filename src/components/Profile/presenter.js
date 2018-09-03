@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Divider } from 'react-native-elements';
 
 import CompanyItem from '../CompanyItem';
-import { InfoBox } from '../commons';
+import { InfoBox, ProfileImage } from '../commons';
 
 const Profile = (props) => {
   const { filteredFairs } = props;
@@ -11,8 +11,10 @@ const Profile = (props) => {
   return (
     <View style={{ height: '100%', backgroundColor: '#fff' }}>
       <InfoBox>
-        <Text>Profile Image</Text>
-        <Text>This is Profile</Text>
+        <View style={styles.userInfoStyle}>
+          <ProfileImage />
+          <Text style={styles.userNameField}>Anonymous User</Text>
+        </View>
       </InfoBox>
       <ScrollView>
         <InfoBox>
@@ -40,9 +42,17 @@ const FairsList = (props) => {
 };
 
 const styles = StyleSheet.create({
+  userInfoStyle: {
+    flexDirection: 'row',
+    padding: 5,
+    alignItems: 'center'
+  },
+  userNameField: {
+    marginHorizontal: 15,
+  },
   fairNameText: {
     fontSize: 17,
-    padding: 5
+    padding: 5,
   }
 });
 
