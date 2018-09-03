@@ -19,4 +19,14 @@ const NoteIcon = () => (
   />
 );
 
-export { FavButton, NoteIcon };
+const EditIcon = () => (
+  <Icon
+    color="black"
+    name="edit"
+    type="entypo"
+    size={15}
+    containerStyle={{ paddingHorizontal: 5 }}
+  />
+);
+
+export { FavButton, NoteIcon, EditIcon };
