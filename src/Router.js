@@ -10,7 +10,6 @@ import Profile, { ProfileIcon } from './components/Profile';
 const RouterComponent = () => (
   <Router>
     <Scene key="root" hideNavBar>
-      <Scene key="login" component={LoginPage} initial title="Login" />
       <Stack key="root">
         <Scene key="fairs" component={Fairs} title="Career Fairs" renderRightButton={ProfileIcon} />
         <Scene
@@ -28,6 +27,7 @@ const RouterComponent = () => (
           renderRightButton={ProfileIcon}
         />
         <Scene key="profile" component={Profile} title="Profile" back />
+        <Scene key="login" component={LoginPage} initial title="Login" />
       </Stack>
     </Scene>
   </Router>
