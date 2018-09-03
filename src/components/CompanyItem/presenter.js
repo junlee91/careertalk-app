@@ -20,9 +20,7 @@ const CompanyItem = (props) => {
           </CardSection>
         </View>
         <View style={{ flex: 1 }}>
-          <CardSection>
-            <AddIcon {...props} />
-          </CardSection>
+          <CardSection>{props.displayLike && <AddIcon {...props} />}</CardSection>
         </View>
       </View>
     </Card>

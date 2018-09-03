@@ -3,7 +3,15 @@ import Profile from './presenter';
 
 class Container extends React.Component {
   componentDidMount() {
-    const { fairs: { Careerfair }, favorites } = this.props;
+    this._setComponentState(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this._setComponentState(nextProps);
+  }
+
+  _setComponentState(props) {
+    const { fairs: { Careerfair }, favorites } = props;
     const filteredFairs = [];
 
     for (let i = 0; i < Careerfair.length; i += 1) {
