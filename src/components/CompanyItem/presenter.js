@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 
-import { Card, CardSection, Label, LogoImage, FavButton } from '../commons';
+import { Card, CardSection, Label, LogoImage, FavButton, NoteIcon } from '../commons';
 
 const CompanyItem = (props) => {
   const { company } = props;
@@ -20,7 +20,12 @@ const CompanyItem = (props) => {
           </CardSection>
         </View>
         <View style={{ flex: 1 }}>
-          <CardSection>{props.displayLike && <AddIcon {...props} />}</CardSection>
+          <CardSection>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
+              <NoteIcon />
+              {props.displayLike && <AddIcon {...props} />}
+            </View>
+          </CardSection>
         </View>
       </View>
     </Card>
