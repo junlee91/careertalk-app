@@ -9,7 +9,7 @@ const CompanyList = (props) => {
   return (
     <ScrollView>
       {Company.map(c => (
-        <CompanyItem key={c.id} company={c} />
+        <CompanyItem key={c.id} company={c} likeButton />
       ))}
     </ScrollView>
   );

@@ -5,12 +5,13 @@ import CompanyItem from './presenter';
 
 class Container extends Component {
   componentDidMount() {
-    const { company, favorites } = this.props;
+    const { company, favorites, likeButton } = this.props;
     const isLiked = favorites.includes(company.id);
 
     this.setState({
       company,
       isLiked,
+      displayLike: likeButton,
     });
   }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import { LogoImage, InfoBox, BottomInfoBox, Tag, FavButton } from '../commons';
@@ -48,6 +48,10 @@ const EventInfo = (props) => {
         <Text style={{ marginLeft: 20 }}>{date}</Text>
       </View>
       <Text style={styles.textStyle}>{props.fair}</Text>
+      <Text style={styles.hrefTextStyle} onPress={() => Linking.openURL(`http://${props.company_url}`)}>
+        http://
+        {props.company_url}
+      </Text>
     </View>
   );
 };
@@ -96,6 +100,11 @@ const styles = StyleSheet.create({
   textStyle: {
     paddingVertical: 2,
     fontFamily: 'Avenir Next'
+  },
+  hrefTextStyle: {
+    paddingVertical: 2,
+    fontFamily: 'Avenir Next',
+    color: 'blue',
   },
   detailTextStyle: {
     paddingVertical: 3,

@@ -30,10 +30,22 @@ const LogoImage = (props) => {
   );
 };
 
+const ProfileImage = () => {
+  return (
+    <FadeIn>
+      <Image
+        source={require('../../img/noPhoto.jpg')}
+        style={styles.imgStyleSmall}
+        defaultSource={require('../../img/noPhoto.jpg')}
+      />
+    </FadeIn>
+  );
+};
+
 const styles = {
   imgStyleSmall: {
     height: 51,
-    width: 51,
+    width: 51
   },
   imgStyleMedium: {
     height: 128,
@@ -46,8 +58,8 @@ const styles = {
     shadowColor: '#8395a7',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 2,
+    shadowRadius: 2
   }
 };
 
-export { LogoImage };
+export { LogoImage, ProfileImage };
