@@ -9,13 +9,14 @@ const FavButton = props => (
   />
 );
 
-const NoteIcon = () => (
+const NoteIcon = props => (
   <Icon
     color="black"
     name="note"
     type="simple-line-icon"
     size={15}
     containerStyle={{ paddingHorizontal: 5 }}
+    iconStyle={props.visible ? { opacity: 100 } : { opacity: 0 }}
   />
 );
 

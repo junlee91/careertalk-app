@@ -14,7 +14,6 @@ import { LogoImage, InfoBox, BottomInfoBox, Tag, FavButton, EditIcon } from '../
 
 const CompanyDetail = (props) => {
   const { companyInfo, date } = props;
-  console.log(props);
 
   return (
     <View style={styles.container}>
@@ -37,7 +36,8 @@ const CompanyDetail = (props) => {
                 placeholderTextColor="grey"
                 numberOfLines={10}
                 multiline
-                onChangeText={() => props.handleEdit()}
+                value={props.note}
+                onChangeText={props.handleEdit}
               />
             </View>
             {props.isEditting && (
