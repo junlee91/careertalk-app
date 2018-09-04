@@ -79,6 +79,7 @@ function getFairs() {
   };
 }
 
+// TODO: This is not needed for V2 (when we have Like DB)
 function likeCompany(cmpId) {
   return (dispatch) => {
     return dispatch(setLikeCompany(cmpId));
@@ -149,6 +150,7 @@ function applySetFairs(state, action) {
   };
 }
 
+// TODO: This is not needed for V2 (when we have Like DB)
 function applyLikeCompany(state, action) {
   return {
     ...state,

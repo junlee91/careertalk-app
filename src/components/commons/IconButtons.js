@@ -11,7 +11,7 @@ const FavButton = props => (
 
 const NoteIcon = props => (
   <Icon
-    color="black"
+    color="grey"
     name="note"
     type="simple-line-icon"
     size={15}

@@ -18,7 +18,7 @@ const CompanyList = (props) => {
   );
 };
 
-const CompanyListHeader = (props)=> {
+const CompanyListHeader = (props) => {
   const { company: { Company } } = props;
   const { favorites } = props;
   const numOfCompanies = Company.length;
@@ -76,10 +76,11 @@ const styles = {
   userHeaderContentsWrapperStyle: {
     marginLeft: 65,
     flexDirection: 'row',
-    width: 80
+    width: 80,
+    alignItems: 'center'
   },
   companyListHeaderStyle: {
-    backgroundColor: '#bcf2ce',
+    backgroundColor: '#dcdde1',
     height: 30
   },
   companyListHeaderText: {
@@ -94,6 +95,7 @@ const styles = {
     padding: 5,
     flex: 1,
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'flex-start'
   }
 };
