@@ -55,7 +55,7 @@ function popNoteCompany(cmpId) {
 // API Actions
 function getCompanyList(fair_id) {
   return (dispatch) => {
-    return fetch(`https://enigmatic-shore-88931.herokuapp.com/${fair_id}/companies`, {
+    return fetch(`https://reactcareertalk.herokuapp.com/${fair_id}/companies`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -68,7 +68,7 @@ function getCompanyList(fair_id) {
 
 function getFairs() {
   return (dispatch) => {
-    return fetch('https://enigmatic-shore-88931.herokuapp.com/careerfairs', {
+    return fetch('https://reactcareertalk.herokuapp.com/careerfairs', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
