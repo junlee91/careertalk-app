@@ -5,6 +5,8 @@ const SET_COMPANY = 'SET_COMPANY';
 const SET_FAIRS = 'SET_FAIRS';
 const SET_LIKE = 'SET_LIKE';
 const SET_UNLIKE = 'SET_UNLIKE';
+const SET_NOTE = 'SET_NOTE';
+const POP_NOTE = 'POP_NOTE';
 
 // Action Creators
 function setCompanyList(company) {
@@ -31,6 +33,21 @@ function setLikeCompany(cmpId) {
 function setUnlikeCompany(cmpId) {
   return {
     type: SET_UNLIKE,
+    cmpId
+  };
+}
+
+function setNoteCompany(cmpId, note) {
+  return {
+    type: SET_NOTE,
+    cmpId,
+    note
+  };
+}
+
+function popNoteCompany(cmpId) {
+  return {
+    type: POP_NOTE,
     cmpId
   };
 }
@@ -62,6 +79,7 @@ function getFairs() {
   };
 }
 
+// TODO: This is not needed for V2 (when we have Like DB)
 function likeCompany(cmpId) {
   return (dispatch) => {
     return dispatch(setLikeCompany(cmpId));
@@ -74,10 +92,23 @@ function unlikeCompany(cmpId) {
   };
 }
 
+function setNote(cmpId, note) {
+  return (dispatch) => {
+    return dispatch(setNoteCompany(cmpId, note));
+  };
+}
+
+function popNote(cmpId) {
+  return (dispatch) => {
+    return dispatch(popNoteCompany(cmpId));
+  };
+}
+
 // Initial State
 const initialState = {
   isLoggedIn: true, // set TRUE for development
   favorites: [],
+  notes: {}
 };
 
 // Reducer
@@ -91,6 +122,10 @@ function reducer(state = initialState, action) {
       return applyLikeCompany(state, action);
     case SET_UNLIKE:
       return applyUnlikeCompany(state, action);
+    case SET_NOTE:
+      return applySetNoteCompany(state, action);
+    case POP_NOTE:
+      return applyPopNoteCompany(state, action);
     default:
       return state;
   }
@@ -115,6 +150,7 @@ function applySetFairs(state, action) {
   };
 }
 
+// TODO: This is not needed for V2 (when we have Like DB)
 function applyLikeCompany(state, action) {
   return {
     ...state,
@@ -129,12 +165,37 @@ function applyUnlikeCompany(state, action) {
   };
 }
 
+// we have to return a new object in order to detect a state change
+function applySetNoteCompany(state, action) {
+  const { cmpId, note } = action;
+  state.notes[cmpId] = note;
+  const newNotes = state.notes;
+
+  return {
+    ...state,
+    notes: Object.assign({}, newNotes)
+  };
+}
+
+function applyPopNoteCompany(state, action) {
+  const { cmpId } = action;
+  delete state.notes[cmpId];
+  const newNotes = state.notes;
+
+  return {
+    ...state,
+    notes: Object.assign({}, newNotes)
+  };
+}
+
 // Exports
 const actionCreators = {
   getCompanyList,
   getFairs,
   likeCompany,
   unlikeCompany,
+  setNote,
+  popNote
 };
 
 export { actionCreators };

@@ -5,24 +5,32 @@ import CompanyItem from './presenter';
 
 class Container extends Component {
   componentDidMount() {
-    const { company, favorites, likeButton } = this.props;
+    const { company, favorites, notes, likeButton } = this.props;
     const isLiked = favorites.includes(company.id);
+    const isNote = notes[company.id] !== undefined;
 
     this.setState({
       company,
       isLiked,
-      displayLike: likeButton,
+      isNote,
+      displayLike: likeButton
     });
   }
 
   componentWillReceiveProps(nextProps) {
-    const { favorites } = nextProps;
+    const { favorites, notes } = nextProps;
     const { company } = this.state;
     const isLiked = favorites.includes(company.id);
+    const isNote = notes[company.id] !== undefined;
 
     if (isLiked !== this.state.isLiked) {
       this.setState({
         isLiked
+      });
+    }
+    if (isNote !== this.state.isNote) {
+      this.setState({
+        isNote
       });
     }
   }

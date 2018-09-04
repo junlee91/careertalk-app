@@ -21,9 +21,9 @@ const CompanyItem = (props) => {
         </View>
         <View style={{ flex: 1 }}>
           <CardSection>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
-              <NoteIcon />
-              {props.displayLike && <AddIcon {...props} />}
+            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginRight: 10 }}>
+              <NoteIcon visible={props.isNote} />
+              {props.displayLike && <FavIcon {...props} />}
             </View>
           </CardSection>
         </View>
@@ -45,7 +45,7 @@ const EmployerField = props => (
   </TouchableOpacity>
 );
 
-const AddIcon = props => (
+const FavIcon = props => (
   <TouchableOpacity onPressOut={props.handleLike}>
     <FavButton isLiked={props.isLiked} />
   </TouchableOpacity>

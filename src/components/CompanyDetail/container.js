@@ -7,7 +7,8 @@ class Container extends Component {
     const {
       fairs: { Careerfair },
       companyInfo,
-      favorites
+      favorites,
+      notes,
     } = this.props;
     const fair = Careerfair.filter(fair => fair.id === companyInfo.fair_id);
     const { start_date_min } = fair[0];
@@ -17,7 +18,8 @@ class Container extends Component {
       date: start_date_min,
       companyInfo,
       isLiked,
-      isEditting: false
+      isEditting: false,
+      note: notes[companyInfo.id]
     });
   }
 
@@ -36,21 +38,35 @@ class Container extends Component {
     });
   };
 
-  _handleEdit = () => {
-    const { isEditting } = this.state;
-
-    if (!isEditting) {
-      this.setState({
-        isEditting: true
-      });
-    }
+  _handleEdit = (text) => {
+    this.setState({
+      note: text.trim(),
+      isEditting: true
+    });
   };
 
+  componentWillUnmount = () => {
+    const { isEditting } = this.state;
+
+    if (isEditting) {
+      this._handleSave();
+    }
+  }
+
   _handleSave = () => {
+    const { note, companyInfo } = this.state;
+    const { saveNote, deleteNote } = this.props;
+
     this.setState({
       isEditting: false
     });
-  }
+
+    if (note.length === 0) {
+      deleteNote(companyInfo.id);
+    } else {
+      saveNote(companyInfo.id, note);
+    }
+  };
 
   render() {
     return (

@@ -14,7 +14,6 @@ import { LogoImage, InfoBox, BottomInfoBox, Tag, FavButton, EditIcon } from '../
 
 const CompanyDetail = (props) => {
   const { companyInfo, date } = props;
-  console.log(props);
 
   return (
     <View style={styles.container}>
@@ -26,26 +25,8 @@ const CompanyDetail = (props) => {
           </View>
         </InfoBox>
         <InfoBox>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View
-              style={props.isEditting ? styles.textAreaContainer : styles.textAreaDisabledContainer}
-            >
-              <TextInput
-                style={styles.textArea}
-                underlineColorAndroid="transparent"
-                placeholder="Make note"
-                placeholderTextColor="grey"
-                numberOfLines={10}
-                multiline
-                onChangeText={() => props.handleEdit()}
-              />
-            </View>
-            {props.isEditting && (
-              <TouchableOpacity onPressOut={props.handleSave}>
-                <EditIcon />
-              </TouchableOpacity>
-            )}
-          </View>
+          {!props.isEditting && props.note && <Text style={styles.textStyle}>Note</Text>}
+          <NoteInfo {...props} />
         </InfoBox>
         <InfoBox>
           <EventInfo {...companyInfo} date={date} />
@@ -64,6 +45,30 @@ const CompanyDetail = (props) => {
           </View>
         </TouchableOpacity>
       </BottomInfoBox>
+    </View>
+  );
+};
+
+const NoteInfo = (props) => {
+  return (
+    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <View style={props.isEditting ? styles.textAreaContainer : styles.textAreaDisabledContainer}>
+        <TextInput
+          style={styles.textArea}
+          underlineColorAndroid="transparent"
+          placeholder="Make note"
+          placeholderTextColor="grey"
+          numberOfLines={10}
+          multiline
+          value={props.note}
+          onChangeText={props.handleEdit}
+        />
+      </View>
+      {props.isEditting && (
+        <TouchableOpacity onPressOut={props.handleSave}>
+          <EditIcon />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
