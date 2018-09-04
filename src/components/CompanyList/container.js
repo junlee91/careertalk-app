@@ -20,7 +20,8 @@ class Container extends Component {
     if (nextProps.company) {
       this.setState({
         loading: false,
-        company: nextProps.company
+        company: nextProps.company,
+        favorites: nextProps.favorites
       });
     }
   }
