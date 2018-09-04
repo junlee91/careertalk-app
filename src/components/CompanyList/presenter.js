@@ -4,12 +4,13 @@ import { ScrollView, View, Text } from 'react-native';
 import CompanyItem from '../CompanyItem';
 import { FavButton, NoteIcon } from '../commons';
 
+
 const CompanyList = (props) => {
   const { company: { Company } } = props;
   return (
-    <View>
+    <View style={styles.companyListViewStyle}>
       <CompanyListHeader {...props} />
-      <ScrollView contentContainerStyle={styles.companyListScrollStyle}>
+      <ScrollView>
         {Company.map(c => (
           <CompanyItem key={c.id} company={c} likeButton />
         ))}
@@ -20,9 +21,11 @@ const CompanyList = (props) => {
 
 const CompanyListHeader = (props) => {
   const { company: { Company } } = props;
-  const { favorites } = props;
+  const { favorites, notes } = props;
+  const numOfNotes = Object.keys(notes).length;
   const numOfCompanies = Company.length;
   const numOfFavorites = favorites.length;
+
   return (
     <View style={styles.companyListHeaderStyle}>
       <View style={styles.userHeaderStyle}>
@@ -30,7 +33,10 @@ const CompanyListHeader = (props) => {
           numOfFavorites={numOfFavorites}
           numOfCompanies={numOfCompanies}
         />
-        <UserNotedCompany />
+        <UserNotedCompany 
+          numOfNotes={numOfNotes}
+          numOfCompanies={numOfCompanies}
+        />
       </View>
     </View>
   );
@@ -46,7 +52,7 @@ const UserLikedCompany = (props) => {
         <FavButton {...likes} />
       </View>
       <View style={styles.userHeaderInfoViewStyle}>
-        <Text style={styles.likesPerCompaniesText}>{likesPerCompanies}</Text>
+        <Text style={styles.HeaderContentsText}>{likesPerCompanies}</Text>
       </View>
     </View>
   );
@@ -56,13 +62,15 @@ const UserLikedCompany = (props) => {
 // Todo
 // This one is not done yet.
 const UserNotedCompany = (props) => {
+  const notesPerCompanies = `${props.numOfNotes}/${props.numOfCompanies}`;
+  console.log(props);
   return (
     <View style={styles.userHeaderContentsWrapperStyle}>
       <View style={styles.userHeaderInfoViewStyle}>
-        <NoteIcon />
+        <NoteIcon visible={{ isNote:true }} />
       </View>
       <View style={styles.userHeaderInfoViewStyle}>
-        <Text>note.</Text>
+        <Text style={styles.HeaderContentsText}>{notesPerCompanies}</Text>
       </View>
     </View>
   );
@@ -70,7 +78,10 @@ const UserNotedCompany = (props) => {
 
 
 const styles = {
-  likesPerCompaniesText: {
+  companyListViewStyle: {
+    marginBottom: 40
+  },
+  HeaderContentsText: {
     color: 'green'
   },
   userHeaderContentsWrapperStyle: {

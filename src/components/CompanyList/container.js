@@ -21,7 +21,8 @@ class Container extends Component {
       this.setState({
         loading: false,
         company: nextProps.company,
-        favorites: nextProps.favorites
+        favorites: nextProps.favorites,
+        notes: nextProps.notes
       });
     }
   }
