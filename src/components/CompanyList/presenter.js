@@ -33,7 +33,7 @@ const CompanyListHeader = (props) => {
           numOfFavorites={numOfFavorites}
           numOfCompanies={numOfCompanies}
         />
-        <UserNotedCompany 
+        <UserNotedCompany
           numOfNotes={numOfNotes}
           numOfCompanies={numOfCompanies}
         />
@@ -59,15 +59,12 @@ const UserLikedCompany = (props) => {
 };
 
 
-// Todo
-// This one is not done yet.
 const UserNotedCompany = (props) => {
   const notesPerCompanies = `${props.numOfNotes}/${props.numOfCompanies}`;
-  console.log(props);
   return (
     <View style={styles.userHeaderContentsWrapperStyle}>
       <View style={styles.userHeaderInfoViewStyle}>
-        <NoteIcon visible={{ isNote:true }} />
+        <NoteIcon visible={{ isNote: true }} />
       </View>
       <View style={styles.userHeaderInfoViewStyle}>
         <Text style={styles.HeaderContentsText}>{notesPerCompanies}</Text>
