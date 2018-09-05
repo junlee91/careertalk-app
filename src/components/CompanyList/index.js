@@ -7,8 +7,8 @@ const mapStateToProps = (state) => {
   return {
     company,
     fairs,
-    favorites,
     notes,
+    favorites
   };
 };
 

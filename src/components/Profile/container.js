@@ -20,7 +20,6 @@ class Container extends React.Component {
   _setComponentState(props) {
     const { fairs: { Careerfair }, favorites } = props;
     const filteredFairs = [];
-
     for (let i = 0; i < Careerfair.length; i += 1) {
       const { companies } = Careerfair[i];
       const filteredCompanies = companies.filter(company => favorites.includes(company.id));
