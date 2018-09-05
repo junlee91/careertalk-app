@@ -6,12 +6,12 @@ import { FavButton, NoteIcon } from '../commons';
 
 
 const CompanyList = (props) => {
-  const { company: { Company } } = props;
+  const { companies } = props;
   return (
     <View style={styles.companyListViewStyle}>
       <CompanyListHeader {...props} />
       <ScrollView>
-        {Company.map(c => (
+        {companies.map(c => (
           <CompanyItem key={c.id} company={c} likeButton />
         ))}
       </ScrollView>
@@ -20,12 +20,8 @@ const CompanyList = (props) => {
 };
 
 const CompanyListHeader = (props) => {
-  const { company: { Company } } = props;
-  const { favorites, notes } = props;
-  const numOfNotes = Object.keys(notes).length;
-  const numOfCompanies = Company.length;
-  const numOfFavorites = favorites.length;
-
+  const { companies, numOfFavorites, numOfNotes } = props;
+  const numOfCompanies = companies.length;
   return (
     <View style={styles.companyListHeaderStyle}>
       <View style={styles.userHeaderStyle}>

@@ -20,7 +20,7 @@ class Container extends Component {
     const param = { fair_id: fair.id };
     Actions.push(key, param);
   };
-
+  
   render() {
     const { fair } = this.props;
     return (

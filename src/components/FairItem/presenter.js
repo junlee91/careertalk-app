@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, ScrollView } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 
 import { LogoImage } from '../commons';
 
@@ -32,6 +32,26 @@ function getMonthName(month) {
   }
 }
 
+function getTimeString(time) {
+  let hour = Math.floor(time/60);
+  const minutes = time % 60;
+  let suffix = 'AM';
+  let minString;
+  if (hour >= 12) {
+    if (hour > 12) {
+      hour -= 12;
+    }
+    suffix = 'PM';
+  }
+  if (minutes < 10) {
+    minString = `0${minutes.toString()}`;
+  } else {
+    minString = minutes.toString();
+  }
+  const timeString = `${hour.toString()}:${minString}${suffix}`;
+  return timeString;
+}
+
 const FairItem = (props) => {
   fair = { company_url: 'uic.edu' };
   return (
@@ -58,8 +78,11 @@ const NumOfCompanies = (props) => {
 
 const FairHeader = (props) => {
   const { fair } = props;
-  const month = getMonthName(props.fair.date.month);
-  const dateString = `${month}, ${fair.date.day}, ${fair.date.year}`;
+  const month = getMonthName(fair.date.month);
+  const startTime = getTimeString(fair.start_time_min);
+  const endTime = getTimeString(fair.end_time);
+  const timeString = `${startTime} - ${endTime}`;
+  const dateString = `${month} ${fair.date.day}, ${fair.date.year} ${timeString}`;
   return (
     <View>
       <Text style={styles.fairHeaderText}>{fair.name}</Text>
@@ -90,7 +113,8 @@ const styles = {
   numOfCompaniesText: {
     fontSize: 17,
     color: '#3f7c55',
-    textAlign: 'center',
+    fontWeight: 'bold',
+    textAlign: 'center'
   },
   numOfcompaniesSmallText: {
     fontSize: 13,

@@ -18,13 +18,30 @@ class Container extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.company) {
-      this.setState({
-        loading: false,
-        company: nextProps.company,
-        favorites: nextProps.favorites,
-        notes: nextProps.notes
-      });
+      this._setComponentState(nextProps);
     }
+  }
+
+  _setComponentState(props) {
+    const { favorites, notes, company: { Company } } = props;
+    const numOfCompanies = Company.length;
+    let filteredFavorites = 0;
+    let filteredNotes = 0;
+    const notesIds = Object.keys(notes);
+    for (let i = 0; i < numOfCompanies; i += 1) {
+      if (favorites.includes(Company[i].id)) {
+        filteredFavorites += 1;
+      }
+      if (notesIds.includes(Company[i].id.toString())) {
+        filteredNotes += 1;
+      }
+    }
+    this.setState({
+      loading: false,
+      numOfFavorites: filteredFavorites,
+      numOfNotes: filteredNotes,
+      companies: Company,
+    });
   }
 
   render() {

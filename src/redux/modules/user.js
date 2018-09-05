@@ -152,16 +152,18 @@ function applySetFairs(state, action) {
 
 // TODO: This is not needed for V2 (when we have Like DB)
 function applyLikeCompany(state, action) {
+  const { cmpId } = action;
   return {
     ...state,
-    favorites: [...state.favorites, action.cmpId]
+    favorites: [...state.favorites, cmpId]
   };
 }
 
 function applyUnlikeCompany(state, action) {
+  const { cmpId } = action;
   return {
     ...state,
-    favorites: state.favorites.filter(item => item !== action.cmpId)
+    favorites: state.favorites.filter(item => item !== cmpId)
   };
 }
 
@@ -170,7 +172,6 @@ function applySetNoteCompany(state, action) {
   const { cmpId, note } = action;
   state.notes[cmpId] = note;
   const newNotes = state.notes;
-
   return {
     ...state,
     notes: Object.assign({}, newNotes)
@@ -181,7 +182,6 @@ function applyPopNoteCompany(state, action) {
   const { cmpId } = action;
   delete state.notes[cmpId];
   const newNotes = state.notes;
-
   return {
     ...state,
     notes: Object.assign({}, newNotes)

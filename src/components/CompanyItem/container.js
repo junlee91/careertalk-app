@@ -44,12 +44,12 @@ class Container extends Component {
 
   _handleLike = () => {
     const { isLiked, company } = this.state;
-    const { likeCompany, unlikeCompany } = this.props;
+    const { likeCompany, unlikeCompany, company: { fair_id } } = this.props;
 
     if (!isLiked) {
-      likeCompany(company.id);
+      likeCompany(company.id, fair_id);
     } else {
-      unlikeCompany(company.id);
+      unlikeCompany(company.id, fair_id);
     }
 
     this.setState({
@@ -59,7 +59,6 @@ class Container extends Component {
 
   render() {
     const { company } = this.props;
-
     return (
       <CompanyItem
         {...this.state}
