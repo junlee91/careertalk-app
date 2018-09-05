@@ -25,7 +25,7 @@ const CompanyDetail = (props) => {
           </View>
         </InfoBox>
         <InfoBox>
-          {!props.isEditting && props.note && <Text style={styles.textStyle}>Note</Text>}
+          {!props.isEditting && <Text style={styles.textStyle}>Note</Text>}
           <NoteInfo {...props} />
         </InfoBox>
         <InfoBox>
