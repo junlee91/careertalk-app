@@ -11,7 +11,9 @@ const CompanyItem = (props) => {
       <View style={styles.companyItemStyle}>
         <View style={{ flex: 1 }}>
           <CardSection>
-            <LogoImage {...company} size="small" />
+            <View style={{ alignSelf: 'center' }}>
+              <LogoImage {...company} size="small" />
+            </View>
           </CardSection>
         </View>
         <View style={{ flex: 4 }}>
