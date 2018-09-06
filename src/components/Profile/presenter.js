@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Divider } from 'react-native-elements';
 
 import CompanyItem from '../CompanyItem';
-import { InfoBox, ProfileImage } from '../commons';
+import { InfoBox, ProfileImage, PoweredBy } from '../commons';
 
 const Profile = (props) => {
   const { filteredFairs, isFavoritePresent } = props;
@@ -35,6 +35,7 @@ const Profile = (props) => {
           </View>
         )}
       </ScrollView>
+      <PoweredBy poweredby="Logos provided by Clearbit" />
     </View>
   );
 };
