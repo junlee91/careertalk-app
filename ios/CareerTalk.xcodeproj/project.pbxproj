@@ -1372,6 +1372,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.creativesolutionlab.CareerTalk;
 				PRODUCT_NAME = CareerTalk;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1395,6 +1396,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.creativesolutionlab.CareerTalk;
 				PRODUCT_NAME = CareerTalk;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

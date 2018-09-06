@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView, View, Text } from 'react-native';
 
 import CompanyItem from '../CompanyItem';
-import { FavButton, NoteIcon } from '../commons';
+import { FavButton, NoteIcon, PoweredBy } from '../commons';
 
 
 const CompanyList = (props) => {
@@ -15,6 +15,7 @@ const CompanyList = (props) => {
           <CompanyItem key={c.id} company={c} likeButton />
         ))}
       </ScrollView>
+      <PoweredBy poweredby="Logos provided by Clearbit" />
     </View>
   );
 };
@@ -72,7 +73,7 @@ const UserNotedCompany = (props) => {
 
 const styles = {
   companyListViewStyle: {
-    marginBottom: 40
+    marginBottom: 48
   },
   HeaderContentsText: {
     color: 'green',
