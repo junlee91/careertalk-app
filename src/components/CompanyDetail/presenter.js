@@ -17,7 +17,6 @@ const CompanyDetail = (props) => {
 
   return (
     <View style={styles.container}>
-      <PoweredBy poweredby="Logos provided by Clearbit" />
       <ScrollView style={{ height: '89%' }}>
         <InfoBox>
           <View style={styles.titleContent}>
@@ -36,7 +35,9 @@ const CompanyDetail = (props) => {
           <DetailInfo {...companyInfo} />
         </InfoBox>
       </ScrollView>
+      <PoweredBy poweredby="Logos provided by Clearbit" />
       <BottomInfoBox>
+        
         <TouchableOpacity onPressOut={props.handleLike}>
           <View style={styles.actionButton}>
             <Text style={{ paddingHorizontal: 10, fontFamily: 'Avenir Next' }}>
@@ -46,7 +47,7 @@ const CompanyDetail = (props) => {
           </View>
         </TouchableOpacity>
       </BottomInfoBox>
-
+      
     </View>
   );
 };
