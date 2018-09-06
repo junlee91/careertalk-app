@@ -17,7 +17,7 @@ const styles = {
   },
   poweredByText: {
     textAlign: 'center',
-    fontSize: 13,
+    fontSize: 11,
     color: 'black',
     fontFamily: 'Avenir Next'
   }
