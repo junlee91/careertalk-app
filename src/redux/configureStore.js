@@ -19,7 +19,6 @@ const reducer = persistCombineReducers(persistConfig, {
 const configureStore = () => {
   const store = createStore(reducer, applyMiddleware(...middlewares));
   const persistor = persistStore(store);
-  persistor.purge();
   return { store, persistor };
 };
 
