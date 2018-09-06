@@ -37,7 +37,6 @@ const CompanyDetail = (props) => {
       </ScrollView>
       <PoweredBy poweredby="Logos provided by Clearbit" />
       <BottomInfoBox>
-        
         <TouchableOpacity onPressOut={props.handleLike}>
           <View style={styles.actionButton}>
             <Text style={{ paddingHorizontal: 10, fontFamily: 'Avenir Next' }}>
@@ -47,7 +46,6 @@ const CompanyDetail = (props) => {
           </View>
         </TouchableOpacity>
       </BottomInfoBox>
-      
     </View>
   );
 };
