@@ -7,13 +7,13 @@ const FairList = (props) => {
   const { fairs: { Careerfair } } = props;
 
   return (
-    <View>
-      <PoweredBy poweredby="Logos provided by Clearbit" />
+    <View style={{ paddingBottom: 16 }}>
       <ScrollView>
         {Careerfair.map(f => (
           <FairItem key={f.id} fair={f} />
         ))}
       </ScrollView>
+      <PoweredBy poweredby="Logos provided by Clearbit" />
     </View>
   );
 };
