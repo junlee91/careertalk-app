@@ -45,11 +45,13 @@ const FairsList = (props) => {
     <View>
       <Text style={styles.fairNameText}>{fair[0].fair}</Text>
       <Divider />
-      <ScrollView>
-        {fair.map(company => (
-          <CompanyItem key={company.id} company={company} likeButton={false} />
-        ))}
-      </ScrollView>
+      <View style={{ flex: 1 }}>
+        <ScrollView>
+          {fair.map(company => (
+            <CompanyItem key={company.id} company={company} likeButton={false} />
+          ))}
+        </ScrollView>
+      </View>
     </View>
   );
 };

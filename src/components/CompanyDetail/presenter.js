@@ -58,7 +58,6 @@ const NoteInfo = (props) => {
           underlineColorAndroid="transparent"
           placeholder="Make note"
           placeholderTextColor="grey"
-          numberOfLines={10}
           multiline
           value={props.note}
           onChangeText={props.handleEdit}
@@ -132,7 +131,6 @@ const styles = StyleSheet.create({
   },
   titleTextStyle: {
     padding: 5,
-    height: 30,
     fontSize: 20,
     fontFamily: 'Avenir Next'
   },
