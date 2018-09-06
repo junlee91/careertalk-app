@@ -19,7 +19,12 @@ const reducer = persistCombineReducers(persistConfig, {
 const configureStore = () => {
   const store = createStore(reducer, applyMiddleware(...middlewares));
   const persistor = persistStore(store);
+<<<<<<< 330a855d3ea55ceefb16f87aab6521f17737b27a
   //persistor.purge();
+||||||| merged common ancestors
+=======
+  // persistor.purge();
+>>>>>>> Added icons and splash icons.
   return { store, persistor };
 };
 
