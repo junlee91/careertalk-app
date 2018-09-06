@@ -25,7 +25,7 @@ const EditIcon = () => (
     color="black"
     name="edit"
     type="entypo"
-    size={15}
+    size={20}
     containerStyle={{ paddingHorizontal: 5 }}
   />
 );
