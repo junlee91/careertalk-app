@@ -6,26 +6,34 @@ import CompanyItem from '../CompanyItem';
 import { InfoBox, ProfileImage } from '../commons';
 
 const Profile = (props) => {
-  const { filteredFairs } = props;
+  const { filteredFairs, isFavoritePresent } = props;
 
   return (
     <View style={{ height: '100%', backgroundColor: '#fff' }}>
       <InfoBox>
         <View style={styles.userInfoStyle}>
           <ProfileImage />
-          <Text style={styles.userNameField}>Anonymous User</Text>
+          <Text style={styles.textField}>Anonymous User</Text>
         </View>
       </InfoBox>
       <ScrollView>
-        <InfoBox>
-          {filteredFairs
-            && filteredFairs.map((fair, index) => {
-              if (fair.length) {
-                return <FairsList key={index} fair={fair} />;
-              }
-              return null;
-            })}
-        </InfoBox>
+        {isFavoritePresent ? (
+          <InfoBox>
+            {filteredFairs
+              && filteredFairs.map((fair, index) => {
+                if (fair.length) {
+                  return <FairsList key={index} fair={fair} />;
+                }
+                return null;
+              })}
+          </InfoBox>
+        ) : (
+          <View>
+            <InfoBox>
+              <Text style={styles.textField}>Add companies to your list!</Text>
+            </InfoBox>
+          </View>
+        )}
       </ScrollView>
     </View>
   );
@@ -52,8 +60,9 @@ const styles = StyleSheet.create({
     padding: 5,
     alignItems: 'center'
   },
-  userNameField: {
-    marginHorizontal: 15
+  textField: {
+    marginHorizontal: 15,
+    fontFamily: 'Avenir Next'
   },
   fairNameText: {
     fontSize: 17,

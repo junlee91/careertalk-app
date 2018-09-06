@@ -104,21 +104,26 @@ const styles = {
   fairHeaderText: {
     paddingTop: 20,
     fontSize: 17,
+    fontFamily: 'Avenir Next'
   },
   fairInfo: {
     color: '#48638c',
     fontSize: 13,
-    paddingTop: 5
+    paddingTop: 5,
+    fontFamily: 'Avenir Next'
   },
   numOfCompaniesText: {
     fontSize: 17,
     color: '#3f7c55',
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
+    fontFamily: 'Avenir Next',
   },
   numOfcompaniesSmallText: {
     fontSize: 13,
-    color: 'grey'
+    color: 'grey',
+    fontFamily: 'Avenir Next',
+    marginTop: 2,
   },
   numOfCompaniesView: {
     flex: 1,
