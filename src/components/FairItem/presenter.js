@@ -33,7 +33,7 @@ function getMonthName(month) {
 }
 
 function getTimeString(time) {
-  let hour = Math.floor(time/60);
+  let hour = Math.floor(time / 60);
   const minutes = time % 60;
   let suffix = 'AM';
   let minString;

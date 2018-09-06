@@ -10,14 +10,15 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { LogoImage, InfoBox, BottomInfoBox, Tag, FavButton, EditIcon } from '../commons';
+import { LogoImage, InfoBox, BottomInfoBox, Tag, FavButton, EditIcon, PoweredBy } from '../commons';
 
 const CompanyDetail = (props) => {
   const { companyInfo, date } = props;
 
   return (
     <View style={styles.container}>
-      <ScrollView style={{ height: '90%' }}>
+      <PoweredBy poweredby="Logos provided by Clearbit" />
+      <ScrollView style={{ height: '89%' }}>
         <InfoBox>
           <View style={styles.titleContent}>
             <LogoImage {...companyInfo} size="medium" />
@@ -45,6 +46,7 @@ const CompanyDetail = (props) => {
           </View>
         </TouchableOpacity>
       </BottomInfoBox>
+
     </View>
   );
 };
