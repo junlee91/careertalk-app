@@ -75,7 +75,8 @@ const styles = {
     marginBottom: 40
   },
   HeaderContentsText: {
-    color: 'green'
+    color: 'green',
+    fontFamily: 'Avenir Next',
   },
   userHeaderContentsWrapperStyle: {
     marginLeft: 65,
