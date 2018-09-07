@@ -65,9 +65,11 @@ const NoteInfo = (props) => {
         />
       </View>
       {props.isEditting && (
-        <TouchableOpacity onPressOut={props.handleSave}>
-          <EditIcon />
-        </TouchableOpacity>
+        <View style={{ flex: 1 }}>
+          <TouchableOpacity onPressOut={props.handleSave}>
+            <EditIcon />
+          </TouchableOpacity>
+        </View>
       )}
     </View>
   );
@@ -164,7 +166,7 @@ const styles = StyleSheet.create({
     borderColor: '#bdc3c7',
     borderWidth: 1,
     padding: 5,
-    minWidth: '90%'
+    flex: 5,
   },
   textAreaDisabledContainer: {
     padding: 5,
