@@ -40,7 +40,7 @@ class Container extends Component {
 
   _handleEdit = (text) => {
     this.setState({
-      note: text.trim(),
+      note: text,
       isEditting: true
     });
   };
@@ -64,7 +64,7 @@ class Container extends Component {
     if (note.length === 0) {
       deleteNote(companyInfo.id);
     } else {
-      saveNote(companyInfo.id, note);
+      saveNote(companyInfo.id, note.trim());
     }
   };
 
