@@ -7,12 +7,14 @@ class Container extends Component {
   constructor() {
     super();
     this.state = {
-      loading: true
+      loading: true,
+      isFetching: false
     };
   }
 
   componentDidMount() {
     const { getCompanyList, fair_id } = this.props;
+
     getCompanyList(fair_id);
   }
 
@@ -21,6 +23,16 @@ class Container extends Component {
       this._setComponentState(nextProps);
     }
   }
+
+  _refresh = () => {
+    const { getCompanyList, fair_id } = this.props;
+
+    this.setState({
+      isFetching: true
+    });
+
+    getCompanyList(fair_id);
+  };
 
   _setComponentState(props) {
     const { favorites, notes, company: { Company } } = props;
@@ -38,15 +50,24 @@ class Container extends Component {
     }
     this.setState({
       loading: false,
+      isFetching: false,
       numOfFavorites: filteredFavorites,
       numOfNotes: filteredNotes,
-      companies: Company,
+      companies: Company
     });
   }
 
   render() {
     const { loading } = this.state;
-    return <Fragment>{loading ? <Spinner size="large" /> : <CompanyList {...this.state} />}</Fragment>;
+    return (
+      <Fragment>
+        {loading ? (
+          <Spinner size="large" />
+        ) : (
+          <CompanyList {...this.state} refresh={this._refresh} />
+        )}
+      </Fragment>
+    );
   }
 }
 
