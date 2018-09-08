@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text, Platform } from 'react-native';
 
 import { Card, CardSection, Label, LogoImage, FavButton, NoteIcon } from '../commons';
 
@@ -11,7 +11,7 @@ const CompanyItem = (props) => {
       <View style={styles.companyItemStyle}>
         <View style={{ flex: 1 }}>
           <CardSection>
-            <View style={{ alignSelf: 'center' }}>
+            <View style={styles.logoStyle}>
               <LogoImage {...company} size="small" />
             </View>
           </CardSection>
@@ -58,6 +58,13 @@ const styles = {
   companyItemStyle: {
     flex: 1,
     flexDirection: 'row'
+  },
+  logoStyle: {
+    ...Platform.select({
+      android: {
+        alignSelf: 'center'
+      }
+    })
   },
   companyNameTextStyle: {
     height: 30,

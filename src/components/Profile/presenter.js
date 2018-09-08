@@ -9,7 +9,7 @@ const Profile = (props) => {
   const { filteredFairs, isFavoritePresent } = props;
 
   return (
-    <View style={{ height: '100%', backgroundColor: '#fff' }}>
+    <View style={{ flex: 1, backgroundColor: '#fff' }}>
       <InfoBox>
         <View style={styles.userInfoStyle}>
           <ProfileImage />
