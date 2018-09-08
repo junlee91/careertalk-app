@@ -41,9 +41,14 @@ class Container extends Component {
   _handleEdit = (text) => {
     this.setState({
       note: text,
-      isEditting: true
     });
   };
+
+  _inputFocus = () => {
+    this.setState({
+      isEditting: true
+    });
+  }
 
   componentWillUnmount = () => {
     const { isEditting } = this.state;
@@ -61,10 +66,14 @@ class Container extends Component {
       isEditting: false
     });
 
-    if (note.length === 0) {
-      deleteNote(companyInfo.id);
-    } else {
-      saveNote(companyInfo.id, note.trim());
+    if (note) {
+      const noteToSave = note.trim();
+
+      if (noteToSave.length === 0) {
+        deleteNote(companyInfo.id);
+      } else {
+        saveNote(companyInfo.id, noteToSave);
+      }
     }
   };
 
@@ -73,6 +82,7 @@ class Container extends Component {
       <CompanyDetail
         {...this.state}
         {...this.props}
+        inputFocus={this._inputFocus}
         handleLike={this._handleLike}
         handleEdit={this._handleEdit}
         handleSave={this._handleSave}

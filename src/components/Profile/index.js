@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
 export const ProfileIcon = () => {
   return (
     <TouchableOpacity onPressOut={() => Actions.push('profile')}>
-      <Icon name="md-person" type="ionicon" containerStyle={{ paddingHorizontal: 10 }} />
+      <Icon name="md-person" type="ionicon" containerStyle={{ paddingHorizontal: 10, marginHorizontal: 5 }} />
     </TouchableOpacity>
   );
 };

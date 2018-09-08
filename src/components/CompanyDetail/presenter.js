@@ -17,7 +17,7 @@ const CompanyDetail = (props) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={{ height: '89%' }}>
+      <ScrollView style={{ height: '89%' }} keyboardDismissMode="on-drag">
         <InfoBox>
           <View style={styles.titleContent}>
             <LogoImage {...companyInfo} size="medium" />
@@ -61,13 +61,17 @@ const NoteInfo = (props) => {
           placeholderTextColor="grey"
           multiline
           value={props.note}
+          autoCorrect={false}
+          onFocus={props.inputFocus}
           onChangeText={props.handleEdit}
         />
       </View>
       {props.isEditting && (
-        <TouchableOpacity onPressOut={props.handleSave}>
-          <EditIcon />
-        </TouchableOpacity>
+        <View style={{ flex: 1 }}>
+          <TouchableOpacity onPressOut={props.handleSave}>
+            <EditIcon />
+          </TouchableOpacity>
+        </View>
       )}
     </View>
   );
@@ -164,7 +168,7 @@ const styles = StyleSheet.create({
     borderColor: '#bdc3c7',
     borderWidth: 1,
     padding: 5,
-    minWidth: '90%'
+    flex: 5
   },
   textAreaDisabledContainer: {
     padding: 5,

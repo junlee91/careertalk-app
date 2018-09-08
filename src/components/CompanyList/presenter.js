@@ -1,16 +1,23 @@
 import React from 'react';
-import { ScrollView, View, Text } from 'react-native';
+import { ScrollView, View, Text, RefreshControl } from 'react-native';
 
 import CompanyItem from '../CompanyItem';
 import { FavButton, NoteIcon, PoweredBy } from '../commons';
-
 
 const CompanyList = (props) => {
   const { companies } = props;
   return (
     <View style={styles.companyListViewStyle}>
       <CompanyListHeader {...props} />
-      <ScrollView>
+      <ScrollView
+        refreshControl={(
+          <RefreshControl
+            refreshing={props.isFetching}
+            onRefresh={props.refresh}
+            tintColor="grey"
+          />
+        )}
+      >
         {companies.map(c => (
           <CompanyItem key={c.id} company={c} likeButton />
         ))}
@@ -26,19 +33,12 @@ const CompanyListHeader = (props) => {
   return (
     <View style={styles.companyListHeaderStyle}>
       <View style={styles.userHeaderStyle}>
-        <UserLikedCompany
-          numOfFavorites={numOfFavorites}
-          numOfCompanies={numOfCompanies}
-        />
-        <UserNotedCompany
-          numOfNotes={numOfNotes}
-          numOfCompanies={numOfCompanies}
-        />
+        <UserLikedCompany numOfFavorites={numOfFavorites} numOfCompanies={numOfCompanies} />
+        <UserNotedCompany numOfNotes={numOfNotes} numOfCompanies={numOfCompanies} />
       </View>
     </View>
   );
 };
-
 
 const UserLikedCompany = (props) => {
   likes = { isLiked: true };
@@ -55,7 +55,6 @@ const UserLikedCompany = (props) => {
   );
 };
 
-
 const UserNotedCompany = (props) => {
   const notesPerCompanies = `${props.numOfNotes}/${props.numOfCompanies}`;
   return (
@@ -70,14 +69,13 @@ const UserNotedCompany = (props) => {
   );
 };
 
-
 const styles = {
   companyListViewStyle: {
     marginBottom: 48
   },
   HeaderContentsText: {
     color: 'green',
-    fontFamily: 'Avenir Next',
+    fontFamily: 'Avenir Next'
   },
   userHeaderContentsWrapperStyle: {
     marginLeft: 65,
@@ -105,6 +103,5 @@ const styles = {
     justifyContent: 'flex-start'
   }
 };
-
 
 export default CompanyList;
