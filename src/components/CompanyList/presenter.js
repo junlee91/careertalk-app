@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, Text, RefreshControl } from 'react-native';
+import { View, Text, RefreshControl, FlatList } from 'react-native';
 
 import CompanyItem from '../CompanyItem';
 import { FavButton, NoteIcon, PoweredBy } from '../commons';
@@ -9,7 +9,7 @@ const CompanyList = (props) => {
   return (
     <View style={styles.companyListViewStyle}>
       <CompanyListHeader {...props} />
-      <ScrollView
+      <FlatList
         refreshControl={(
           <RefreshControl
             refreshing={props.isFetching}
@@ -17,11 +17,10 @@ const CompanyList = (props) => {
             tintColor="grey"
           />
         )}
-      >
-        {companies.map(c => (
-          <CompanyItem key={c.id} company={c} likeButton />
-        ))}
-      </ScrollView>
+        data={companies}
+        keyExtractor={c => c.id.toString()}
+        renderItem={c => <CompanyItem id={c.item.id} company={c.item} likeButton />}
+      />
       <PoweredBy poweredby="Logos provided by Clearbit" />
     </View>
   );
