@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text, Platform, StyleSheet } from 'react-native';
+import { Surface } from 'react-native-paper';
 
 import { LogoImage } from '../commons';
 
@@ -56,11 +57,19 @@ const FairItem = (props) => {
   fair = { company_url: 'uic.edu' };
   return (
     <TouchableOpacity onPress={() => props.navigateTo('companyList', props.fair.id)}>
-      <View style={styles.bigCard}>
-        <LogoImage {...fair} size="big" />
-        <NumOfCompanies {...props} />
-        <FairHeader {...props} />
-      </View>
+      {Platform.OS === 'ios' ? (
+        <View style={styles.bigCard}>
+          <LogoImage {...fair} size="big" />
+          <NumOfCompanies {...props} />
+          <FairHeader {...props} />
+        </View>
+      ) : (
+        <Surface style={[stylesAndroid.surface, { elevation: 6 }]}>
+          <LogoImage {...fair} size="big" />
+          <NumOfCompanies {...props} />
+          <FairHeader {...props} />
+        </Surface>
+      )}
     </TouchableOpacity>
   );
 };
@@ -71,7 +80,7 @@ const NumOfCompanies = (props) => {
   return (
     <View style={styles.numOfCompaniesView}>
       <Text style={styles.numOfCompaniesText}>{numOfCompanies}</Text>
-      <Text style={styles.numOfcompaniesSmallText}>  Employers</Text>
+      <Text style={styles.numOfcompaniesSmallText}> Employers</Text>
     </View>
   );
 };
@@ -104,13 +113,13 @@ const styles = {
   fairHeaderText: {
     paddingTop: 20,
     fontSize: 17,
-    fontFamily: 'Avenir Next'
+    fontFamily: 'Avenir Next',
   },
   fairInfo: {
     color: '#48638c',
     fontSize: 13,
     paddingTop: 5,
-    fontFamily: 'Avenir Next'
+    fontFamily: 'Avenir Next',
   },
   numOfCompaniesText: {
     fontSize: 17,
@@ -128,8 +137,16 @@ const styles = {
   numOfCompaniesView: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 };
+
+const stylesAndroid = StyleSheet.create({
+  surface: {
+    backgroundColor: 'white',
+    padding: 25,
+    margin: 30,
+  },
+});
 
 export default FairItem;
