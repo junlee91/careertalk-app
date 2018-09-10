@@ -6,11 +6,12 @@ import {
   ScrollView,
   TouchableOpacity,
   Linking,
-  TextInput
+  Platform
 } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { TextInput } from 'react-native-paper';
 
-import { LogoImage, InfoBox, BottomInfoBox, Tag, FavButton, EditIcon, PoweredBy } from '../commons';
+import { LogoImage, InfoBox, BottomInfoBox, Tag, FavButton, PoweredBy } from '../commons';
 
 const CompanyDetail = (props) => {
   const { companyInfo, date } = props;
@@ -25,7 +26,6 @@ const CompanyDetail = (props) => {
           </View>
         </InfoBox>
         <InfoBox>
-          {!props.isEditting && <Text style={styles.textStyle}>Note</Text>}
           <NoteInfo {...props} />
         </InfoBox>
         <InfoBox>
@@ -51,28 +51,25 @@ const CompanyDetail = (props) => {
 };
 
 const NoteInfo = (props) => {
+  const mode = props.isEditting ? 'outline' : 'flat';
+
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-      <View style={props.isEditting ? styles.textAreaContainer : styles.textAreaDisabledContainer}>
+      <View style={{ flex: 1 }}>
         <TextInput
-          style={styles.textArea}
-          underlineColorAndroid="transparent"
+          style={styles.inputContainerStyle}
+          mode={Platform.OS === 'android' ? 'outline' : mode}
+          label="Note"
           placeholder="Make note"
           placeholderTextColor="grey"
-          multiline
           value={props.note}
-          autoCorrect={false}
-          onFocus={props.inputFocus}
           onChangeText={props.handleEdit}
+          autoCorrect={false}
+          multiline
+          onFocus={props.inputFocus}
+          onBlur={props.inputFocus}
         />
       </View>
-      {props.isEditting && (
-        <View style={{ flex: 1 }}>
-          <TouchableOpacity onPressOut={props.handleSave}>
-            <EditIcon />
-          </TouchableOpacity>
-        </View>
-      )}
     </View>
   );
 };
@@ -164,18 +161,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 1
   },
-  textAreaContainer: {
-    borderColor: '#bdc3c7',
-    borderWidth: 1,
-    padding: 5,
-    flex: 5
-  },
-  textAreaDisabledContainer: {
-    padding: 5,
-    minWidth: '90%'
-  },
-  textArea: {
-    justifyContent: 'flex-start'
+  inputContainerStyle: {
+    margin: 1
   }
 });
 

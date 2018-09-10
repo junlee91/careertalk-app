@@ -18,7 +18,7 @@ class Container extends Component {
       date: start_date_min,
       companyInfo,
       isLiked,
-      isEditting: false,
+      isEditting: true,
       note: notes[companyInfo.id]
     });
   }
@@ -44,27 +44,21 @@ class Container extends Component {
     });
   };
 
-  _inputFocus = () => {
-    this.setState({
-      isEditting: true
-    });
+  componentWillUnmount = () => {
+    this._handleSave();
   }
 
-  componentWillUnmount = () => {
+  _inputFocus = () => {
     const { isEditting } = this.state;
-
-    if (isEditting) {
-      this._handleSave();
-    }
+    const newState = !isEditting;
+    this.setState({
+      isEditting: newState
+    });
   }
 
   _handleSave = () => {
     const { note, companyInfo } = this.state;
     const { saveNote, deleteNote } = this.props;
-
-    this.setState({
-      isEditting: false
-    });
 
     if (note) {
       const noteToSave = note.trim();
