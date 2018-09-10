@@ -11,8 +11,8 @@ const styles = {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    borderColor: '#ddd'
-  }
+    borderColor: '#ddd',
+  },
 };
 
 export { CardSection };
