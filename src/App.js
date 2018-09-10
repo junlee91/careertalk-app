@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
+import { Provider as PaperProvider } from 'react-native-paper';
 import { PersistGate } from 'redux-persist/es/integration/react';
 import SplashScreen from 'react-native-splash-screen';
 
@@ -17,7 +18,9 @@ class App extends Component {
     return (
       <Provider store={store}>
         <PersistGate persistor={persistor}>
-          <Router />
+          <PaperProvider>
+            <Router />
+          </PaperProvider>
         </PersistGate>
       </Provider>
     );
