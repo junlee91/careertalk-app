@@ -18,19 +18,21 @@ const CompanyList = (props) => {
         </View>
         <CompanyListHeader {...props} />
       </View>
-      <FlatList
-        refreshControl={(
-          <RefreshControl
-            refreshing={props.isFetching}
-            onRefresh={props.refresh}
-            tintColor="grey"
-          />
-        )}
-        data={companiesForRender}
-        keyExtractor={c => c.id.toString()}
-        renderItem={c => <CompanyItem id={c.item.id} company={c.item} likeButton />}
-      />
-      <PoweredBy poweredby="Logos provided by Clearbit" />
+      <View style={{ flex: 8 }}>
+        <FlatList
+          refreshControl={(
+            <RefreshControl
+              refreshing={props.isFetching}
+              onRefresh={props.refresh}
+              tintColor="grey"
+            />
+          )}
+          data={companiesForRender}
+          keyExtractor={c => c.id.toString()}
+          renderItem={c => <CompanyItem id={c.item.id} company={c.item} likeButton />}
+        />
+        <PoweredBy poweredby="Logos provided by Clearbit" />
+      </View>
     </View>
   );
 };
@@ -82,9 +84,10 @@ const styles = {
   headerView: {
     backgroundColor: '#dcdde1',
     height: 68,
+    flex: 1,
   },
   companyListViewStyle: {
-    marginBottom: 90,
+    flex: 1,
   },
   HeaderContentsText: {
     color: 'green',
