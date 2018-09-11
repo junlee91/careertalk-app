@@ -6,7 +6,6 @@ import {
   ScrollView,
   TouchableOpacity,
   Linking,
-  Platform,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { TextInput } from 'react-native-paper';
@@ -51,11 +50,10 @@ const CompanyDetail = (props) => {
 };
 
 const NoteInfo = (props) => {
-  const mode = props.isEditting ? 'flat' : 'outline';
   return (
     <View style={{ flex: 1 }}>
       <TextInput
-        mode={Platform.OS === 'android' ? 'outline' : mode}
+        mode={props.isEditting ? 'outlined' : null}
         label="Note"
         placeholder="Make note"
         placeholderTextColor="grey"
