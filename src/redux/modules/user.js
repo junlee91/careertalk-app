@@ -12,28 +12,28 @@ const POP_NOTE = 'POP_NOTE';
 function setCompanyList(company) {
   return {
     type: SET_COMPANY,
-    company
+    company,
   };
 }
 
 function setFairs(fairs) {
   return {
     type: SET_FAIRS,
-    fairs
+    fairs,
   };
 }
 
 function setLikeCompany(cmpId) {
   return {
     type: SET_LIKE,
-    cmpId
+    cmpId,
   };
 }
 
 function setUnlikeCompany(cmpId) {
   return {
     type: SET_UNLIKE,
-    cmpId
+    cmpId,
   };
 }
 
@@ -41,14 +41,14 @@ function setNoteCompany(cmpId, note) {
   return {
     type: SET_NOTE,
     cmpId,
-    note
+    note,
   };
 }
 
 function popNoteCompany(cmpId) {
   return {
     type: POP_NOTE,
-    cmpId
+    cmpId,
   };
 }
 
@@ -58,8 +58,8 @@ function getCompanyList(fair_id) {
     return fetch(`https://reactcareertalk.herokuapp.com/${fair_id}/companies`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     })
       .then(response => response.json())
       .then(json => dispatch(setCompanyList(json)));
@@ -71,8 +71,8 @@ function getFairs() {
     return fetch('https://reactcareertalk.herokuapp.com/careerfairs', {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     })
       .then(response => response.json())
       .then(json => dispatch(setFairs(json)));
@@ -108,7 +108,7 @@ function popNote(cmpId) {
 const initialState = {
   isLoggedIn: true, // set TRUE for development
   favorites: [],
-  notes: {}
+  notes: {},
 };
 
 // Reducer
@@ -137,7 +137,7 @@ function applySetCompany(state, action) {
 
   return {
     ...state,
-    company
+    company,
   };
 }
 
@@ -146,7 +146,7 @@ function applySetFairs(state, action) {
 
   return {
     ...state,
-    fairs
+    fairs,
   };
 }
 
@@ -155,7 +155,7 @@ function applyLikeCompany(state, action) {
   const { cmpId } = action;
   return {
     ...state,
-    favorites: [...state.favorites, cmpId]
+    favorites: [...state.favorites, cmpId],
   };
 }
 
@@ -163,7 +163,7 @@ function applyUnlikeCompany(state, action) {
   const { cmpId } = action;
   return {
     ...state,
-    favorites: state.favorites.filter(item => item !== cmpId)
+    favorites: state.favorites.filter(item => item !== cmpId),
   };
 }
 
@@ -174,7 +174,7 @@ function applySetNoteCompany(state, action) {
   const newNotes = state.notes;
   return {
     ...state,
-    notes: Object.assign({}, newNotes)
+    notes: Object.assign({}, newNotes),
   };
 }
 
@@ -184,7 +184,7 @@ function applyPopNoteCompany(state, action) {
   const newNotes = state.notes;
   return {
     ...state,
-    notes: Object.assign({}, newNotes)
+    notes: Object.assign({}, newNotes),
   };
 }
 
@@ -195,7 +195,7 @@ const actionCreators = {
   likeCompany,
   unlikeCompany,
   setNote,
-  popNote
+  popNote,
 };
 
 export { actionCreators };

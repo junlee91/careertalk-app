@@ -8,7 +8,7 @@ const mapStateToProps = (state) => {
     company,
     fairs,
     notes,
-    favorites
+    favorites,
   };
 };
 
@@ -18,7 +18,7 @@ const mapDispatchToProps = dispatch => ({
   },
   getFairs: () => {
     dispatch(userActions.getFairs());
-  }
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Container);
