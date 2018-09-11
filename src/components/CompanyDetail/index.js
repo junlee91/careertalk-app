@@ -4,11 +4,10 @@ import { actionCreators as userActions } from '../../redux/modules/user';
 
 
 const mapStateToProps = (state) => {
-  const { user: { fairs, favorites, notes } } = state;
+  const { user: { fairs, favorites } } = state;
   return {
     fairs,
     favorites,
-    notes,
   };
 };
 
@@ -24,7 +23,7 @@ const mapDispatchToProps = dispatch => ({
   },
   deleteNote: (cmpId) => {
     dispatch(userActions.popNote(cmpId));
-  }
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Container);
