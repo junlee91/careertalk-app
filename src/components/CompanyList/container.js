@@ -8,8 +8,12 @@ class Container extends Component {
     super();
     this.state = {
       loading: true,
-      isFetching: false
+      isFetching: false,
+      searching: false,
+      companiesForRender: [],
     };
+
+    this._searching = this._searching.bind(this);
   }
 
   componentDidMount() {
@@ -28,14 +32,32 @@ class Container extends Component {
     const { getCompanyList, fair_id } = this.props;
 
     this.setState({
-      isFetching: true
+      isFetching: true,
     });
 
     getCompanyList(fair_id);
   };
 
+  _searching = (text) => {
+    const { companies, companiesForRender } = this.state;
+    if (text === '' || companiesForRender === null) {
+      this.setState({
+        searching: true,
+        companiesForRender: companies,
+      });
+    } else {
+      const filtered = companies.filter(c => c.name.toLowerCase().includes(text.toLowerCase()));
+      this.setState({
+        searching: true,
+        companiesForRender: filtered,
+      });
+    }
+  };
+
   _setComponentState(props) {
+    console.log('props: ', props);
     const { favorites, notes, company: { Company } } = props;
+    let { companiesForRender } = props;
     const numOfCompanies = Company.length;
     let filteredFavorites = 0;
     let filteredNotes = 0;
@@ -48,12 +70,18 @@ class Container extends Component {
         filteredNotes += 1;
       }
     }
+
+    if (this.state.searching === false) {
+      companiesForRender = Company;
+    }
     this.setState({
       loading: false,
       isFetching: false,
       numOfFavorites: filteredFavorites,
       numOfNotes: filteredNotes,
-      companies: Company
+      numOfCompanies: Company.length,
+      companies: Company,
+      companiesForRender,
     });
   }
 
@@ -64,7 +92,7 @@ class Container extends Component {
         {loading ? (
           <Spinner size="large" />
         ) : (
-          <CompanyList {...this.state} refresh={this._refresh} />
+          <CompanyList {...this.state} refresh={this._refresh} search={this._searching} />
         )}
       </Fragment>
     );

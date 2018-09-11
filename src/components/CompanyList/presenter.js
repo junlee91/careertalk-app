@@ -1,14 +1,22 @@
 import React from 'react';
 import { View, Text, RefreshControl, FlatList } from 'react-native';
-
+import Search from 'react-native-search-box';
 import CompanyItem from '../CompanyItem';
 import { FavButton, NoteIcon, PoweredBy } from '../commons';
 
 const CompanyList = (props) => {
-  const { companies } = props;
+  const { companiesForRender } = props;
   return (
     <View style={styles.companyListViewStyle}>
-      <CompanyListHeader {...props} />
+      <View style={styles.headerView}>
+        <View style={{ flex: 1 }}>
+          <Search
+            onChangeText={props.search}
+            backgroundColor="#dcdde1"
+          />
+        </View>
+        <CompanyListHeader {...props} />
+      </View>
       <FlatList
         refreshControl={(
           <RefreshControl
@@ -17,7 +25,7 @@ const CompanyList = (props) => {
             tintColor="grey"
           />
         )}
-        data={companies}
+        data={companiesForRender}
         keyExtractor={c => c.id.toString()}
         renderItem={c => <CompanyItem id={c.item.id} company={c.item} likeButton />}
       />
@@ -27,8 +35,7 @@ const CompanyList = (props) => {
 };
 
 const CompanyListHeader = (props) => {
-  const { companies, numOfFavorites, numOfNotes } = props;
-  const numOfCompanies = companies.length;
+  const { numOfFavorites, numOfNotes, numOfCompanies } = props;
   return (
     <View style={styles.companyListHeaderStyle}>
       <View style={styles.userHeaderStyle}>
@@ -41,7 +48,8 @@ const CompanyListHeader = (props) => {
 
 const UserLikedCompany = (props) => {
   likes = { isLiked: true };
-  const likesPerCompanies = `${props.numOfFavorites}/${props.numOfCompanies}`;
+  const { numOfCompanies } = props;
+  const likesPerCompanies = `${props.numOfFavorites}/${numOfCompanies}`;
   return (
     <View style={styles.userHeaderContentsWrapperStyle}>
       <View style={styles.userHeaderInfoViewStyle}>
@@ -55,7 +63,8 @@ const UserLikedCompany = (props) => {
 };
 
 const UserNotedCompany = (props) => {
-  const notesPerCompanies = `${props.numOfNotes}/${props.numOfCompanies}`;
+  const { numOfCompanies } = props;
+  const notesPerCompanies = `${props.numOfNotes}/${numOfCompanies}`;
   return (
     <View style={styles.userHeaderContentsWrapperStyle}>
       <View style={styles.userHeaderInfoViewStyle}>
@@ -69,38 +78,41 @@ const UserNotedCompany = (props) => {
 };
 
 const styles = {
+  headerView: {
+    backgroundColor: '#dcdde1',
+    height: 80,
+  },
   companyListViewStyle: {
-    marginBottom: 48
+    marginBottom: 48,
   },
   HeaderContentsText: {
     color: 'green',
-    fontFamily: 'Avenir Next'
+    fontFamily: 'Avenir Next',
   },
   userHeaderContentsWrapperStyle: {
     marginLeft: 65,
     flexDirection: 'row',
     width: 80,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   companyListHeaderStyle: {
-    backgroundColor: '#dcdde1',
-    height: 30
+    height: 30,
   },
   companyListHeaderText: {
     size: 8,
-    color: 'blue'
+    color: 'blue',
   },
   userHeaderInfoViewStyle: {
     marginLeft: 5,
-    marginRight: 5
+    marginRight: 5,
   },
   userHeaderStyle: {
     padding: 5,
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start'
-  }
+    justifyContent: 'flex-start',
+  },
 };
 
 export default CompanyList;
