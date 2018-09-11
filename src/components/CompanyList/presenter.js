@@ -13,6 +13,7 @@ const CompanyList = (props) => {
           <Search
             onChangeText={props.search}
             backgroundColor="#dcdde1"
+            titleCancelColor="black"
           />
         </View>
         <CompanyListHeader {...props} />

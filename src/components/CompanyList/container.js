@@ -40,7 +40,7 @@ class Container extends Component {
 
   _searching = (text) => {
     const { companies, companiesForRender } = this.state;
-    if (text === '' || companiesForRender === null) {
+    if (text === '' || companiesForRender.lenght === 0) {
       this.setState({
         searching: false,
         companiesForRender: companies,
