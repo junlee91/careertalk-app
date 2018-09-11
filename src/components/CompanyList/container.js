@@ -42,7 +42,7 @@ class Container extends Component {
     const { companies, companiesForRender } = this.state;
     if (text === '' || companiesForRender === null) {
       this.setState({
-        searching: true,
+        searching: false,
         companiesForRender: companies,
       });
     } else {
@@ -55,7 +55,6 @@ class Container extends Component {
   };
 
   _setComponentState(props) {
-    console.log('props: ', props);
     const { favorites, notes, company: { Company } } = props;
     let { companiesForRender } = props;
     const numOfCompanies = Company.length;
