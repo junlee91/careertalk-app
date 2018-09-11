@@ -23,6 +23,7 @@ class Container extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('company list');
     if (nextProps.company) {
       this._setComponentState(nextProps);
     }
@@ -41,7 +42,7 @@ class Container extends Component {
 
   _searching = (text) => {
     const { companies, companiesForRender } = this.state;
-    if (text === '' || companiesForRender.lenght === 0) {
+    if (text === '' || companiesForRender.length === 0) {
       this.setState({
         searching: false,
         companiesForRender: companies,
@@ -65,7 +66,7 @@ class Container extends Component {
 
   _setComponentState(props) {
     const { favorites, notes, company: { Company } } = props;
-    let { companiesForRender } = props;
+    let { companiesForRender } = this.state;
     const numOfCompanies = Company.length;
     let filteredFavorites = 0;
     let filteredNotes = 0;
