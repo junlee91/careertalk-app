@@ -13,10 +13,12 @@ const CompanyList = (props) => {
           onChangeText={props.search}
           backgroundColor="#dcdde1"
           titleCancelColor="black"
+          onCancel={props.cancel}
+          onDelete={props.cancel}
         />
         <CompanyListHeader {...props} />
       </View>
-      <View style={{ flex: 8 }}>
+      <View style={{ flex: 7.5 }}>
         <FlatList
           refreshControl={(
             <RefreshControl

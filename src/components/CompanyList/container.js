@@ -55,6 +55,14 @@ class Container extends Component {
     }
   };
 
+  _cancel = () => {
+    const { companies } = this.state;
+    this.setState({
+      searching: false,
+      companiesForRender: companies,
+    });
+  }
+
   _setComponentState(props) {
     const { favorites, notes, company: { Company } } = props;
     let { companiesForRender } = props;
@@ -92,7 +100,12 @@ class Container extends Component {
         {loading ? (
           <Spinner size="large" />
         ) : (
-          <CompanyList {...this.state} refresh={this._refresh} search={this._searching} />
+          <CompanyList
+            {...this.state}
+            refresh={this._refresh}
+            search={this._searching}
+            cancel={this._cancel}
+          />
         )}
       </Fragment>
     );
