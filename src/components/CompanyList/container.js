@@ -33,6 +33,7 @@ class Container extends Component {
 
     this.setState({
       isFetching: true,
+      searching: false,
     });
 
     getCompanyList(fair_id);

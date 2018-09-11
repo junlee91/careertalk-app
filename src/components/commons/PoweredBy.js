@@ -13,14 +13,14 @@ const PoweredBy = (props) => {
 
 const styles = {
   poweredByView: {
-    backgroundColor: '#dcdde1'
+    backgroundColor: '#dcdde1',
   },
   poweredByText: {
     textAlign: 'center',
     fontSize: 11,
     color: '#99a8a8',
-    fontFamily: 'Avenir Next'
-  }
+    fontFamily: 'Avenir Next',
+  },
 };
 
 export { PoweredBy };
