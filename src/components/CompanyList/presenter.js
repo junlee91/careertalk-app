@@ -9,13 +9,11 @@ const CompanyList = (props) => {
   return (
     <View style={styles.companyListViewStyle}>
       <View style={styles.headerView}>
-        <View style={{ flex: 1 }}>
-          <Search
-            onChangeText={props.search}
-            backgroundColor="#dcdde1"
-            titleCancelColor="black"
-          />
-        </View>
+        <Search
+          onChangeText={props.search}
+          backgroundColor="#dcdde1"
+          titleCancelColor="black"
+        />
         <CompanyListHeader {...props} />
       </View>
       <View style={{ flex: 8 }}>
