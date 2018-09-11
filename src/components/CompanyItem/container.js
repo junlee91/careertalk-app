@@ -13,7 +13,7 @@ class Container extends Component {
       company,
       isLiked,
       isNote,
-      displayLike: likeButton
+      displayLike: likeButton,
     });
   }
 
@@ -25,19 +25,20 @@ class Container extends Component {
 
     if (isLiked !== this.state.isLiked) {
       this.setState({
-        isLiked
+        isLiked,
       });
     }
     if (isNote !== this.state.isNote) {
       this.setState({
-        isNote
+        isNote,
       });
     }
   }
 
   _navigateTo = (key) => {
     const { company } = this.state;
-    const params = { companyInfo: company };
+    const { notes } = this.props;
+    const params = { companyInfo: company, note: notes[company.id] };
 
     Actions.push(key, params);
   };
@@ -53,7 +54,7 @@ class Container extends Component {
     }
 
     this.setState({
-      isLiked: !isLiked
+      isLiked: !isLiked,
     });
   };
 

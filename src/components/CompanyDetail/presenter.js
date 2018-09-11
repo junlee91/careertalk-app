@@ -6,7 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Linking,
-  Platform
+  Platform,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { TextInput } from 'react-native-paper';
@@ -51,25 +51,22 @@ const CompanyDetail = (props) => {
 };
 
 const NoteInfo = (props) => {
-  const mode = props.isEditting ? 'outline' : 'flat';
-
+  const mode = props.isEditting ? 'flat' : 'outline';
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-      <View style={{ flex: 1 }}>
-        <TextInput
-          style={styles.inputContainerStyle}
-          mode={Platform.OS === 'android' ? 'outline' : mode}
-          label="Note"
-          placeholder="Make note"
-          placeholderTextColor="grey"
-          value={props.note}
-          onChangeText={props.handleEdit}
-          autoCorrect={false}
-          multiline
-          onFocus={props.inputFocus}
-          onBlur={props.inputFocus}
-        />
-      </View>
+    <View style={{ flex: 1 }}>
+      <TextInput
+        mode={Platform.OS === 'android' ? 'outline' : mode}
+        label="Note"
+        placeholder="Make note"
+        placeholderTextColor="grey"
+        value={props.new_note}
+        onChangeText={props.handleEdit}
+        autoCorrect={false}
+        multiline
+        onFocus={props.inputFocus}
+        onBlur={props.inputFocus}
+        onEndEditing={props.handleSave}
+      />
     </View>
   );
 };
@@ -124,46 +121,43 @@ const DetailInfo = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   titleContent: {
     paddingHorizontal: 15,
     paddingVertical: 15,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   titleTextStyle: {
     padding: 5,
     fontSize: 20,
-    fontFamily: 'Avenir Next'
+    fontFamily: 'Avenir Next',
   },
   textStyle: {
     paddingVertical: 2,
-    fontFamily: 'Avenir Next'
+    fontFamily: 'Avenir Next',
   },
   hrefTextStyle: {
     paddingVertical: 2,
     fontFamily: 'Avenir Next',
-    color: 'blue'
+    color: 'blue',
   },
   detailTextStyle: {
     paddingVertical: 3,
     fontFamily: 'Avenir Next',
-    fontSize: 16
+    fontSize: 16,
   },
   tagStyle: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    paddingVertical: 6
+    paddingVertical: 6,
   },
   actionButton: {
     flexDirection: 'row',
     alignSelf: 'center',
     alignItems: 'center',
-    paddingVertical: 1
+    paddingVertical: 1,
   },
-  inputContainerStyle: {
-    margin: 1
-  }
 });
 
 export default CompanyDetail;

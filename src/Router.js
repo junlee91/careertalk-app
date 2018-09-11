@@ -25,7 +25,8 @@ const RouterComponent = () => (
           component={CompanyDetail}
           title="Employer Detail"
           back
-          renderRightButton={ProfileIcon}
+          // TODO: Bug is triggered here.. this will be refactored.
+          // renderRightButton={ProfileIcon}
         />
         <Scene key="profile" component={Profile} title="Profile" back />
       </Stack>

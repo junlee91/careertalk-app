@@ -8,7 +8,7 @@ class Container extends Component {
       fairs: { Careerfair },
       companyInfo,
       favorites,
-      notes,
+      note,
     } = this.props;
     const fair = Careerfair.filter(fair => fair.id === companyInfo.fair_id);
     const { start_date_min } = fair[0];
@@ -18,8 +18,8 @@ class Container extends Component {
       date: start_date_min,
       companyInfo,
       isLiked,
-      isEditting: true,
-      note: notes[companyInfo.id]
+      isEditting: false,
+      new_note: note,
     });
   }
 
@@ -34,13 +34,13 @@ class Container extends Component {
     }
 
     this.setState({
-      isLiked: !isLiked
+      isLiked: !isLiked,
     });
   };
 
   _handleEdit = (text) => {
     this.setState({
-      note: text,
+      new_note: text,
     });
   };
 
@@ -50,18 +50,18 @@ class Container extends Component {
 
   _inputFocus = () => {
     const { isEditting } = this.state;
-    const newState = !isEditting;
+
     this.setState({
-      isEditting: newState
+      isEditting: !isEditting,
     });
   }
 
   _handleSave = () => {
-    const { note, companyInfo } = this.state;
+    const { new_note, companyInfo } = this.state;
     const { saveNote, deleteNote } = this.props;
 
-    if (note) {
-      const noteToSave = note.trim();
+    if (new_note) {
+      const noteToSave = new_note.trim();
 
       if (noteToSave.length === 0) {
         deleteNote(companyInfo.id);
