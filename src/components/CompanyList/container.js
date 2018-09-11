@@ -23,7 +23,6 @@ class Container extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('company list');
     if (nextProps.company) {
       this._setComponentState(nextProps);
     }
