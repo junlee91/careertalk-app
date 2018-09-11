@@ -81,10 +81,10 @@ const UserNotedCompany = (props) => {
 const styles = {
   headerView: {
     backgroundColor: '#dcdde1',
-    height: 80,
+    height: 68,
   },
   companyListViewStyle: {
-    marginBottom: 48,
+    marginBottom: 90,
   },
   HeaderContentsText: {
     color: 'green',
