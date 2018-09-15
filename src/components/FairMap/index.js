@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, Platform } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import ImageViewer from 'react-native-image-zoom-viewer';
@@ -33,7 +33,13 @@ class FairMap extends Component {
 
   render() {
     const { fairMap } = this.state;
-    return <ImageViewer imageUrls={fairMap} enableSwipeDown onCancel={() => Actions.pop()} />;
+    return (
+      <ImageViewer
+        imageUrls={fairMap}
+        enableSwipeDown={Platform.OS === 'ios'}
+        onCancel={() => Actions.pop()}
+      />
+    );
   }
 }
 
