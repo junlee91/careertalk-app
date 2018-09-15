@@ -4918,6 +4918,16 @@ react-native-fade-in-image@^1.4.1:
     react-mixin "^3.0.5"
     react-timer-mixin "^0.13.3"
 
+react-native-image-pan-zoom@^2.1.9:
+  version "2.1.9"
+  resolved "https://registry.yarnpkg.com/react-native-image-pan-zoom/-/react-native-image-pan-zoom-2.1.9.tgz#0a838330bda2468b00a0e5051e71149d86a44ad7"
+
+react-native-image-zoom-viewer@^2.2.18:
+  version "2.2.18"
+  resolved "https://registry.yarnpkg.com/react-native-image-zoom-viewer/-/react-native-image-zoom-viewer-2.2.18.tgz#99304592a3b256c859cb07c0677726986f82ccb8"
+  dependencies:
+    react-native-image-pan-zoom "^2.1.9"
+
 react-native-paper@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-2.0.1.tgz#0221ead52e35811ca6d2ce41cf069d424fe92bcf"
@@ -4950,7 +4960,7 @@ react-native-search-box@0.0.19:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-splash-screen@^3.0.6:
+react-native-splash-screen@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.1.1.tgz#1a4e46c9fdce53ff52af2a2cb4181788c4e30b30"
 
