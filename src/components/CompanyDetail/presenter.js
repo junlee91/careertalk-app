@@ -21,7 +21,11 @@ const CompanyDetail = (props) => {
               <Caption>
                 {companyInfo.tables.length === 1 ? `Table: ${tables}` : `Tables: ${tables}`}
               </Caption>
-              <MapIcon fairId={companyInfo.fair_id} />
+              <MapIcon
+                fairId={companyInfo.fair_id}
+                companyName={companyInfo.name}
+                tables={tables}
+              />
             </View>
           </View>
         </InfoBox>
