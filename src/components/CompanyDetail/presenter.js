@@ -8,9 +8,10 @@ import {
   Linking,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { TextInput } from 'react-native-paper';
+import { TextInput, Caption } from 'react-native-paper';
 
 import { LogoImage, InfoBox, BottomInfoBox, Tag, FavButton, PoweredBy } from '../commons';
+import { MapIcon } from '../FairMap';
 
 const CompanyDetail = (props) => {
   const { companyInfo, date } = props;
@@ -22,6 +23,10 @@ const CompanyDetail = (props) => {
           <View style={styles.titleContent}>
             <LogoImage {...companyInfo} size="medium" />
             <Text style={styles.titleTextStyle}>{companyInfo.name}</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Caption>Table: 44</Caption>
+              <MapIcon fairId={companyInfo.fair_id} />
+            </View>
           </View>
         </InfoBox>
         <InfoBox>

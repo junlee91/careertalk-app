@@ -21,6 +21,7 @@ module.exports = {
     'no-constant-condition': 0,
     'no-param-reassign': 0,
     'no-continue': 0,
+    'comma-dangle': 0,
     'space-before-function-paren': 0,
     'import/no-unresolved': 0,
     'import/no-extraneous-dependencies': 0,
