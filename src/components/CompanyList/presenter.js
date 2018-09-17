@@ -89,7 +89,7 @@ const styles = {
     flex: 1,
   },
   HeaderContentsText: {
-    color: 'green',
+    color: 'red',
     fontFamily: 'Avenir Next',
   },
   userHeaderContentsWrapperStyle: {
