@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Linking,
-} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { TextInput, Caption } from 'react-native-paper';
 
@@ -15,6 +8,7 @@ import { MapIcon } from '../FairMap';
 
 const CompanyDetail = (props) => {
   const { companyInfo, date } = props;
+  const tables = companyInfo.tables.join(', ');
 
   return (
     <View style={styles.container}>
@@ -24,8 +18,14 @@ const CompanyDetail = (props) => {
             <LogoImage {...companyInfo} size="medium" />
             <Text style={styles.titleTextStyle}>{companyInfo.name}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Caption>Table: 44</Caption>
-              <MapIcon fairId={companyInfo.fair_id} />
+              <Caption>
+                {companyInfo.tables.length === 1 ? `Table: ${tables}` : `Tables: ${tables}`}
+              </Caption>
+              <MapIcon
+                fairId={companyInfo.fair_id}
+                companyName={companyInfo.name}
+                tables={tables}
+              />
             </View>
           </View>
         </InfoBox>
@@ -124,43 +124,43 @@ const DetailInfo = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
   titleContent: {
     paddingHorizontal: 15,
     paddingVertical: 15,
-    alignItems: 'center',
+    alignItems: 'center'
   },
   titleTextStyle: {
     padding: 5,
     fontSize: 20,
-    fontFamily: 'Avenir Next',
+    fontFamily: 'Avenir Next'
   },
   textStyle: {
     paddingVertical: 2,
-    fontFamily: 'Avenir Next',
+    fontFamily: 'Avenir Next'
   },
   hrefTextStyle: {
     paddingVertical: 2,
     fontFamily: 'Avenir Next',
-    color: 'blue',
+    color: 'blue'
   },
   detailTextStyle: {
     paddingVertical: 3,
     fontFamily: 'Avenir Next',
-    fontSize: 16,
+    fontSize: 16
   },
   tagStyle: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    paddingVertical: 6,
+    paddingVertical: 6
   },
   actionButton: {
     flexDirection: 'row',
     alignSelf: 'center',
     alignItems: 'center',
-    paddingVertical: 1,
-  },
+    paddingVertical: 1
+  }
 });
 
 export default CompanyDetail;
