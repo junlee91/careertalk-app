@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 
 import CompanyList from './presenter';
-import { Spinner } from '../commons';
+import { Spinner } from '../../components/commons';
 
 class Container extends Component {
   constructor() {

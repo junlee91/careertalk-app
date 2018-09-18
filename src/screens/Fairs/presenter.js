@@ -1,7 +1,8 @@
 import React from 'react';
 import { ScrollView, View } from 'react-native';
-import FairItem from '../FairItem';
-import { PoweredBy } from '../commons';
+
+import FairItem from '../../components/FairItem';
+import { PoweredBy } from '../../components/commons';
 
 const FairList = (props) => {
   const { fairs: { Careerfair } } = props;
