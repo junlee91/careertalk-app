@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Divider } from 'react-native-elements';
 
-import CompanyItem from '../CompanyItem';
-import { InfoBox, ProfileImage, PoweredBy } from '../commons';
+import CompanyItem from '../../components/CompanyItem';
+import { InfoBox, ProfileImage, PoweredBy } from '../../components/commons';
 
 const Profile = (props) => {
   const { filteredFairs, isFavoritePresent } = props;

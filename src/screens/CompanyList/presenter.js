@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, Text, RefreshControl, FlatList } from 'react-native';
 import Search from 'react-native-search-box';
-import CompanyItem from '../CompanyItem';
-import { FavButton, NoteIcon, PoweredBy } from '../commons';
+
+import CompanyItem from '../../components/CompanyItem';
+import { FavButton, NoteIcon, PoweredBy } from '../../components/commons';
 
 const CompanyList = (props) => {
   const { companiesForRender } = props;

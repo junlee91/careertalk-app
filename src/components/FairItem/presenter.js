@@ -4,6 +4,7 @@ import { Surface } from 'react-native-paper';
 
 import { LogoImage } from '../commons';
 
+// TODO: move to lib folder
 function getMonthName(month) {
   switch (month) {
     case 1:

@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking } from 'r
 import { Icon } from 'react-native-elements';
 import { TextInput, Caption } from 'react-native-paper';
 
-import { LogoImage, InfoBox, BottomInfoBox, Tag, FavButton, PoweredBy } from '../commons';
-import { MapIcon } from '../FairMap';
+import { LogoImage, InfoBox, BottomInfoBox, Tag, FavButton, PoweredBy } from '../../components/commons';
+import { MapIcon } from '../../components/FairMap';
 
 const CompanyDetail = (props) => {
   const { companyInfo, date } = props;
