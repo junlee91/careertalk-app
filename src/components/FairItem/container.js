@@ -18,9 +18,9 @@ class Container extends Component {
   _navigateTo = (key) => {
     const { fair } = this.props;
     const param = { fair_id: fair.id };
-    Actions.push(key, param);
+    Actions.jump(key, param);
   };
-  
+
   render() {
     const { fair } = this.props;
     return (

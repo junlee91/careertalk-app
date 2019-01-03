@@ -10,26 +10,31 @@ import FairMap from './components/FairMap';
 
 const RouterComponent = () => (
   <Router>
-    <Scene key="root" hideNavBar>
+    <Scene key="root" hideNavBar tabBarStyle={{ backgroundColor: '#eee' }}>
       {/* <Scene key="login" component={LoginPage} initial title="Login" /> */}
-      <Stack key="root">
-        <Scene key="fairs" component={Fairs} title="Career Fairs" renderRightButton={ProfileIcon} />
-        <Scene
-          key="companyList"
-          component={CompanyList}
-          title="Employer List"
-          back
-          renderRightButton={ProfileIcon}
-        />
-        <Scene
-          key="companyDetail"
-          component={CompanyDetail}
-          title="Employer Detail"
-          back
-        />
-        <Scene key="profile" component={Profile} title="Profile" back />
-        <Scene key="fairMap" component={FairMap} title="Map" back hideNavBar />
-      </Stack>
+      <Scene key="fairs" component={Fairs} title="Career Fairs" hideNavBar />
+
+      <Scene key="tabbar" tabs>
+        <Stack key="Employers" hideNavBar>
+          <Router key="modalRoot">
+            <Scene modal navTransparent>
+              <Scene key="companyList" component={CompanyList} initial title="Employer List" hideNavBar />
+              <Scene key="companyDetail" component={CompanyDetail} title="" hideNavBar />
+            </Scene>
+          </Router>
+        </Stack>
+
+        <Stack key="Profile" hideNavBar>
+          <Router key="modalRoot">
+            <Scene modal navTransparent>
+              <Scene key="profile" component={Profile} title="Profile" hideNavBar />
+              <Scene key="companyDetail" component={CompanyDetail} title="" hideNavBar />
+            </Scene>
+          </Router>
+        </Stack>
+      </Scene>
+
+      <Scene key="fairMap" component={FairMap} title="Map" back hideNavBar />
     </Scene>
   </Router>
 );
