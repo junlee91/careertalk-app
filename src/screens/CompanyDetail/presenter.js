@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking, SafeAreaView } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { TextInput, Caption } from 'react-native-paper';
+import { Actions } from 'react-native-router-flux';
 
 import { LogoImage, InfoBox, BottomInfoBox, Tag, FavButton, PoweredBy } from '../../components/commons';
 import { MapIcon } from '../../components/FairMap';
@@ -11,7 +12,7 @@ const CompanyDetail = (props) => {
   const tables = companyInfo.tables.join(', ');
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ScrollView style={{ height: '89%' }} keyboardDismissMode="on-drag">
         <InfoBox>
           <View style={styles.titleContent}>
@@ -28,6 +29,11 @@ const CompanyDetail = (props) => {
               />
             </View>
           </View>
+        </InfoBox>
+        <InfoBox>
+          <TouchableOpacity onPressOut={() => Actions.pop()}>
+            <Text>Temporary Go back</Text>
+          </TouchableOpacity>
         </InfoBox>
         <InfoBox>
           <NoteInfo {...props} />
@@ -50,7 +56,7 @@ const CompanyDetail = (props) => {
           </View>
         </TouchableOpacity>
       </BottomInfoBox>
-    </View>
+    </SafeAreaView>
   );
 };
 

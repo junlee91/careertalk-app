@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { SafeAreaView, View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Divider } from 'react-native-elements';
 
 import CompanyItem from '../../components/CompanyItem';
@@ -9,7 +9,7 @@ const Profile = (props) => {
   const { filteredFairs, isFavoritePresent } = props;
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#fff' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <InfoBox>
         <View style={styles.userInfoStyle}>
           <ProfileImage />
@@ -36,7 +36,7 @@ const Profile = (props) => {
         )}
       </ScrollView>
       <PoweredBy poweredby="Logos provided by Clearbit" />
-    </View>
+    </SafeAreaView>
   );
 };
 

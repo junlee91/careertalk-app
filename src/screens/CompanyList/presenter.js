@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, RefreshControl, FlatList } from 'react-native';
+import { SafeAreaView, View, Text, RefreshControl, FlatList } from 'react-native';
 import Search from 'react-native-search-box';
 
 import CompanyItem from '../../components/CompanyItem';
@@ -8,7 +8,7 @@ import { FavButton, NoteIcon, PoweredBy } from '../../components/commons';
 const CompanyList = (props) => {
   const { companiesForRender } = props;
   return (
-    <View style={styles.companyListViewStyle}>
+    <SafeAreaView style={styles.companyListViewStyle}>
       <View style={styles.headerView}>
         <Search
           onChangeText={props.search}
@@ -27,14 +27,14 @@ const CompanyList = (props) => {
               onRefresh={props.refresh}
               tintColor="grey"
             />
-          )}
+)}
           data={companiesForRender}
           keyExtractor={c => c.id.toString()}
           renderItem={c => <CompanyItem id={c.item.id} company={c.item} likeButton />}
         />
         <PoweredBy poweredby="Logos provided by Clearbit" />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -84,39 +84,40 @@ const UserNotedCompany = (props) => {
 const styles = {
   headerView: {
     backgroundColor: '#dcdde1',
-    height: 72,
+    height: 72
   },
   companyListViewStyle: {
     flex: 1,
+    backgroundColor: '#ddd'
   },
   HeaderContentsText: {
     color: 'green',
-    fontFamily: 'Avenir Next',
+    fontFamily: 'Avenir Next'
   },
   userHeaderContentsWrapperStyle: {
     marginLeft: 65,
     flexDirection: 'row',
     width: 80,
-    alignItems: 'center',
+    alignItems: 'center'
   },
   companyListHeaderStyle: {
-    height: 30,
+    height: 30
   },
   companyListHeaderText: {
     size: 8,
-    color: 'blue',
+    color: 'blue'
   },
   userHeaderInfoViewStyle: {
     marginLeft: 5,
-    marginRight: 5,
+    marginRight: 5
   },
   userHeaderStyle: {
     padding: 5,
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
+    justifyContent: 'flex-start'
+  }
 };
 
 export default CompanyList;
