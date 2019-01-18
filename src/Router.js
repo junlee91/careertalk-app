@@ -17,17 +17,17 @@ const RouterComponent = () => (
       <Scene key="tabbar" tabs>
         <Stack key="Employers" hideNavBar>
           <Router key="modalRoot">
-            <Scene modal navTransparent>
-              <Scene key="companyList" component={CompanyList} initial title="Employer List" hideNavBar />
-              <Scene key="companyDetail" component={CompanyDetail} title="" hideNavBar />
+            <Scene modal hideNavBar>
+              <Scene key="companyList" component={CompanyList} initial hideNavBar />
+              <Scene key="companyDetail" component={CompanyDetail} hideNavBar />
             </Scene>
           </Router>
         </Stack>
 
         <Stack key="Profile" hideNavBar>
           <Router key="modalRoot">
-            <Scene modal navTransparent>
-              <Scene key="profile" component={Profile} title="Profile" hideNavBar />
+            <Scene modal hideNavBar>
+              <Scene key="profile" component={Profile} hideNavBar />
               <Scene key="companyDetail" component={CompanyDetail} title="" hideNavBar />
             </Scene>
           </Router>
