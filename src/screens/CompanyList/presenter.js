@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, View, Text, RefreshControl, FlatList } from 'react-native';
-import Search from 'react-native-search-box';
+// import Search from 'react-native-search-box';
 
 import CompanyItem from '../../components/CompanyItem';
 import { FavButton, NoteIcon, PoweredBy } from '../../components/commons';
@@ -9,13 +9,13 @@ const CompanyList = (props) => {
   const { companiesForRender } = props;
   return (
     <SafeAreaView style={styles.companyListViewStyle}>
-      <Search
+      {/* <Search
         onChangeText={props.search}
         backgroundColor="#dcdde1"
         titleCancelColor="black"
         onCancel={props.cancel}
         onDelete={props.cancel}
-      />
+      /> */}
       <CompanyListHeader {...props} />
       <View style={{ flex: 7.5 }}>
         <FlatList
@@ -24,8 +24,7 @@ const CompanyList = (props) => {
               refreshing={props.isFetching}
               onRefresh={props.refresh}
               tintColor="grey"
-            />
-)}
+            />)}
           data={companiesForRender}
           keyExtractor={c => c.id.toString()}
           renderItem={c => <CompanyItem id={c.item.id} company={c.item} likeButton />}

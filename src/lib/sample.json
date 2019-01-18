@@ -1,0 +1,43 @@
+{
+  "Company": [
+    {
+      "company_url": "microsoft.com",
+      "degree": ["BS", "MS", "PhD"],
+      "description": "",
+      "fair": "D-1 UIC Engineering&Computer Science Career Fair",
+      "fair_id": 1,
+      "hiring_majors": ["CS", "CompE", "ECE"],
+      "hiring_types": ["INT", "FT"],
+      "id": 42,
+      "name": "Microsoft",
+      "tables": [10],
+      "visa": "yes"
+    },
+    {
+      "company_url": "google.com",
+      "degree": ["BS", "MS", "PhD"],
+      "description": "",
+      "fair": "D-1 UIC Engineering&Computer Science Career Fair",
+      "fair_id": 1,
+      "hiring_majors": ["CS", "CompE", "ECE"],
+      "hiring_types": ["INT", "FT"],
+      "id": 32,
+      "name": "Google",
+      "tables": [11],
+      "visa": "yes"
+    },
+    {
+      "company_url": "github.com",
+      "degree": ["BS", "MS", "PhD"],
+      "description": "",
+      "fair": "D-1 UIC Engineering&Computer Science Career Fair",
+      "fair_id": 1,
+      "hiring_majors": ["CS", "CompE"],
+      "hiring_types": ["INT", "FT"],
+      "id": 12,
+      "name": "Github",
+      "tables": [12],
+      "visa": "yes"
+    }
+  ]
+}

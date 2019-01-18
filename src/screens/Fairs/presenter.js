@@ -5,12 +5,12 @@ import FairItem from '../../components/FairItem';
 import { PoweredBy } from '../../components/commons';
 
 const FairList = (props) => {
-  const { fairs: { Careerfair } } = props;
+  const { fairs } = props;
 
   return (
     <SafeAreaView style={{ paddingBottom: 16 }}>
       <ScrollView>
-        {Careerfair.map(f => (
+        {fairs.map(f => (
           <FairItem key={f.id} fair={f} />
         ))}
       </ScrollView>
