@@ -31,4 +31,27 @@ const EditIcon = () => (
   />
 );
 
-export { FavButton, NoteIcon, EditIcon };
+const TabIcon = (props) => {
+  const name = getTabIconName(props.title);
+  return (
+    <Icon
+      color={props.focused ? '#130f40' : '#95afc0'}
+      type="material-icons"
+      name={name}
+      size={30}
+    />
+  );
+};
+
+const getTabIconName = (name) => {
+  switch (name) {
+    case 'Employer':
+      return 'format-list-bulleted';
+    case 'Profile':
+      return 'person';
+    default:
+      return 'radio-button-unchecked';
+  }
+};
+
+export { FavButton, NoteIcon, EditIcon, TabIcon };
