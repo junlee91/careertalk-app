@@ -6,7 +6,8 @@ import {
   ScrollView,
   TouchableOpacity,
   Linking,
-  SafeAreaView
+  SafeAreaView,
+  Platform
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { TextInput, Caption } from 'react-native-paper';
@@ -21,22 +22,9 @@ const CompanyDetail = (props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity
-        style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: 50,
-          height: 50,
-          position: 'absolute',
-          right: 1,
-          borderRadius: 50,
-          zIndex: 5
-        }}
-        onPressOut={() => Actions.pop()}
-      >
-        <BackIcon />
-      </TouchableOpacity>
+      {Platform.OS === 'android' && <CrossButton />}
       <ScrollView keyboardDismissMode="on-drag">
+        {Platform.OS === 'ios' && <CrossButton />}
         <InfoBox>
           <View style={styles.titleContent}>
             <LogoImage {...companyInfo} size="medium" />
@@ -154,6 +142,24 @@ const DetailInfo = (props) => {
     </View>
   );
 };
+
+const CrossButton = () => (
+  <TouchableOpacity
+    style={{
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: 50,
+      height: 50,
+      position: 'absolute',
+      right: 1,
+      borderRadius: 50,
+      zIndex: 5
+    }}
+    onPressOut={() => Actions.pop()}
+  >
+    <BackIcon />
+  </TouchableOpacity>
+);
 
 const styles = StyleSheet.create({
   container: {
