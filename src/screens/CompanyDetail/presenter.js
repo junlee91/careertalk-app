@@ -12,7 +12,7 @@ import { Icon } from 'react-native-elements';
 import { TextInput, Caption } from 'react-native-paper';
 import { Actions } from 'react-native-router-flux';
 
-import { LogoImage, InfoBox, Tag, FavButton, PoweredBy } from '../../components/commons';
+import { LogoImage, InfoBox, Tag, FavButton, PoweredBy, BackIcon } from '../../components/commons';
 import { MapIcon } from '../../components/FairMap';
 
 const CompanyDetail = (props) => {
@@ -21,28 +21,34 @@ const CompanyDetail = (props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView keyboardDismissMode="on-drag">
-        <InfoBox>
-          <View style={styles.titleContent}>
-            <LogoImage {...companyInfo} size="medium" />
-            <Text style={styles.titleTextStyle}>{companyInfo.name}</Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Caption>
-                {companyInfo.tables.length === 1 ? `Table: ${tables}` : `Tables: ${tables}`}
-              </Caption>
-              <MapIcon
-                fairId={companyInfo.fair_id}
-                companyName={companyInfo.name}
-                tables={tables}
-              />
-            </View>
+      <InfoBox>
+        <TouchableOpacity
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 50,
+            height: 50,
+            position: 'absolute',
+            right: 1,
+            borderRadius: 50,
+            zIndex: 5
+          }}
+          onPressOut={() => Actions.pop()}
+        >
+          <BackIcon />
+        </TouchableOpacity>
+        <View style={styles.titleContent}>
+          <LogoImage {...companyInfo} size="medium" />
+          <Text style={styles.titleTextStyle}>{companyInfo.name}</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Caption>
+              {companyInfo.tables.length === 1 ? `Table: ${tables}` : `Tables: ${tables}`}
+            </Caption>
+            <MapIcon fairId={companyInfo.fair_id} companyName={companyInfo.name} tables={tables} />
           </View>
-        </InfoBox>
-        <InfoBox>
-          <TouchableOpacity onPressOut={() => Actions.pop()}>
-            <Text>Temporary Go back</Text>
-          </TouchableOpacity>
-        </InfoBox>
+        </View>
+      </InfoBox>
+      <ScrollView keyboardDismissMode="on-drag">
         <InfoBox>
           <NoteInfo {...props} />
         </InfoBox>
@@ -63,7 +69,7 @@ const CompanyDetail = (props) => {
           width: 70,
           height: 70,
           position: 'absolute',
-          bottom: 70,
+          bottom: 30,
           right: 15,
           backgroundColor: props.isLiked ? '#ffdde9' : '#fff',
           borderRadius: 100,

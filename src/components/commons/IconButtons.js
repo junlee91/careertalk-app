@@ -57,4 +57,6 @@ const getTabIconName = (name) => {
   }
 };
 
-export { FavButton, NoteIcon, EditIcon, TabIcon };
+const BackIcon = () => <Icon color="#95afc0" name="cross" type="entypo" size={30} />;
+
+export { FavButton, NoteIcon, EditIcon, TabIcon, BackIcon };
