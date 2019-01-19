@@ -49,6 +49,8 @@ const getTabIconName = (name) => {
       return 'format-list-bulleted';
     case 'Profile':
       return 'person';
+    case 'Summary':
+      return 'equalizer';
     default:
       return 'radio-button-unchecked';
   }

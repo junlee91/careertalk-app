@@ -71,12 +71,8 @@ const UserNotedCompany = (props) => {
 };
 
 const styles = {
-  headerView: {
-    backgroundColor: '#dcdde1'
-  },
   companyListViewStyle: {
     flex: 1,
-    backgroundColor: '#ddd'
   },
   HeaderContentsText: {
     color: 'green',

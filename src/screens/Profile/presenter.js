@@ -9,7 +9,7 @@ const Profile = (props) => {
   const { filteredFairs, isFavoritePresent } = props;
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <InfoBox>
         <View style={styles.userInfoStyle}>
           <ProfileImage />

@@ -7,8 +7,9 @@ import Fairs from './screens/Fairs';
 import CompanyList from './screens/CompanyList';
 import CompanyDetail from './screens/CompanyDetail';
 import Profile from './screens/Profile';
-import FairMap from './components/FairMap';
+import SummaryPage from './screens/Summary';
 
+import FairMap from './components/FairMap';
 import { TabIcon } from './components/commons';
 
 const RouterComponent = () => (
@@ -32,6 +33,9 @@ const RouterComponent = () => (
 
             {/* Tab 2 */}
             <Scene key="profile" component={Profile} hideNavBar title="Profile" icon={TabIcon} />
+
+            {/* Tab 3 */}
+            <Scene key="summary" component={SummaryPage} title="Summary" hideNavBar icon={TabIcon} />
 
             {/* TODO: more tabs here!! */}
           </Scene>
