@@ -6,6 +6,7 @@ const FavButton = props => (
     name={props.isLiked ? 'favorite' : 'favorite-border'}
     color={props.isLiked ? '#eb4b59' : '#95a5a6'}
     containerStyle={{ paddingHorizontal: 5 }}
+    size={props.size}
   />
 );
 
@@ -31,4 +32,31 @@ const EditIcon = () => (
   />
 );
 
-export { FavButton, NoteIcon, EditIcon };
+const TabIcon = (props) => {
+  const name = getTabIconName(props.title);
+  return (
+    <Icon
+      color={props.focused ? '#130f40' : '#95afc0'}
+      type="material-icons"
+      name={name}
+      size={30}
+    />
+  );
+};
+
+const getTabIconName = (name) => {
+  switch (name) {
+    case 'Employer':
+      return 'format-list-bulleted';
+    case 'Profile':
+      return 'person';
+    case 'Summary':
+      return 'equalizer';
+    default:
+      return 'radio-button-unchecked';
+  }
+};
+
+const BackIcon = () => <Icon color="#95afc0" name="cross" type="entypo" size={30} />;
+
+export { FavButton, NoteIcon, EditIcon, TabIcon, BackIcon };

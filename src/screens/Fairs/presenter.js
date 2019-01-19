@@ -8,7 +8,7 @@ const FairList = (props) => {
   const { fairs } = props;
 
   return (
-    <SafeAreaView style={{ paddingBottom: 16 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
         {fairs.map(f => (
           <FairItem key={f.id} fair={f} />

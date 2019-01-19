@@ -20,13 +20,13 @@ class Container extends Component {
   }
 
   componentDidMount() {
-    const { demoGetCompany, company: { Company } } = this.props;
+    const { demoGetCompany, company } = this.props;
 
-    if (!Company) {
+    if (!(company && company.Company)) {
       demoGetCompany();
     } else {
       this.setState({
-        companiesForRender: Company
+        companiesForRender: company.Company
       });
     }
   }
