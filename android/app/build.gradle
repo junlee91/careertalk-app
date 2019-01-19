@@ -148,11 +148,17 @@ android {
     buildToolsVersion '27.0.3'
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+    implementation project(':react-native-fbsdk')
     implementation project(':react-native-splash-screen')
     implementation project(':react-native-vector-icons')
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+    implementation 'com.android.support:appcompat-v7:27.0.2'
     implementation "com.facebook.react:react-native:+"  // From node_modules
 }
 
