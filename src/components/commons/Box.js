@@ -14,7 +14,6 @@ const BottomInfoBox = styled.View`
   background-color: #dfe6e9;
   padding: 15px;
   display: flex;
-  height: 10%;
 `;
 
 export { InfoBox, BottomInfoBox };

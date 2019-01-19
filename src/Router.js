@@ -1,39 +1,36 @@
 import React from 'react';
-import { Router, Scene, Stack } from 'react-native-router-flux';
+import { Router, Scene } from 'react-native-router-flux';
 
-// import LoginPage from './screens/Login';
+import LoginPage from './screens/Login';
 import Fairs from './screens/Fairs';
 import CompanyList from './screens/CompanyList';
 import CompanyDetail from './screens/CompanyDetail';
-import Profile, { ProfileIcon } from './screens/Profile';
+import Profile from './screens/Profile';
 import FairMap from './components/FairMap';
 
 const RouterComponent = () => (
   <Router>
     <Scene key="root" hideNavBar tabBarStyle={{ backgroundColor: '#eee' }}>
-      {/* <Scene key="login" component={LoginPage} initial title="Login" /> */}
+      <Scene key="login" component={LoginPage} initial title="Login" />
       <Scene key="fairs" component={Fairs} title="Career Fairs" hideNavBar />
 
-      <Scene key="tabbar" tabs>
-        <Stack key="Employers" hideNavBar>
-          <Router key="modalRoot">
-            <Scene modal navTransparent>
-              <Scene key="companyList" component={CompanyList} initial title="Employer List" hideNavBar />
-              <Scene key="companyDetail" component={CompanyDetail} title="" hideNavBar />
-            </Scene>
-          </Router>
-        </Stack>
+      <Router>
+        <Scene modal hideNavBar>
+          <Scene key="tabber" tabs>
+            {/* Tab 1 */}
+            <Scene key="companyList" initial component={CompanyList} hideNavBar title="Employer" />
 
-        <Stack key="Profile" hideNavBar>
-          <Router key="modalRoot">
-            <Scene modal navTransparent>
-              <Scene key="profile" component={Profile} title="Profile" hideNavBar />
-              <Scene key="companyDetail" component={CompanyDetail} title="" hideNavBar />
-            </Scene>
-          </Router>
-        </Stack>
-      </Scene>
+            {/* Tab 2 */}
+            <Scene key="profile" component={Profile} hideNavBar title="Profile" />
 
+            {/* TODO: more tabs here!! */}
+          </Scene>
+
+          <Scene key="companyDetail" component={CompanyDetail} hideNavBar />
+        </Scene>
+      </Router>
+
+      {/* Modal goes here!! */}
       <Scene key="fairMap" component={FairMap} title="Map" back hideNavBar />
     </Scene>
   </Router>

@@ -45,7 +45,7 @@ const CompanyDetail = (props) => {
           <DetailInfo {...companyInfo} />
         </InfoBox>
       </ScrollView>
-      <PoweredBy poweredby="Logos provided by Clearbit" />
+      {/* TODO: Make FAB */}
       <BottomInfoBox>
         <TouchableOpacity onPressOut={props.handleLike}>
           <View style={styles.actionButton}>
@@ -56,6 +56,7 @@ const CompanyDetail = (props) => {
           </View>
         </TouchableOpacity>
       </BottomInfoBox>
+      <PoweredBy poweredby="Logos provided by Clearbit" />
     </SafeAreaView>
   );
 };
@@ -81,14 +82,14 @@ const NoteInfo = (props) => {
 };
 
 const EventInfo = (props) => {
-  const index = props.date.indexOf('00:00:00') - 1;
-  const date = props.date.slice(0, index);
+  // const index = props.date.indexOf('00:00:00') - 1;
+  // const date = props.date.slice(0, index);
 
   return (
     <View>
       <View style={{ flexDirection: 'row', alignItems: 'center', padding: 5 }}>
         <Icon name="calendar" type="entypo" />
-        <Text style={{ marginLeft: 20 }}>{date}</Text>
+        <Text style={{ marginLeft: 20 }}>{props.date}</Text>
       </View>
       <Text style={styles.textStyle}>{props.fair}</Text>
       <Text

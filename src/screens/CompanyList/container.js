@@ -7,91 +7,107 @@ class Container extends Component {
   constructor() {
     super();
     this.state = {
-      loading: true,
+      loading: false,
       isFetching: false,
       searching: false,
       companiesForRender: [],
+      numOfFavorites: 0,
+      numOfNotes: 0,
+      numOfCompanies: 0
     };
 
-    this._searching = this._searching.bind(this);
+    // this._searching = this._searching.bind(this);
   }
 
   componentDidMount() {
-    const { getCompanyList, fair_id } = this.props;
+    const { demoGetCompany, company: { Company } } = this.props;
 
-    getCompanyList(fair_id);
+    if (!Company) {
+      demoGetCompany();
+    } else {
+      this.setState({
+        companiesForRender: Company
+      });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.company) {
-      this._setComponentState(nextProps);
+      this.setState({
+        companiesForRender: nextProps.company.Company
+      });
     }
   }
 
   _refresh = () => {
-    const { getCompanyList, fair_id } = this.props;
+    console.log('refreshing..');
+    // const { getCompanyList, fair_id } = this.props;
 
-    this.setState({
-      isFetching: true,
-      searching: false,
-    });
+    // this.setState({
+    //   isFetching: true,
+    //   searching: false,
+    // });
 
-    getCompanyList(fair_id);
+    // getCompanyList(fair_id);
   };
 
-  _searching = (text) => {
-    const { companies, companiesForRender } = this.state;
-    if (text === '' || companiesForRender.length === 0) {
-      this.setState({
-        searching: false,
-        companiesForRender: companies,
-      });
-    } else {
-      const filtered = companies.filter(c => c.name.toLowerCase().includes(text.toLowerCase()));
-      this.setState({
-        searching: true,
-        companiesForRender: filtered,
-      });
-    }
-  };
+  // _searching = (text) => {
+  //   const { companies, companiesForRender } = this.state;
+  //   if (text === '' || companiesForRender.length === 0) {
+  //     this.setState({
+  //       searching: false,
+  //       companiesForRender: companies,
+  //     });
+  //   } else {
+  //     const filtered = companies.filter(c => c.name.toLowerCase().includes(text.toLowerCase()));
+  //     this.setState({
+  //       searching: true,
+  //       companiesForRender: filtered,
+  //     });
+  //   }
+  // };
 
-  _cancel = () => {
-    const { companies } = this.state;
-    this.setState({
-      searching: false,
-      companiesForRender: companies,
-    });
-  }
+  // _cancel = () => {
+  //   const { companies } = this.state;
+  //   this.setState({
+  //     searching: false,
+  //     companiesForRender: companies
+  //   });
+  // };
 
-  _setComponentState(props) {
-    const { favorites, notes, company: { Company } } = props;
-    let { companiesForRender } = this.state;
-    const numOfCompanies = Company.length;
-    let filteredFavorites = 0;
-    let filteredNotes = 0;
-    const notesIds = Object.keys(notes);
-    for (let i = 0; i < numOfCompanies; i += 1) {
-      if (favorites.includes(Company[i].id)) {
-        filteredFavorites += 1;
-      }
-      if (notesIds.includes(Company[i].id.toString())) {
-        filteredNotes += 1;
-      }
-    }
+  // _setComponentState(props) {
+  //   const {
+  //     favorites,
+  //     notes,
+  //     company: { Company }
+  //   } = props;
+  //   let { companiesForRender } = this.state;
+  //   const numOfCompanies = Company.length;
+  //   let filteredFavorites = 0;
+  //   let filteredNotes = 0;
+  //   const notesIds = Object.keys(notes);
+  //   for (let i = 0; i < numOfCompanies; i += 1) {
+  //     if (favorites.includes(Company[i].id)) {
+  //       filteredFavorites += 1;
+  //     }
+  //     if (notesIds.includes(Company[i].id.toString())) {
+  //       filteredNotes += 1;
+  //     }
+  //   }
 
-    if (this.state.searching === false) {
-      companiesForRender = Company;
-    }
-    this.setState({
-      loading: false,
-      isFetching: false,
-      numOfFavorites: filteredFavorites,
-      numOfNotes: filteredNotes,
-      numOfCompanies: Company.length,
-      companies: Company,
-      companiesForRender,
-    });
-  }
+  //   if (this.state.searching === false) {
+  //     companiesForRender = Company;
+  //   }
+  //   this.setState({
+  //     loading: false,
+  //     isFetching: false,
+  //     numOfFavorites: filteredFavorites,
+  //     numOfNotes: filteredNotes,
+  //     numOfCompanies: Company.length,
+  //     companies: Company,
+  //     companiesForRender
+  //   });
+  // }
 
   render() {
     const { loading } = this.state;
@@ -103,8 +119,8 @@ class Container extends Component {
           <CompanyList
             {...this.state}
             refresh={this._refresh}
-            search={this._searching}
-            cancel={this._cancel}
+            // search={this._searching}
+            // cancel={this._cancel}
           />
         )}
       </Fragment>

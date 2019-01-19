@@ -6,7 +6,7 @@ class LoginPage extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button onPress={() => Actions.push('fairs')} title="Login" />
+        <Button onPress={() => Actions.reset('fairs')} title="Login" />
       </View>
     );
   }
