@@ -21,34 +21,38 @@ const CompanyDetail = (props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <InfoBox>
-        <TouchableOpacity
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: 50,
-            height: 50,
-            position: 'absolute',
-            right: 1,
-            borderRadius: 50,
-            zIndex: 5
-          }}
-          onPressOut={() => Actions.pop()}
-        >
-          <BackIcon />
-        </TouchableOpacity>
-        <View style={styles.titleContent}>
-          <LogoImage {...companyInfo} size="medium" />
-          <Text style={styles.titleTextStyle}>{companyInfo.name}</Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Caption>
-              {companyInfo.tables.length === 1 ? `Table: ${tables}` : `Tables: ${tables}`}
-            </Caption>
-            <MapIcon fairId={companyInfo.fair_id} companyName={companyInfo.name} tables={tables} />
-          </View>
-        </View>
-      </InfoBox>
+      <TouchableOpacity
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: 50,
+          height: 50,
+          position: 'absolute',
+          right: 1,
+          borderRadius: 50,
+          zIndex: 5
+        }}
+        onPressOut={() => Actions.pop()}
+      >
+        <BackIcon />
+      </TouchableOpacity>
       <ScrollView keyboardDismissMode="on-drag">
+        <InfoBox>
+          <View style={styles.titleContent}>
+            <LogoImage {...companyInfo} size="medium" />
+            <Text style={styles.titleTextStyle}>{companyInfo.name}</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Caption>
+                {companyInfo.tables.length === 1 ? `Table: ${tables}` : `Tables: ${tables}`}
+              </Caption>
+              <MapIcon
+                fairId={companyInfo.fair_id}
+                companyName={companyInfo.name}
+                tables={tables}
+              />
+            </View>
+          </View>
+        </InfoBox>
         <InfoBox>
           <NoteInfo {...props} />
         </InfoBox>
