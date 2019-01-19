@@ -7,9 +7,9 @@ import { Actions } from 'react-native-router-flux';
 import Container from './container';
 
 const mapStateToProps = (state) => {
-  const { user: { fairs, favorites } } = state;
+  const { user: { company, favorites } } = state;
   return {
-    fairs,
+    company,
     favorites,
   };
 };

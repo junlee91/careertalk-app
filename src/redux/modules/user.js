@@ -1,4 +1,5 @@
 // Imports
+import sample from '../../lib/sample.json';
 
 // Actions
 const SET_COMPANY = 'SET_COMPANY';
@@ -63,6 +64,12 @@ function getCompanyList(fair_id) {
     })
       .then(response => response.json())
       .then(json => dispatch(setCompanyList(json)));
+  };
+}
+
+function demoGetCompany() {
+  return (dispatch) => {
+    return dispatch(setCompanyList(sample));
   };
 }
 
@@ -191,6 +198,7 @@ function applyPopNoteCompany(state, action) {
 // Exports
 const actionCreators = {
   getCompanyList,
+  demoGetCompany,
   getFairs,
   likeCompany,
   unlikeCompany,

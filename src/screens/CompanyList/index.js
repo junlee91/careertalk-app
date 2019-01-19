@@ -19,6 +19,9 @@ const mapDispatchToProps = dispatch => ({
   getFairs: () => {
     dispatch(userActions.getFairs());
   },
+  demoGetCompany: () => {
+    dispatch(userActions.demoGetCompany());
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Container);

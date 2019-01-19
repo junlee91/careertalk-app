@@ -8,7 +8,7 @@
       "fair_id": 1,
       "hiring_majors": ["CS", "CompE", "ECE"],
       "hiring_types": ["INT", "FT"],
-      "id": 42,
+      "id": 32,
       "name": "Microsoft",
       "tables": [10],
       "visa": "yes"
@@ -21,7 +21,7 @@
       "fair_id": 1,
       "hiring_majors": ["CS", "CompE", "ECE"],
       "hiring_types": ["INT", "FT"],
-      "id": 32,
+      "id": 22,
       "name": "Google",
       "tables": [11],
       "visa": "yes"

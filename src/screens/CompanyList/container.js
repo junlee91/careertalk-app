@@ -3,8 +3,6 @@ import React, { Component, Fragment } from 'react';
 import CompanyList from './presenter';
 import { Spinner } from '../../components/commons';
 
-import companies from '../../lib/sample.json';
-
 class Container extends Component {
   constructor() {
     super();
@@ -22,18 +20,24 @@ class Container extends Component {
   }
 
   componentDidMount() {
-    // const { getCompanyList, fair_id } = this.props;
-    // getCompanyList(fair_id);
-    this.setState({
-      companiesForRender: companies.Company
-    });
+    const { demoGetCompany, company: { Company } } = this.props;
+
+    if (!Company) {
+      demoGetCompany();
+    } else {
+      this.setState({
+        companiesForRender: Company
+      });
+    }
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.company) {
-  //     this._setComponentState(nextProps);
-  //   }
-  // }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.company) {
+      this.setState({
+        companiesForRender: nextProps.company.Company
+      });
+    }
+  }
 
   _refresh = () => {
     console.log('refreshing..');

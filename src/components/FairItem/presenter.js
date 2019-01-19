@@ -57,7 +57,7 @@ function getTimeString(time) {
 const FairItem = (props) => {
   fair = { company_url: 'uic.edu' };
   return (
-    <TouchableOpacity onPress={() => props.navigateTo('companyList', props.fair.id)}>
+    <TouchableOpacity onPress={() => props.navigateTo('company_list_router_modal', props.fair.id)}>
       {Platform.OS === 'ios' ? (
         <View style={styles.bigCard}>
           <LogoImage {...fair} size="big" />
@@ -109,45 +109,45 @@ const styles = {
     margin: 30,
     shadowOffset: { width: 10, height: 10 },
     shadowColor: '#79818e',
-    shadowOpacity: 1.0,
+    shadowOpacity: 1.0
   },
   fairHeaderText: {
     paddingTop: 20,
     fontSize: 17,
-    fontFamily: 'Avenir Next',
+    fontFamily: 'Avenir Next'
   },
   fairInfo: {
     color: '#48638c',
     fontSize: 13,
     paddingTop: 5,
-    fontFamily: 'Avenir Next',
+    fontFamily: 'Avenir Next'
   },
   numOfCompaniesText: {
     fontSize: 17,
     color: '#3f7c55',
     fontWeight: 'bold',
     textAlign: 'center',
-    fontFamily: 'Avenir Next',
+    fontFamily: 'Avenir Next'
   },
   numOfcompaniesSmallText: {
     fontSize: 13,
     color: 'grey',
     fontFamily: 'Avenir Next',
-    marginTop: 2,
+    marginTop: 2
   },
   numOfCompaniesView: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center',
-  },
+    justifyContent: 'center'
+  }
 };
 
 const stylesAndroid = StyleSheet.create({
   surface: {
     backgroundColor: 'white',
     padding: 25,
-    margin: 30,
-  },
+    margin: 30
+  }
 });
 
 export default FairItem;

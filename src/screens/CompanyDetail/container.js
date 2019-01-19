@@ -4,22 +4,15 @@ import CompanyDetail from './presenter';
 
 class Container extends Component {
   componentWillMount() {
-    const {
-      fairs: { Careerfair },
-      companyInfo,
-      favorites,
-      note,
-    } = this.props;
-    const fair = Careerfair.filter(fair => fair.id === companyInfo.fair_id);
-    const { start_date_min } = fair[0];
+    const { companyInfo, favorites, note } = this.props;
     const isLiked = favorites.includes(companyInfo.id);
 
     this.setState({
-      date: start_date_min,
+      date: '2019/01/01',
       companyInfo,
       isLiked,
       isEditting: false,
-      new_note: note,
+      new_note: note
     });
   }
 
@@ -34,27 +27,27 @@ class Container extends Component {
     }
 
     this.setState({
-      isLiked: !isLiked,
+      isLiked: !isLiked
     });
   };
 
   _handleEdit = (text) => {
     this.setState({
-      new_note: text,
+      new_note: text
     });
   };
 
   componentWillUnmount = () => {
     this._handleSave();
-  }
+  };
 
   _inputFocus = () => {
     const { isEditting } = this.state;
 
     this.setState({
-      isEditting: !isEditting,
+      isEditting: !isEditting
     });
-  }
+  };
 
   _handleSave = () => {
     const { new_note, companyInfo } = this.state;

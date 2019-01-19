@@ -10,33 +10,33 @@ class Container extends React.Component {
   }
 
   componentDidMount() {
-    this._setComponentState(this.props);
+    // this._setComponentState(this.props);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this._setComponentState(nextProps);
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   this._setComponentState(nextProps);
+  // }
 
-  _setComponentState(props) {
-    const { fairs: { Careerfair }, favorites } = props;
-    const filteredFairs = [];
-    let isFavoritePresent = false;
+  // _setComponentState(props) {
+  //   const { fairs: { Careerfair }, favorites } = props;
+  //   const filteredFairs = [];
+  //   let isFavoritePresent = false;
 
-    for (let i = 0; i < Careerfair.length; i += 1) {
-      const { companies } = Careerfair[i];
-      const filteredCompanies = companies.filter(company => favorites.includes(company.id));
+  //   for (let i = 0; i < Careerfair.length; i += 1) {
+  //     const { companies } = Careerfair[i];
+  //     const filteredCompanies = companies.filter(company => favorites.includes(company.id));
 
-      if (filteredCompanies.length > 0) {
-        isFavoritePresent = true;
-      }
-      filteredFairs.push(filteredCompanies);
-    }
+  //     if (filteredCompanies.length > 0) {
+  //       isFavoritePresent = true;
+  //     }
+  //     filteredFairs.push(filteredCompanies);
+  //   }
 
-    this.setState({
-      filteredFairs,
-      isFavoritePresent
-    });
-  }
+  //   this.setState({
+  //     filteredFairs,
+  //     isFavoritePresent
+  //   });
+  // }
 
   render() {
     const { filteredFairs } = this.state;
