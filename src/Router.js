@@ -14,22 +14,23 @@ const RouterComponent = () => (
       <Scene key="login" component={LoginPage} initial title="Login" />
       <Scene key="fairs" component={Fairs} title="Career Fairs" hideNavBar />
 
-      <Scene key="tabbar" tabs>
-        <Router key="company_list_router_modal" title="Employer">
-          <Scene modal hideNavBar>
-            <Scene key="companyList" initial component={CompanyList} hideNavBar />
-            <Scene key="companyDetail" component={CompanyDetail} hideNavBar />
-          </Scene>
-        </Router>
+      <Router>
+        <Scene modal hideNavBar>
+          <Scene key="tabber" tabs>
+            {/* Tab 1 */}
+            <Scene key="companyList" initial component={CompanyList} hideNavBar title="Employer" />
 
-        <Router key="profile_router_modal" title="Profile">
-          <Scene modal hideNavBar>
-            <Scene key="profile" component={Profile} hideNavBar />
-            <Scene key="companyDetail" component={CompanyDetail} title="" hideNavBar />
-          </Scene>
-        </Router>
-      </Scene>
+            {/* Tab 2 */}
+            <Scene key="profile" component={Profile} hideNavBar title="Profile" />
 
+            {/* TODO: more tabs here!! */}
+          </Scene>
+
+          <Scene key="companyDetail" component={CompanyDetail} hideNavBar />
+        </Scene>
+      </Router>
+
+      {/* Modal goes here!! */}
       <Scene key="fairMap" component={FairMap} title="Map" back hideNavBar />
     </Scene>
   </Router>
