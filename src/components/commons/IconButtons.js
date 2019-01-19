@@ -6,6 +6,7 @@ const FavButton = props => (
     name={props.isLiked ? 'favorite' : 'favorite-border'}
     color={props.isLiked ? '#eb4b59' : '#95a5a6'}
     containerStyle={{ paddingHorizontal: 5 }}
+    size={props.size}
   />
 );
 

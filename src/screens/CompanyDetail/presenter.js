@@ -1,10 +1,18 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking, SafeAreaView } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Linking,
+  SafeAreaView
+} from 'react-native';
 import { Icon } from 'react-native-elements';
 import { TextInput, Caption } from 'react-native-paper';
 import { Actions } from 'react-native-router-flux';
 
-import { LogoImage, InfoBox, BottomInfoBox, Tag, FavButton, PoweredBy } from '../../components/commons';
+import { LogoImage, InfoBox, Tag, FavButton, PoweredBy } from '../../components/commons';
 import { MapIcon } from '../../components/FairMap';
 
 const CompanyDetail = (props) => {
@@ -13,7 +21,7 @@ const CompanyDetail = (props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={{ height: '89%' }} keyboardDismissMode="on-drag">
+      <ScrollView keyboardDismissMode="on-drag">
         <InfoBox>
           <View style={styles.titleContent}>
             <LogoImage {...companyInfo} size="medium" />
@@ -45,17 +53,25 @@ const CompanyDetail = (props) => {
           <DetailInfo {...companyInfo} />
         </InfoBox>
       </ScrollView>
-      {/* TODO: Make FAB */}
-      <BottomInfoBox>
-        <TouchableOpacity onPressOut={props.handleLike}>
-          <View style={styles.actionButton}>
-            <Text style={{ paddingHorizontal: 10, fontFamily: 'Avenir Next' }}>
-              {props.isLiked ? 'Delete from List' : 'Add to Favorite'}
-            </Text>
-            <FavButton isLiked={props.isLiked} />
-          </View>
-        </TouchableOpacity>
-      </BottomInfoBox>
+      <TouchableOpacity
+        onPressOut={props.handleLike}
+        style={{
+          borderWidth: 1,
+          borderColor: 'rgba(0,0,0,0.2)',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: 70,
+          height: 70,
+          position: 'absolute',
+          bottom: 70,
+          right: 15,
+          backgroundColor: props.isLiked ? '#ffdde9' : '#fff',
+          borderRadius: 100,
+          zIndex: 5
+        }}
+      >
+        <FavButton isLiked={props.isLiked} size={35} />
+      </TouchableOpacity>
       <PoweredBy poweredby="Logos provided by Clearbit" />
     </SafeAreaView>
   );
