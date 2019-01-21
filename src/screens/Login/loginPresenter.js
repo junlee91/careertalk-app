@@ -1,37 +1,9 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  View,
-  Button,
-  StyleSheet,
-  TextInput,
-  Dimensions,
-  Image,
-  Platform,
-  Text,
-  TouchableOpacity
-} from 'react-native';
 import { Actions } from 'react-native-router-flux';
-
-import { LoginButton, AccessToken, LoginManager } from 'react-native-fbsdk';
+import { LoginButton, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
+import { SafeAreaView, View, Button, StyleSheet, TextInput, Dimensions, Image } from 'react-native';
 
 const { width } = Dimensions.get('window');
-
-// TODO: Change this!!!
-function _fbAuth() {
-  LoginManager.logInWithReadPermissions(['public_profile']).then(
-    function(result) {
-      if (result.isCancelled) {
-        alert('Login cancelled');
-      } else {
-        alert(`Login success with permissions: ${result.grantedPermissions.toString()}`);
-      }
-    },
-    function(error) {
-      alert(`Login fail with error: ${error}`);
-    }
-  );
-}
 
 const LoginPage = (props) => {
   return (
@@ -66,31 +38,37 @@ const LoginPage = (props) => {
 
         <Button onPress={() => Actions.reset('fairs')} title="Login" />
 
-        {Platform.OS === 'android' && (
-          <View>
-            <LoginButton
-              // TODO: Change this!!!
-              onLoginFinished={(error, result) => {
-                if (error) {
-                  console.log(`login has error: ${result.error}`);
-                } else if (result.isCancelled) {
-                  console.log('login is cancelled.');
-                } else {
-                  AccessToken.getCurrentAccessToken().then((data) => {
-                    console.log(data.accessToken.toString());
-                  });
-                }
-              }}
-              onLogoutFinished={() => console.log('logout.')}
-            />
-          </View>
-        )}
+        <View>
+          <LoginButton
+            onLoginFinished={(error, result) => {
+              if (error) {
+                console.error(`login has error: ${result.error}`);
+              } else if (result.isCancelled) {
+                console.log('login is cancelled.');
+              } else {
+                AccessToken.getCurrentAccessToken().then((data) => {
+                  // FB TOKEN
+                  const token = data.accessToken.toString();
+                  props.saveToken(token);
 
-        {Platform.OS === 'ios' && (
-          <TouchableOpacity onPress={() => _fbAuth()}>
-            <Text>Login with Facebook</Text>
-          </TouchableOpacity>
-        )}
+                  // Create a graph request asking for user information
+                  // with a callback to handle the response.
+                  const infoRequest = new GraphRequest(
+                    '/me?fields=name,picture.type(large)',
+                    null,
+                    props.fbCallback
+                  );
+
+                  // Request for user data
+                  new GraphRequestManager().addRequest(infoRequest).start();
+                });
+              }
+            }}
+            onLogoutFinished={() => console.log('logout.')}
+          />
+        </View>
+
+        {props.profilePhoto && <Image source={{ uri: props.profilePhoto }} style={styles.image} />}
       </View>
     </SafeAreaView>
   );
@@ -129,6 +107,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     backgroundColor: '#FAFAFA',
     fontSize: 14
+  },
+  image: {
+    height: 200,
+    width: 200,
+    margin: 20
   }
 });
 
