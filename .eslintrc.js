@@ -41,5 +41,6 @@ module.exports = {
     "no-undef": 0,
     "react/no-array-index-key": 0,
     "react/jsx-one-expression-per-line": 0,
+    "no-console": 0,
   },
 };
