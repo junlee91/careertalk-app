@@ -9,14 +9,14 @@ class Container extends Component {
     this.state = {
       loading: false,
       isFetching: false,
-      searching: false,
+      canSearch: false,
+      searchText: '',
+      searchBarFocus: false,
       companiesForRender: [],
       numOfFavorites: 0,
       numOfNotes: 0,
       numOfCompanies: 0
     };
-
-    // this._searching = this._searching.bind(this);
   }
 
   componentDidMount() {
@@ -41,39 +41,31 @@ class Container extends Component {
 
   _refresh = () => {
     console.log('refreshing..');
-    // const { getCompanyList, fair_id } = this.props;
-
-    // this.setState({
-    //   isFetching: true,
-    //   searching: false,
-    // });
-
-    // getCompanyList(fair_id);
   };
 
-  // _searching = (text) => {
-  //   const { companies, companiesForRender } = this.state;
-  //   if (text === '' || companiesForRender.length === 0) {
-  //     this.setState({
-  //       searching: false,
-  //       companiesForRender: companies,
-  //     });
-  //   } else {
-  //     const filtered = companies.filter(c => c.name.toLowerCase().includes(text.toLowerCase()));
-  //     this.setState({
-  //       searching: true,
-  //       companiesForRender: filtered,
-  //     });
-  //   }
-  // };
+  _searching = (text) => {
+    this.setState({
+      canSearch: false,
+      searchText: text
+    });
 
-  // _cancel = () => {
-  //   const { companies } = this.state;
-  //   this.setState({
-  //     searching: false,
-  //     companiesForRender: companies
-  //   });
-  // };
+    this.searchTimeout = setTimeout(() => {
+      this.setState({ canSearch: true });
+    }, 500);
+  };
+
+  _cancel = () => {
+    this.setState({
+      searchText: ''
+    });
+  };
+
+  _searchBarFocusFn = () => {
+    const { searchBarFocus } = this.state;
+    this.setState({
+      searchBarFocus: !searchBarFocus
+    });
+  }
 
   // _setComponentState(props) {
   //   const {
@@ -111,6 +103,11 @@ class Container extends Component {
 
   render() {
     const { loading } = this.state;
+
+    if (this.state.canSearch) {
+      console.log(`searching for ${this.state.searchText}`);
+    }
+
     return (
       <Fragment>
         {loading ? (
@@ -119,8 +116,9 @@ class Container extends Component {
           <CompanyList
             {...this.state}
             refresh={this._refresh}
-            // search={this._searching}
-            // cancel={this._cancel}
+            search={this._searching}
+            cancel={this._cancel}
+            searchBarFocusFn={this._searchBarFocusFn}
           />
         )}
       </Fragment>
