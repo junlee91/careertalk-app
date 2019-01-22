@@ -1,21 +1,27 @@
 import React from 'react';
-import { SafeAreaView, View, Text, RefreshControl, FlatList } from 'react-native';
-// import Search from 'react-native-search-box';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  RefreshControl,
+  FlatList,
+  Platform,
+  Dimensions,
+  TouchableOpacity
+} from 'react-native';
+import { SearchBar } from 'react-native-elements';
+import { Actions } from 'react-native-router-flux';
 
 import CompanyItem from '../../components/CompanyItem';
-import { FavButton, NoteIcon, PoweredBy } from '../../components/commons';
+import { FavButton, NoteIcon, PoweredBy, BackArrowIcon } from '../../components/commons';
+
+const { width } = Dimensions.get('window');
 
 const CompanyList = (props) => {
   const { companiesForRender } = props;
   return (
     <SafeAreaView style={styles.companyListViewStyle}>
-      {/* <Search
-        onChangeText={props.search}
-        backgroundColor="#dcdde1"
-        titleCancelColor="black"
-        onCancel={props.cancel}
-        onDelete={props.cancel}
-      /> */}
+      <SearchBarHeader {...props} />
       <CompanyListHeader {...props} />
       <View style={{ flex: 7.5 }}>
         <FlatList
@@ -32,6 +38,42 @@ const CompanyList = (props) => {
         <PoweredBy poweredby="Logos provided by Clearbit" />
       </View>
     </SafeAreaView>
+  );
+};
+
+const SearchBarHeader = props => (
+  <View style={{ flexDirection: 'row' }}>
+    {!props.searchBarFocus && Platform.OS === 'ios' && (
+      <TouchableOpacity style={styles.backButtonStyle} onPressOut={() => Actions.pop()}>
+        <BackArrowIcon />
+      </TouchableOpacity>
+    )}
+    <SearchBarComponent {...props} />
+  </View>
+);
+
+const SearchBarComponent = (props) => {
+  return (
+    <SearchBar
+      lightTheme
+      onChangeText={props.search}
+      value={props.searchText}
+      onClear={props.cancel}
+      onCancel={props.cancel}
+      placeholder="Search"
+      cancelButtonTitle="Cancel"
+      autoCorrect={false}
+      platform={Platform.OS}
+      onFocus={props.searchBarFocusFn}
+      onBlur={props.searchBarFocusFn}
+      returnKeyType="search"
+      onSubmitEditing={() => console.log('should search!')}
+      inputContainerStyle={styles.searchBarInputContainerStyle}
+      inputStyle={styles.searchBarInputStyle}
+      containerStyle={styles.searchBarContainerStyle}
+      searchIcon={false}
+      cancelIcon={null}
+    />
   );
 };
 
@@ -72,7 +114,7 @@ const UserNotedCompany = (props) => {
 
 const styles = {
   companyListViewStyle: {
-    flex: 1,
+    flex: 1
   },
   HeaderContentsText: {
     color: 'green',
@@ -101,6 +143,40 @@ const styles = {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around'
+  },
+  backButtonStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 3,
+    paddingVertical: 2,
+    marginLeft: 8
+  },
+  searchBarInputContainerStyle: {
+    backgroundColor: '#FAFAFA',
+    ...Platform.select({
+      android: {
+        borderRadius: 9,
+        width: width - 25
+      },
+      ios: {
+        width: width - 80
+      }
+    })
+  },
+  searchBarInputStyle: {
+    ...Platform.select({
+      ios: {
+        paddingHorizontal: 15
+      }
+    })
+  },
+  searchBarContainerStyle: {
+    backgroundColor: 'transparent',
+    ...Platform.select({
+      android: {
+        paddingHorizontal: 10
+      }
+    })
   }
 };
 

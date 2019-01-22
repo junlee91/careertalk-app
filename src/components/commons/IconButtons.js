@@ -59,4 +59,6 @@ const getTabIconName = (name) => {
 
 const BackIcon = () => <Icon color="#95afc0" name="cross" type="entypo" size={30} />;
 
-export { FavButton, NoteIcon, EditIcon, TabIcon, BackIcon };
+const BackArrowIcon = () => <Icon color="black" name="ios-arrow-back" type="ionicon" size={30} />;
+
+export { FavButton, NoteIcon, EditIcon, TabIcon, BackIcon, BackArrowIcon };
