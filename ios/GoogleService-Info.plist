@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>529908790556-38pqg2e56u8b9sisrasl6d162qvom77e.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.529908790556-38pqg2e56u8b9sisrasl6d162qvom77e</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBrKnuA71RC4Ap16-Gm89j0rrcn2WiE2GQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>529908790556</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.creativesolutionlab.CareerTalk</string>
+	<key>PROJECT_ID</key>
+	<string>careertalk-227d7</string>
+	<key>STORAGE_BUCKET</key>
+	<string>careertalk-227d7.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:529908790556:ios:abbe1b9b234b3c3c</string>
+	<key>DATABASE_URL</key>
+	<string>https://careertalk-227d7.firebaseio.com</string>
+</dict>
+</plist>

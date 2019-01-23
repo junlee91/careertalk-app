@@ -1,9 +1,31 @@
 import React from 'react';
 import { Actions } from 'react-native-router-flux';
 import { LoginButton, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
+import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
 import { SafeAreaView, View, Button, StyleSheet, TextInput, Dimensions, Image } from 'react-native';
 
 const { width } = Dimensions.get('window');
+
+GoogleSignin.configure();
+
+signIn = async () => {
+  try {
+    await GoogleSignin.hasPlayServices();
+    const userInfo = await GoogleSignin.signIn();
+    console.log(userInfo);
+    // this.setState({ userInfo });
+  } catch (error) {
+    if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+      // user cancelled the login flow
+    } else if (error.code === statusCodes.IN_PROGRESS) {
+      // operation (f.e. sign in) is in progress already
+    } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+      // play services not available or outdated
+    } else {
+      // some other error happened
+    }
+  }
+};
 
 const LoginPage = (props) => {
   return (
@@ -65,6 +87,16 @@ const LoginPage = (props) => {
               }
             }}
             onLogoutFinished={() => console.log('logout.')}
+          />
+        </View>
+
+        <View>
+          <GoogleSigninButton
+            style={{ width: 48, height: 48 }}
+            size={GoogleSigninButton.Size.Wide}
+            color={GoogleSigninButton.Color.Dark}
+            onPress={() => signIn()}
+            // disabled={this.state.isSigninInProgress}
           />
         </View>
 

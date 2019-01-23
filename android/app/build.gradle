@@ -153,6 +153,7 @@ repositories {
 }
 
 dependencies {
+    compile project(':react-native-google-signin')
     implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
     implementation project(':react-native-fbsdk')
     implementation project(':react-native-splash-screen')
