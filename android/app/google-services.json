@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "529908790556",
+    "firebase_url": "https://careertalk-227d7.firebaseio.com",
+    "project_id": "careertalk-227d7",
+    "storage_bucket": "careertalk-227d7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:529908790556:android:0284b8c91ce7e012",
+        "android_client_info": {
+          "package_name": "com.careertalk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "529908790556-nv8tmn92e1p1vs32k9eodmk9ppbmfrj2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.careertalk",
+            "certificate_hash": "b6ccb139eb0e75976421662024a36e62d8b3faa0"
+          }
+        },
+        {
+          "client_id": "529908790556-7djdfbhvembd1hnejelquahkubv8rctv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCe_M4rku-HHOuw0pHDAsD5ZsqIRDhepEs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "529908790556-7djdfbhvembd1hnejelquahkubv8rctv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "529908790556-38pqg2e56u8b9sisrasl6d162qvom77e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.creativesolutionlab.CareerTalk"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

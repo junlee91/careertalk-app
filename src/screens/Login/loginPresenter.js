@@ -13,6 +13,7 @@ signIn = async () => {
     await GoogleSignin.hasPlayServices();
     const userInfo = await GoogleSignin.signIn();
     console.log(userInfo);
+    alert(JSON.stringify(userInfo));
     // this.setState({ userInfo });
   } catch (error) {
     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -92,7 +93,7 @@ const LoginPage = (props) => {
 
         <View>
           <GoogleSigninButton
-            style={{ width: 48, height: 48 }}
+            style={{ width: 250, height: 48 }}
             size={GoogleSigninButton.Size.Wide}
             color={GoogleSigninButton.Color.Dark}
             onPress={() => signIn()}

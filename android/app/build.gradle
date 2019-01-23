@@ -145,7 +145,7 @@ android {
             }
         }
     }
-    buildToolsVersion '27.0.3'
+    buildToolsVersion '28.0.3'
 }
 
 repositories {
@@ -153,7 +153,7 @@ repositories {
 }
 
 dependencies {
-    compile project(':react-native-google-signin')
+    implementation project(':react-native-google-signin')
     implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
     implementation project(':react-native-fbsdk')
     implementation project(':react-native-splash-screen')
@@ -169,3 +169,5 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+
+apply plugin: 'com.google.gms.google-services'
