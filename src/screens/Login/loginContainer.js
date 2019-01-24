@@ -10,23 +10,19 @@ class Container extends React.Component {
   state = {
     username: '',
     password: '',
-    isSubmitting: false,
-    profilePhoto: null,
-    fbId: null,
-    token: null
   };
+
+  componentWillMount() {
+    this._googleIsSignedIn();
+  }
 
   // Create response callback.
   _responseInfoCallback = (error, result) => {
     if (error) {
       console.error(error.toString());
     } else {
-      // result.picture.data.url => profile photo
-      // result.id => fbId
-      // result.name => username
-      this.setState({
-        profilePhoto: result.picture.data.url
-      });
+      // send userInfo with token to store
+      this.props.socialLogin(result);
     }
   };
 
@@ -39,14 +35,15 @@ class Container extends React.Component {
       AccessToken.getCurrentAccessToken().then((data) => {
         // FB TOKEN
         const token = data.accessToken.toString();
-        props.saveToken(token);
+
+        this.setState({ token });
 
         // Create a graph request asking for user information
         // with a callback to handle the response.
         const infoRequest = new GraphRequest(
-          '/me?fields=name,picture.type(large)',
+          '/me?fields=name,first_name,last_name,picture.type(large)',
           null,
-          props.fbCallback
+          this._responseInfoCallback
         );
 
         // Request for user data
@@ -60,7 +57,9 @@ class Container extends React.Component {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
 
-      console.log(userInfo);
+      // send userInfo to store
+      this.props.socialLogin(userInfo);
+      this.setState({ isGoogleSignedIn: true });
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
@@ -74,14 +73,29 @@ class Container extends React.Component {
     }
   };
 
+  _googleIsSignedIn = async () => {
+    const isGoogleSignedIn = await GoogleSignin.isSignedIn();
+    this.setState({ isGoogleSignedIn });
+  };
+
+  _gooogleSignOut = async () => {
+    try {
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut();
+      this.setState({ isGoogleSignedIn: false });
+      // Remember to remove the user from your app's state as well
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   render() {
     return (
       <LoginPage
         {...this.state}
-        saveToken={this._saveToken}
         facebookLoginFinished={this._facebookLoginFinished}
-        fbCallback={this._responseInfoCallback}
         googleSigin={this._googleSignIn}
+        googleSignOut={this._gooogleSignOut}
       />
     );
   }

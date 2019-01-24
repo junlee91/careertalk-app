@@ -20,18 +20,23 @@ const LoginPage = (props) => {
         <Button onPress={() => Actions.reset('fairs')} title="Direct Login" />
 
         <View style={{ paddingVertical: 15 }}>
-          <GoogleSigninButton
-            style={{ width: 230, height: 48 }}
-            size={GoogleSigninButton.Size.Wide}
-            color={GoogleSigninButton.Color.Light}
-            onPress={props.googleSigin}
-          />
+          {props.isGoogleSignedIn ? (
+            <Button onPress={props.googleSignOut} title="Google Signout" />
+          ) : (
+            <GoogleSigninButton
+              style={{ width: 230, height: 48 }}
+              size={GoogleSigninButton.Size.Wide}
+              color={GoogleSigninButton.Color.Light}
+              onPress={props.googleSigin}
+            />
+          )}
         </View>
 
         <Text>OR</Text>
 
         <View style={{ paddingVertical: 15 }}>
           <LoginButton
+            readPermissions={['public_profile']}
             onLoginFinished={props.facebookLoginFinished}
             onLogoutFinished={() => console.log('logout.')}
           />
