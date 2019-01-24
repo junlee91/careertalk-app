@@ -1,5 +1,6 @@
 import React from 'react';
 import { GoogleSignin, statusCodes } from 'react-native-google-signin';
+import { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 
 import LoginPage from './loginPresenter';
 
@@ -29,6 +30,31 @@ class Container extends React.Component {
     }
   };
 
+  _facebookLoginFinished = (error, result) => {
+    if (error) {
+      console.error(`login has error: ${result.error}`);
+    } else if (result.isCancelled) {
+      console.log('login is cancelled.');
+    } else {
+      AccessToken.getCurrentAccessToken().then((data) => {
+        // FB TOKEN
+        const token = data.accessToken.toString();
+        props.saveToken(token);
+
+        // Create a graph request asking for user information
+        // with a callback to handle the response.
+        const infoRequest = new GraphRequest(
+          '/me?fields=name,picture.type(large)',
+          null,
+          props.fbCallback
+        );
+
+        // Request for user data
+        new GraphRequestManager().addRequest(infoRequest).start();
+      });
+    }
+  };
+
   _googleSignIn = async () => {
     try {
       await GoogleSignin.hasPlayServices();
@@ -53,6 +79,7 @@ class Container extends React.Component {
       <LoginPage
         {...this.state}
         saveToken={this._saveToken}
+        facebookLoginFinished={this._facebookLoginFinished}
         fbCallback={this._responseInfoCallback}
         googleSigin={this._googleSignIn}
       />
@@ -80,4 +107,4 @@ export default Container;
       token
     });
   };
-   */
+*/
