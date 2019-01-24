@@ -8,6 +8,7 @@ import CompanyList from './screens/CompanyList';
 import CompanyDetail from './screens/CompanyDetail';
 import Profile from './screens/Profile';
 import SummaryPage from './screens/Summary';
+import Settings from './screens/Settings';
 
 import FairMap from './components/FairMap';
 import { TabIcon } from './components/commons';
@@ -36,6 +37,9 @@ const RouterComponent = () => (
 
             {/* Tab 3 */}
             <Scene key="summary" component={SummaryPage} title="Summary" hideNavBar icon={TabIcon} />
+
+            {/* Tab 4 */}
+            <Scene key="settings" component={Settings} title="Settings" hideNavBar icon={TabIcon} />
 
             {/* TODO: more tabs here!! */}
           </Scene>

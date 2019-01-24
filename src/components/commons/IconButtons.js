@@ -52,6 +52,8 @@ const getTabIconName = (name) => {
       return 'person';
     case 'Summary':
       return 'equalizer';
+    case 'Settings':
+      return 'settings';
     default:
       return 'radio-button-unchecked';
   }
