@@ -1,32 +1,10 @@
 import React from 'react';
 import { Actions } from 'react-native-router-flux';
 import { LoginButton, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
-import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
-import { SafeAreaView, View, Button, StyleSheet, TextInput, Dimensions, Image } from 'react-native';
+import { GoogleSigninButton } from 'react-native-google-signin';
+import { SafeAreaView, View, Button, StyleSheet, Text, TextInput, Dimensions, Image } from 'react-native';
 
 const { width } = Dimensions.get('window');
-
-GoogleSignin.configure();
-
-signIn = async () => {
-  try {
-    await GoogleSignin.hasPlayServices();
-    const userInfo = await GoogleSignin.signIn();
-    console.log(userInfo);
-    alert(JSON.stringify(userInfo));
-    // this.setState({ userInfo });
-  } catch (error) {
-    if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-      // user cancelled the login flow
-    } else if (error.code === statusCodes.IN_PROGRESS) {
-      // operation (f.e. sign in) is in progress already
-    } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-      // play services not available or outdated
-    } else {
-      // some other error happened
-    }
-  }
-};
 
 const LoginPage = (props) => {
   return (
@@ -39,29 +17,20 @@ const LoginPage = (props) => {
         />
       </View>
       <View style={styles.content}>
-        <TextInput
-          placeholder="Email"
-          style={styles.textInput}
-          autoCapitalize="none"
-          autoCorrect={false}
-          value={props.username}
-          onChangeText={props.changeUsername}
-        />
+        <Button onPress={() => Actions.reset('fairs')} title="Direct Login" />
 
-        <TextInput
-          placeholder="Password"
-          style={styles.textInput}
-          autoCapitalize="none"
-          secureTextEntry
-          value={props.password}
-          onChangeText={props.changePassword}
-          returnKeyType="send"
-          onSubmitEditing={props.submit}
-        />
+        <View style={{ paddingVertical: 15 }}>
+          <GoogleSigninButton
+            style={{ width: 230, height: 48 }}
+            size={GoogleSigninButton.Size.Wide}
+            color={GoogleSigninButton.Color.Light}
+            onPress={props.googleSigin}
+          />
+        </View>
 
-        <Button onPress={() => Actions.reset('fairs')} title="Login" />
+        <Text>OR</Text>
 
-        <View>
+        <View style={{ paddingVertical: 15 }}>
           <LoginButton
             onLoginFinished={(error, result) => {
               if (error) {
@@ -91,16 +60,6 @@ const LoginPage = (props) => {
           />
         </View>
 
-        <View>
-          <GoogleSigninButton
-            style={{ width: 250, height: 48 }}
-            size={GoogleSigninButton.Size.Wide}
-            color={GoogleSigninButton.Color.Dark}
-            onPress={() => signIn()}
-            // disabled={this.state.isSigninInProgress}
-          />
-        </View>
-
         {props.profilePhoto && <Image source={{ uri: props.profilePhoto }} style={styles.image} />}
       </View>
     </SafeAreaView>
@@ -109,7 +68,7 @@ const LoginPage = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 2,
     justifyContent: 'center'
   },
   header: {
@@ -124,7 +83,7 @@ const styles = StyleSheet.create({
     height: 80
   },
   content: {
-    flex: 4,
+    flex: 5,
     backgroundColor: 'white',
     paddingTop: 50,
     alignItems: 'center',
@@ -149,3 +108,30 @@ const styles = StyleSheet.create({
 });
 
 export default LoginPage;
+
+// Not used yet
+/**
+const LoginInput = props => (
+  <View>
+    <TextInput
+      placeholder="Email"
+      style={styles.textInput}
+      autoCapitalize="none"
+      autoCorrect={false}
+      value={props.username}
+      onChangeText={props.changeUsername}
+    />
+
+    <TextInput
+      placeholder="Password"
+      style={styles.textInput}
+      autoCapitalize="none"
+      secureTextEntry
+      value={props.password}
+      onChangeText={props.changePassword}
+      returnKeyType="send"
+      onSubmitEditing={props.submit}
+    />
+  </View>
+);
+ */
