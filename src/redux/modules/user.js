@@ -113,7 +113,6 @@ function popNote(cmpId) {
 
 // Initial State
 const initialState = {
-  isLoggedIn: true, // set TRUE for development
   favorites: [],
   notes: {},
 };

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Actions } from 'react-native-router-flux';
-import { LoginButton, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
+import { LoginButton } from 'react-native-fbsdk';
 import { GoogleSigninButton } from 'react-native-google-signin';
-import { SafeAreaView, View, Button, StyleSheet, Text, TextInput, Dimensions, Image } from 'react-native';
+import { SafeAreaView, View, Button, StyleSheet, Text, Dimensions, Image } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
@@ -20,47 +20,27 @@ const LoginPage = (props) => {
         <Button onPress={() => Actions.reset('fairs')} title="Direct Login" />
 
         <View style={{ paddingVertical: 15 }}>
-          <GoogleSigninButton
-            style={{ width: 230, height: 48 }}
-            size={GoogleSigninButton.Size.Wide}
-            color={GoogleSigninButton.Color.Light}
-            onPress={props.googleSigin}
-          />
+          {props.isGoogleSignedIn ? (
+            <Button onPress={props.googleSignOut} title="Google Signout" />
+          ) : (
+            <GoogleSigninButton
+              style={{ width: 230, height: 48 }}
+              size={GoogleSigninButton.Size.Wide}
+              color={GoogleSigninButton.Color.Light}
+              onPress={props.googleSigin}
+            />
+          )}
         </View>
 
         <Text>OR</Text>
 
         <View style={{ paddingVertical: 15 }}>
           <LoginButton
-            onLoginFinished={(error, result) => {
-              if (error) {
-                console.error(`login has error: ${result.error}`);
-              } else if (result.isCancelled) {
-                console.log('login is cancelled.');
-              } else {
-                AccessToken.getCurrentAccessToken().then((data) => {
-                  // FB TOKEN
-                  const token = data.accessToken.toString();
-                  props.saveToken(token);
-
-                  // Create a graph request asking for user information
-                  // with a callback to handle the response.
-                  const infoRequest = new GraphRequest(
-                    '/me?fields=name,picture.type(large)',
-                    null,
-                    props.fbCallback
-                  );
-
-                  // Request for user data
-                  new GraphRequestManager().addRequest(infoRequest).start();
-                });
-              }
-            }}
+            readPermissions={['public_profile']}
+            onLoginFinished={props.facebookLoginFinished}
             onLogoutFinished={() => console.log('logout.')}
           />
         </View>
-
-        {props.profilePhoto && <Image source={{ uri: props.profilePhoto }} style={styles.image} />}
       </View>
     </SafeAreaView>
   );

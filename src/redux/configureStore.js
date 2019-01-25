@@ -3,6 +3,7 @@ import { persistStore, persistCombineReducers } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // save store on disk
 import thunk from 'redux-thunk';
 
+import auth from './modules/auth';
 import user from './modules/user';
 
 const middlewares = [thunk];
@@ -13,6 +14,7 @@ const persistConfig = {
 };
 
 const reducer = persistCombineReducers(persistConfig, {
+  auth,
   user,
 });
 

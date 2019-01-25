@@ -4,8 +4,8 @@ import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { PersistGate } from 'redux-persist/es/integration/react';
 import SplashScreen from 'react-native-splash-screen';
 
-import Router from './Router';
-import configureStore from './redux/configureStore';
+import configureStore from './src/redux/configureStore';
+import AppContainer from './src/AppContainer';
 
 const { persistor, store } = configureStore();
 
@@ -29,7 +29,7 @@ class App extends Component {
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <PaperProvider theme={theme}>
-            <Router />
+            <AppContainer />
           </PaperProvider>
         </PersistGate>
       </Provider>
