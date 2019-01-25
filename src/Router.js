@@ -13,12 +13,18 @@ import Settings from './screens/Settings';
 import FairMap from './components/FairMap';
 import { TabIcon } from './components/commons';
 
-const RouterComponent = () => (
+const PublicRouter = () => (
   <Router>
     <Scene key="root" hideNavBar>
       <Scene key="login" component={LoginPage} initial title="Login" />
-      <Scene key="fairs" component={Fairs} title="Career Fairs" hideNavBar />
+    </Scene>
+  </Router>
+);
 
+const PrivateRouter = () => (
+  <Router>
+    <Scene key="root" hideNavBar>
+      <Scene key="fairs" component={Fairs} title="Career Fairs" hideNavBar />
       <Router>
         <Scene modal hideNavBar>
           <Scene key="tabber" tabs hideNavBar tabBarStyle={styles.tabBarStyle} showLabel={false}>
@@ -36,7 +42,13 @@ const RouterComponent = () => (
             <Scene key="profile" component={Profile} hideNavBar title="Profile" icon={TabIcon} />
 
             {/* Tab 3 */}
-            <Scene key="summary" component={SummaryPage} title="Summary" hideNavBar icon={TabIcon} />
+            <Scene
+              key="summary"
+              component={SummaryPage}
+              title="Summary"
+              hideNavBar
+              icon={TabIcon}
+            />
 
             {/* Tab 4 */}
             <Scene key="settings" component={Settings} title="Settings" hideNavBar icon={TabIcon} />
@@ -60,4 +72,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default RouterComponent;
+export { PublicRouter, PrivateRouter };
