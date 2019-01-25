@@ -12,17 +12,15 @@ class Container extends React.Component {
     password: '',
   };
 
-  componentWillMount() {
-    this._googleIsSignedIn();
-  }
+  //         FACEBOOK       //
 
-  // Create response callback.
+  // Create facebook signin response callback.
   _responseInfoCallback = (error, result) => {
     if (error) {
       console.error(error.toString());
     } else {
       // send userInfo with token to store
-      this.props.socialLogin(result);
+      this.props.socialLogin(result, 'facebook');
     }
   };
 
@@ -52,14 +50,17 @@ class Container extends React.Component {
     }
   };
 
+  //         GOOGLE       //
+
+  // Google Siginin
   _googleSignIn = async () => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
 
       // send userInfo to store
-      this.props.socialLogin(userInfo);
       this.setState({ isGoogleSignedIn: true });
+      this.props.socialLogin(userInfo, 'google');
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
@@ -73,29 +74,12 @@ class Container extends React.Component {
     }
   };
 
-  _googleIsSignedIn = async () => {
-    const isGoogleSignedIn = await GoogleSignin.isSignedIn();
-    this.setState({ isGoogleSignedIn });
-  };
-
-  _gooogleSignOut = async () => {
-    try {
-      await GoogleSignin.revokeAccess();
-      await GoogleSignin.signOut();
-      this.setState({ isGoogleSignedIn: false });
-      // Remember to remove the user from your app's state as well
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   render() {
     return (
       <LoginPage
         {...this.state}
         facebookLoginFinished={this._facebookLoginFinished}
         googleSigin={this._googleSignIn}
-        googleSignOut={this._gooogleSignOut}
       />
     );
   }

@@ -1,13 +1,33 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-// import { Actions } from 'react-native-router-flux';
+import { SafeAreaView, Text, StyleSheet, Button } from 'react-native';
+import { LoginButton } from 'react-native-fbsdk';
+import { GoogleSignin } from 'react-native-google-signin';
 
 class SettingsPage extends React.Component {
+  _googleSignOut = async () => {
+    try {
+      // Finish Google Session
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut();
+      // Clear auth state
+      this.props.logout();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   render() {
+    const { socialProvider, logout } = this.props;
+
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <Text>Settings Page</Text>
-      </View>
+        {socialProvider && socialProvider === 'facebook' ? (
+          <LoginButton onLogoutFinished={logout} />
+        ) : (
+          <Button onPress={this._googleSignOut} title="Google Logout" />
+        )}
+      </SafeAreaView>
     );
   }
 }

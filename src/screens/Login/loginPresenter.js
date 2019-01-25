@@ -1,5 +1,4 @@
 import React from 'react';
-import { Actions } from 'react-native-router-flux';
 import { LoginButton } from 'react-native-fbsdk';
 import { GoogleSigninButton } from 'react-native-google-signin';
 import { SafeAreaView, View, Button, StyleSheet, Text, Dimensions, Image } from 'react-native';
@@ -18,16 +17,12 @@ const LoginPage = (props) => {
       </View>
       <View style={styles.content}>
         <View style={{ paddingVertical: 15 }}>
-          {props.isGoogleSignedIn ? (
-            <Button onPress={props.googleSignOut} title="Google Signout" />
-          ) : (
-            <GoogleSigninButton
-              style={{ width: 230, height: 48 }}
-              size={GoogleSigninButton.Size.Wide}
-              color={GoogleSigninButton.Color.Light}
-              onPress={props.googleSigin}
-            />
-          )}
+          <GoogleSigninButton
+            style={{ width: 230, height: 48 }}
+            size={GoogleSigninButton.Size.Wide}
+            color={GoogleSigninButton.Color.Light}
+            onPress={props.googleSigin}
+          />
         </View>
 
         <Text>OR</Text>
