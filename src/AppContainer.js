@@ -12,10 +12,6 @@ const mapStateToProps = (state) => {
 };
 
 class App extends Component {
-  componentDidMount() {
-    console.log(this.props);
-  }
-
   render() {
     return this.props.isLoggedIn ? <PrivateRouter /> : <PublicRouter />;
   }
