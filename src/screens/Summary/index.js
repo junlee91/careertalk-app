@@ -1,13 +1,13 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
 // import { Actions } from 'react-native-router-flux';
 
 class SummaryPage extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <Text>Summary Page</Text>
-      </View>
+      </SafeAreaView>
     );
   }
 }
