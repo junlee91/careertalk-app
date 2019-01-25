@@ -17,8 +17,6 @@ const LoginPage = (props) => {
         />
       </View>
       <View style={styles.content}>
-        <Button onPress={() => Actions.reset('fairs')} title="Direct Login" />
-
         <View style={{ paddingVertical: 15 }}>
           {props.isGoogleSignedIn ? (
             <Button onPress={props.googleSignOut} title="Google Signout" />
