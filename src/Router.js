@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Router, Scene } from 'react-native-router-flux';
+import { Router, Scene, Modal } from 'react-native-router-flux';
 
 import LoginPage from './screens/Login';
 import Fairs from './screens/Fairs';
@@ -14,7 +14,7 @@ import FairMap from './components/FairMap';
 import { TabIcon } from './components/commons';
 
 const PublicRouter = () => (
-  <Router>
+  <Router key="public">
     <Scene key="root" hideNavBar>
       <Scene key="login" component={LoginPage} initial title="Login" />
     </Scene>
@@ -22,11 +22,14 @@ const PublicRouter = () => (
 );
 
 const PrivateRouter = () => (
-  <Router>
+  <Router key="private">
     <Scene key="root" hideNavBar>
-      <Scene key="fairs" component={Fairs} title="Career Fairs" hideNavBar />
-      <Router>
-        <Scene modal hideNavBar>
+
+      <Scene key="fairs" component={Fairs} initial title="Career Fairs" hideNavBar />
+
+      {/* Inner Router for Tabs */}
+      <Router key="modalRouter">
+        <Modal key="modalScene" hideNavBar>
           <Scene key="tabber" tabs hideNavBar tabBarStyle={styles.tabBarStyle} showLabel={false}>
             {/* Tab 1 */}
             <Scene
@@ -56,12 +59,13 @@ const PrivateRouter = () => (
             {/* TODO: more tabs here!! */}
           </Scene>
 
+          {/* Modal goes here!! */}
           <Scene key="companyDetail" component={CompanyDetail} hideNavBar />
-        </Scene>
+        </Modal>
       </Router>
 
-      {/* Modal goes here!! */}
       <Scene key="fairMap" component={FairMap} title="Map" back hideNavBar />
+
     </Scene>
   </Router>
 );
