@@ -3,8 +3,13 @@ import { GoogleSignin, statusCodes } from 'react-native-google-signin';
 import { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 
 import LoginPage from './loginPresenter';
+import config from '../../../config.json';
 
-GoogleSignin.configure();
+// Follow the link for more info:
+// https://github.com/react-native-community/react-native-google-signin/issues/263#issuecomment-320611997
+GoogleSignin.configure({
+  webClientId: config.webClientId,
+});
 
 class Container extends React.Component {
   state = {
@@ -13,7 +18,6 @@ class Container extends React.Component {
   };
 
   //         FACEBOOK       //
-
   // Create facebook signin response callback.
   _responseInfoCallback = (error, result) => {
     if (error) {
@@ -51,7 +55,6 @@ class Container extends React.Component {
   };
 
   //         GOOGLE       //
-
   // Google Siginin
   _googleSignIn = async () => {
     try {
@@ -59,7 +62,6 @@ class Container extends React.Component {
       const userInfo = await GoogleSignin.signIn();
 
       // send userInfo to store
-      this.setState({ isGoogleSignedIn: true });
       this.props.socialLogin(userInfo, 'google');
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
