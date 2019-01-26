@@ -25,7 +25,10 @@ class SettingsPage extends React.Component {
         {socialProvider && socialProvider === 'facebook' ? (
           <LoginButton onLogoutFinished={logout} />
         ) : (
-          <Button onPress={this._googleSignOut} title="Google Logout" />
+          <Button
+            onPress={socialProvider === 'google' ? this._googleSignOut : this.props.logout}
+            title="Logout"
+          />
         )}
       </SafeAreaView>
     );

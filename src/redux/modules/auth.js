@@ -26,6 +26,15 @@ function setProvider(provider) {
 }
 
 // API Actions
+function login() {
+  return (dispatch) => {
+    // For anonymous login, we don't have a token
+    dispatch(setLogIn(null));
+
+    return true;
+  };
+}
+
 function socialLogin(userInfo, socialProvider) {
   return (dispatch) => {
     console.log(userInfo);
@@ -89,7 +98,8 @@ function applySetProvider(state, action) {
 
 const actionCreators = {
   socialLogin,
-  logout
+  login,
+  logout,
 };
 
 export { actionCreators };

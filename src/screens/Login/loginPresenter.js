@@ -34,6 +34,9 @@ const LoginPage = (props) => {
             onLogoutFinished={() => console.log('logout.')}
           />
         </View>
+
+        <Button title="Login" onPress={props.login} />
+
       </View>
     </SafeAreaView>
   );

@@ -11,6 +11,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
+  login: () => {
+    dispatch(authActions.login());
+  },
   socialLogin: (info, socialProvider) => {
     dispatch(authActions.socialLogin(info, socialProvider));
   }
