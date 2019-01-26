@@ -63,3 +63,5 @@ android/gradle.properties
 
 # Fair maps
 src/img/uic_map/
+
+config.json
