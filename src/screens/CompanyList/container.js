@@ -15,7 +15,8 @@ class Container extends Component {
       companiesForRender: [],
       numOfFavorites: 0,
       numOfNotes: 0,
-      numOfCompanies: 0
+      numOfCompanies: 0,
+      overlayVisible: false,
     };
   }
 
@@ -64,6 +65,13 @@ class Container extends Component {
     const { searchBarFocus } = this.state;
     this.setState({
       searchBarFocus: !searchBarFocus
+    });
+  }
+
+  _toggleOverlayFilter = () => {
+    const { overlayVisible } = this.state;
+    this.setState({
+      overlayVisible: !overlayVisible
     });
   }
 
@@ -119,6 +127,7 @@ class Container extends Component {
             search={this._searching}
             cancel={this._cancel}
             searchBarFocusFn={this._searchBarFocusFn}
+            toggleFilter={this._toggleOverlayFilter}
           />
         )}
       </Fragment>

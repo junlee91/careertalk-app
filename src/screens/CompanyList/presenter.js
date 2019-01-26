@@ -9,11 +9,17 @@ import {
   Dimensions,
   TouchableOpacity
 } from 'react-native';
-import { SearchBar } from 'react-native-elements';
+import { SearchBar, Overlay } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 
 import CompanyItem from '../../components/CompanyItem';
-import { FavButton, NoteIcon, PoweredBy, BackArrowIcon } from '../../components/commons';
+import {
+  FavButton,
+  NoteIcon,
+  PoweredBy,
+  BackArrowIcon,
+  FilterIcon
+} from '../../components/commons';
 
 const { width } = Dimensions.get('window');
 
@@ -37,6 +43,7 @@ const CompanyList = (props) => {
         />
         <PoweredBy poweredby="Logos provided by Clearbit" />
       </View>
+      <FilterOverlay {...props} />
     </SafeAreaView>
   );
 };
@@ -84,6 +91,7 @@ const CompanyListHeader = (props) => {
       <View style={styles.userHeaderStyle}>
         <UserLikedCompany numOfFavorites={numOfFavorites} numOfCompanies={numOfCompanies} />
         <UserNotedCompany numOfNotes={numOfNotes} numOfCompanies={numOfCompanies} />
+        <FilterButton {...props} />
       </View>
     </View>
   );
@@ -95,7 +103,7 @@ const UserLikedCompany = (props) => {
   const likesPerCompanies = `${props.numOfFavorites}/${numOfCompanies}`;
   return (
     <View style={styles.userHeaderContentsWrapperStyle}>
-      <FavButton {...likes} />
+      <FavButton {...likes} size={20} />
       <Text style={styles.HeaderContentsText}>{likesPerCompanies}</Text>
     </View>
   );
@@ -112,6 +120,18 @@ const UserNotedCompany = (props) => {
   );
 };
 
+const FilterButton = props => (
+  <TouchableOpacity onPressOut={props.toggleFilter}>
+    <FilterIcon />
+  </TouchableOpacity>
+);
+
+const FilterOverlay = props => (
+  <Overlay isVisible={props.overlayVisible} onBackdropPress={props.toggleFilter}>
+    <Text>Hello from Overlay!</Text>
+  </Overlay>
+);
+
 const styles = {
   companyListViewStyle: {
     flex: 1
@@ -124,7 +144,9 @@ const styles = {
   userHeaderContentsWrapperStyle: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 5,
   },
   companyListHeaderStyle: {
     height: 30
