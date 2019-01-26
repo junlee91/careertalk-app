@@ -1,3 +1,16 @@
+import { AsyncStorage } from 'react-native';
+
+// More info: https://facebook.github.io/react-native/docs/asyncstorage
+_storeData = async (key, value) => {
+  try {
+    await AsyncStorage.setItem(key, value);
+    console.log(key, value);
+  } catch (error) {
+    // Error saving data
+    console.error(error);
+  }
+};
+
 // Actions
 const LOG_IN = 'LOG_IN';
 const LOG_OUT = 'LOG_OUT';
@@ -72,6 +85,11 @@ function reducer(state = initialState, action) {
 // Reducer Functions
 function applyLogIn(state, action) {
   const { token } = action;
+
+  if (token) {
+    _storeData('token', token);
+  }
+
   return {
     ...state,
     isLoggedIn: true,
@@ -80,6 +98,7 @@ function applyLogIn(state, action) {
 }
 
 function applyLogOut() {
+  AsyncStorage.clear();
   return {
     isLoggedIn: false,
     token: ''
