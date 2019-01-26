@@ -17,6 +17,11 @@ class Container extends React.Component {
     password: '',
   };
 
+  // Anonymous login
+  _login = (async = () => {
+    this.props.login();
+  });
+
   //         FACEBOOK       //
   // Create facebook signin response callback.
   _responseInfoCallback = (error, result) => {
@@ -82,6 +87,7 @@ class Container extends React.Component {
         {...this.state}
         facebookLoginFinished={this._facebookLoginFinished}
         googleSigin={this._googleSignIn}
+        login={this._login}
       />
     );
   }
