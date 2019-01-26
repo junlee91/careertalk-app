@@ -60,7 +60,7 @@ const FairItem = (props) => {
     <TouchableOpacity onPress={() => props.navigateTo('companyList', props.fair.id)}>
       {Platform.OS === 'ios' ? (
         <View style={styles.bigCard}>
-          <LogoImage {...fair} size="big" />
+          <LogoImage {...fair} size="big" wide />
           <NumOfCompanies {...props} />
           <FairHeader {...props} />
         </View>

@@ -27,7 +27,7 @@ const CompanyDetail = (props) => {
         {Platform.OS === 'ios' && <CrossButton />}
         <InfoBox>
           <View style={styles.titleContent}>
-            <LogoImage {...companyInfo} size="medium" />
+            <LogoImage {...companyInfo} size="medium" wide />
             <Text style={styles.titleTextStyle}>{companyInfo.name}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Caption>
