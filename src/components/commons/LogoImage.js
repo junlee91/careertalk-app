@@ -17,7 +17,7 @@ function getSize(size) {
 
 const LogoImage = (props) => {
   const size = getSize(props.size);
-  const imgStyle = size === 64 ? styles.imgStyleSmall : styles.imgStyleMedium;
+  const imgStyle = props.wide ? styles.imgStyleMedium : styles.imgStyleSmall;
 
   return (
     <FadeIn>
