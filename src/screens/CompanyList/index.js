@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import Container from './container';
-import { actionCreators as userActions } from '../../redux/modules/user';
+import { actionCreators as companyActions } from '../../redux/modules/company';
 
 const mapStateToProps = (state) => {
-  const { user: { company, fairs, favorites, notes } } = state;
+  const { company: { company, fairs, favorites, notes } } = state;
   return {
     company,
     fairs,
@@ -14,13 +14,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
   getCompanyList: (fair_id) => {
-    dispatch(userActions.getCompanyList(fair_id));
+    dispatch(companyActions.getCompanyList(fair_id));
   },
   getFairs: () => {
-    dispatch(userActions.getFairs());
+    dispatch(companyActions.getFairs());
   },
   demoGetCompany: () => {
-    dispatch(userActions.demoGetCompany());
+    dispatch(companyActions.demoGetCompany());
   }
 });
 

@@ -18,7 +18,8 @@ import {
   NoteIcon,
   PoweredBy,
   BackArrowIcon,
-  FilterIcon
+  FilterIcon,
+  BackIcon,
 } from '../../components/commons';
 
 const { width } = Dimensions.get('window');
@@ -127,8 +128,19 @@ const FilterButton = props => (
 );
 
 const FilterOverlay = props => (
-  <Overlay isVisible={props.overlayVisible} onBackdropPress={props.toggleFilter}>
-    <Text>Hello from Overlay!</Text>
+  <Overlay
+    overlayStyle={styles.overlayStyle}
+    isVisible={props.overlayVisible}
+    onBackdropPress={props.toggleFilter}
+  >
+    <View style={styles.overlayHeader}>
+      <TouchableOpacity onPressOut={props.toggleFilter}>
+        <BackIcon />
+      </TouchableOpacity>
+    </View>
+    <View style={styles.overlayContent}>
+      <Text>Filter options content</Text>
+    </View>
   </Overlay>
 );
 
@@ -199,6 +211,17 @@ const styles = {
         paddingHorizontal: 10
       }
     })
+  },
+  overlayStyle: {},
+  overlayHeader: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  overlayContent: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 };
 

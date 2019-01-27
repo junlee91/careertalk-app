@@ -30,11 +30,11 @@ const LogoImage = (props) => {
   );
 };
 
-const ProfileImage = () => {
+const ProfileImage = (props) => {
   return (
     <FadeIn>
       <Image
-        source={require('../../img/noPhoto.jpg')}
+        source={props.profilePhoto ? { uri: props.profilePhoto } : require('../../img/noPhoto.jpg')}
         style={styles.imgStyleSmall}
         defaultSource={require('../../img/noPhoto.jpg')}
       />

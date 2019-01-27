@@ -7,17 +7,27 @@ import { Actions } from 'react-native-router-flux';
 import Container from './container';
 
 const mapStateToProps = (state) => {
-  const { user: { company, favorites } } = state;
+  const {
+    company: { company, favorites },
+    user: { firstName, lastName, profilePhoto }
+  } = state;
   return {
     company,
     favorites,
+    firstName,
+    lastName,
+    profilePhoto,
   };
 };
 
 export const ProfileIcon = () => {
   return (
     <TouchableOpacity onPressOut={() => Actions.push('profile')}>
-      <Icon name="md-person" type="ionicon" containerStyle={{ paddingHorizontal: 10, marginHorizontal: 5 }} />
+      <Icon
+        name="md-person"
+        type="ionicon"
+        containerStyle={{ paddingHorizontal: 10, marginHorizontal: 5 }}
+      />
     </TouchableOpacity>
   );
 };

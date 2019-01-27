@@ -66,7 +66,7 @@ const FairItem = (props) => {
         </View>
       ) : (
         <Surface style={[stylesAndroid.surface, { elevation: 6 }]}>
-          <LogoImage {...fair} size="big" />
+          <LogoImage {...fair} size="big" wide />
           <NumOfCompanies {...props} />
           <FairHeader {...props} />
         </Surface>

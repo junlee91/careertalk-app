@@ -1,4 +1,5 @@
 import { AsyncStorage } from 'react-native';
+import { actionCreators as userActions } from './user';
 
 // More info: https://facebook.github.io/react-native/docs/asyncstorage
 _storeData = async (key, value) => {
@@ -14,7 +15,6 @@ _storeData = async (key, value) => {
 // Actions
 const LOG_IN = 'LOG_IN';
 const LOG_OUT = 'LOG_OUT';
-const SET_USER = 'SET_USER';
 const SET_PROVIDER = 'SET_PROVIDER';
 
 // Action Creators
@@ -41,18 +41,37 @@ function setProvider(provider) {
 // API Actions
 function login() {
   return (dispatch) => {
-    // For anonymous login, we don't have a token
+    // For anonymous login, we don't have a token and user data
     dispatch(setLogIn(null));
+    dispatch(userActions.setUser(null));
 
     return true;
   };
 }
 
-function socialLogin(userInfo, socialProvider) {
+function socialLogin(
+  { email, firstName, lastName, profilePhoto, socialToken, idToken, socialId },
+  socialProvider
+) {
   return (dispatch) => {
-    console.log(userInfo);
+    console.log(`Email: ${email}`);
+    console.log(`First: ${firstName} Last: ${lastName}`);
+    console.log(`Photo: ${profilePhoto}`);
+    console.log(`Social Token: ${socialToken}`);
+
+    if (idToken) {
+      console.log(`Google Firebase Id Token: ${idToken}`);
+    }
+
+    if (socialId) {
+      console.log(`Social Id: ${socialId}`);
+    }
 
     const token = 'Career Talk Token';
+
+    if (firstName && lastName) {
+      dispatch(userActions.setUser({ firstName, lastName, profilePhoto }));
+    }
 
     dispatch(setProvider(socialProvider));
     dispatch(setLogIn(token));
