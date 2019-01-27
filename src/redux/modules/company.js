@@ -156,7 +156,6 @@ function applySetFairs(state, action) {
   };
 }
 
-// TODO: This is not needed for V2 (when we have Like DB)
 function applyLikeCompany(state, action) {
   const { cmpId } = action;
   return {

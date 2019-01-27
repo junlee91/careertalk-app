@@ -26,17 +26,13 @@ class Container extends Component {
     if (!(company && company.Company)) {
       demoGetCompany();
     } else {
-      this.setState({
-        companiesForRender: company.Company
-      });
+      this._setComponentState(this.props);
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.company) {
-      this.setState({
-        companiesForRender: nextProps.company.Company
-      });
+      this._setComponentState(nextProps);
     }
   }
 
@@ -66,12 +62,26 @@ class Container extends Component {
     this.setState({
       searchBarFocus: !searchBarFocus
     });
-  }
+  };
 
   _toggleOverlayFilter = () => {
     const { overlayVisible } = this.state;
     this.setState({
       overlayVisible: !overlayVisible
+    });
+  };
+
+  _setComponentState(props) {
+    const { company: { Company }, favorites, notes } = props;
+    const numOfCompanies = Company.length;
+    const numOfFavorites = favorites.length;
+    const numOfNotes = Object.keys(notes).length;
+
+    this.setState({
+      companiesForRender: Company,
+      numOfCompanies,
+      numOfFavorites,
+      numOfNotes
     });
   }
 
