@@ -28,8 +28,27 @@ class Container extends React.Component {
     if (error) {
       console.error(error.toString());
     } else {
+      const { fbToken } = this.state;
+      const {
+        email,
+        first_name,
+        last_name,
+        id,
+        picture,
+      } = result;
+
       // send userInfo with token to store
-      this.props.socialLogin(result, 'facebook');
+      this.props.socialLogin(
+        {
+          email,
+          firstName: first_name,
+          lastName: last_name,
+          profilePhoto: picture.data.url,
+          socialToken: fbToken,
+          socialId: id
+        },
+        'facebook'
+      );
     }
   };
 
@@ -43,12 +62,12 @@ class Container extends React.Component {
         // FB TOKEN
         const token = data.accessToken.toString();
 
-        this.setState({ token });
+        this.setState({ fbToken: token });
 
         // Create a graph request asking for user information
         // with a callback to handle the response.
         const infoRequest = new GraphRequest(
-          '/me?fields=name,first_name,last_name,picture.type(large)',
+          '/me?fields=email,name,first_name,last_name,picture.type(large)',
           null,
           this._responseInfoCallback
         );
@@ -65,9 +84,22 @@ class Container extends React.Component {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
+      const { accessToken, idToken, user } = userInfo;
+      const { email, givenName, familyName, id, photo } = user;
 
       // send userInfo to store
-      this.props.socialLogin(userInfo, 'google');
+      this.props.socialLogin(
+        {
+          email,
+          firstName: givenName,
+          lastName: familyName,
+          profilePhoto: photo,
+          socialToken: accessToken,
+          idToken,
+          socialId: id
+        },
+        'google'
+      );
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow

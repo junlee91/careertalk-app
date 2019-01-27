@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import Container from './container';
-import { actionCreators as userActions } from '../../redux/modules/user';
+import { actionCreators as companyActions } from '../../redux/modules/company';
 
 const mapStateToProps = (state) => {
-  const { user: { favorites, notes, numOfFavorites, numOfNotes } } = state;
+  const { company: { favorites, notes, numOfFavorites, numOfNotes } } = state;
   return {
     favorites,
     notes,
@@ -14,10 +14,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
   likeCompany: (cmpId) => {
-    dispatch(userActions.likeCompany(cmpId));
+    dispatch(companyActions.likeCompany(cmpId));
   },
   unlikeCompany: (cmpId) => {
-    dispatch(userActions.unlikeCompany(cmpId));
+    dispatch(companyActions.unlikeCompany(cmpId));
   }
 });
 

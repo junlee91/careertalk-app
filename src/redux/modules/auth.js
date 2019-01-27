@@ -48,9 +48,23 @@ function login() {
   };
 }
 
-function socialLogin(userInfo, socialProvider) {
+function socialLogin(
+  { email, firstName, lastName, profilePhoto, socialToken, idToken, socialId },
+  socialProvider
+) {
   return (dispatch) => {
-    console.log(userInfo);
+    console.log(`Email: ${email}`);
+    console.log(`First: ${firstName} Last: ${lastName}`);
+    console.log(`Photo: ${profilePhoto}`);
+    console.log(`Social Token: ${socialToken}`);
+
+    if (idToken) {
+      console.log(`Google Firebase Id Token: ${idToken}`);
+    }
+
+    if (socialId) {
+      console.log(`Social Id: ${socialId}`);
+    }
 
     const token = 'Career Talk Token';
 

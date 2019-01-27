@@ -5,6 +5,7 @@ import thunk from 'redux-thunk';
 
 import auth from './modules/auth';
 import user from './modules/user';
+import company from './modules/company';
 
 const middlewares = [thunk];
 
@@ -16,6 +17,7 @@ const persistConfig = {
 const reducer = persistCombineReducers(persistConfig, {
   auth,
   user,
+  company,
 });
 
 const configureStore = () => {
