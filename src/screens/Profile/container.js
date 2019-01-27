@@ -13,7 +13,6 @@ class Container extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
     const { firstName, lastName, profilePhoto } = this.props;
 
     this.setState({
