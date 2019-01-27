@@ -158,7 +158,6 @@ function applySetFairs(state, action) {
 
 function applyLikeCompany(state, action) {
   const { cmpId } = action;
-  console.log(`Like company: ${cmpId}`);
   return {
     ...state,
     favorites: [...state.favorites, cmpId],
@@ -167,7 +166,6 @@ function applyLikeCompany(state, action) {
 
 function applyUnlikeCompany(state, action) {
   const { cmpId } = action;
-  console.log(`Unlike company: ${cmpId}`);
   return {
     ...state,
     favorites: state.favorites.filter(item => item !== cmpId),
