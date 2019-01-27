@@ -60,10 +60,10 @@ const PrivateRouter = () => (
           </Scene>
 
           {/* Modal goes here!! */}
-          <Scene key="companyDetail" component={CompanyDetail} hideNavBar />
         </Modal>
       </Router>
 
+      <Scene key="companyDetail" component={CompanyDetail} hideNavBar />
       <Scene key="fairMap" component={FairMap} title="Map" back hideNavBar />
 
     </Scene>
