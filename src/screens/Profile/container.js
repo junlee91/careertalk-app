@@ -5,11 +5,22 @@ class Container extends React.Component {
   constructor() {
     super();
     this.state = {
-      filteredFairs: []
+      filteredFairs: [],
+      firstName: '',
+      lastName: '',
+      profilePhoto: '',
     };
   }
 
   componentDidMount() {
+    console.log(this.props);
+    const { firstName, lastName, profilePhoto } = this.props;
+
+    this.setState({
+      firstName,
+      lastName,
+      profilePhoto,
+    });
     // this._setComponentState(this.props);
   }
 

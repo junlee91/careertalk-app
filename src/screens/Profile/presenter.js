@@ -6,14 +6,15 @@ import CompanyItem from '../../components/CompanyItem';
 import { InfoBox, ProfileImage, PoweredBy } from '../../components/commons';
 
 const Profile = (props) => {
-  const { filteredFairs, isFavoritePresent } = props;
+  const { filteredFairs, isFavoritePresent, firstName, lastName, profilePhoto } = props;
+  const displayName = firstName && lastName ? `${firstName} ${lastName}` : 'Anonymous User';
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <InfoBox>
         <View style={styles.userInfoStyle}>
-          <ProfileImage />
-          <Text style={styles.textField}>Anonymous User</Text>
+          <ProfileImage profilePhoto={profilePhoto} />
+          <Text style={styles.textField}>{displayName}</Text>
         </View>
       </InfoBox>
       <ScrollView>
