@@ -1,0 +1,64 @@
+{
+  "hiring_types": [
+    {
+      "label": "INT",
+      "name": "Internship"
+    },
+    {
+      "label": "FT",
+      "name": "Full Time"
+    }
+  ],
+  "majors": [
+    {
+      "label": "CS",
+      "name": "Computer Science"
+    },
+    {
+      "label": "ECE",
+      "name": "Electrical Computer Engineering"
+    },
+    {
+      "label": "CompE",
+      "name": "Computer Engineering"
+    },
+    {
+      "label": "Civil",
+      "name": "Civil Engineering"
+    },
+    {
+      "label": "EE",
+      "name": "Electrical Engineering"
+    },
+    {
+      "label": "IE",
+      "name": "Industrial Engineering"
+    },
+    {
+      "label": "ME",
+      "name": "Mechanical Engineering"
+    },
+    {
+      "label": "BioE",
+      "name": "Bio Engineering"
+    },
+    {
+      "label": "ChemE",
+      "name": "Chemical Engineering"
+    }
+  ],
+  "degree": [
+    {
+      "label": "BS",
+      "name": "BS"
+    },
+    {
+      "label": "MS",
+      "name": "MS"
+    },
+    {
+      "label": "PhD",
+      "name": "PhD"
+    }
+  ]
+}

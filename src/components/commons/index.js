@@ -6,3 +6,4 @@ export * from './Label';
 export * from './IconButtons';
 export * from './Box';
 export * from './PoweredBy';
+export * from './Chip';

@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 
 import CompanyList from './presenter';
 import { Spinner } from '../../components/commons';
+import filterFields from '../../lib/fields.json';
 
 class Container extends Component {
   constructor() {
@@ -17,6 +18,13 @@ class Container extends Component {
       numOfNotes: 0,
       numOfCompanies: 0,
       overlayVisible: false,
+      filterOptions: {
+        degree: new Set(),
+        majors: new Set(),
+        hiringTypes: new Set(),
+      },
+      sponsorChecked: false,
+      filterFields,
     };
   }
 
@@ -71,6 +79,26 @@ class Container extends Component {
     });
   };
 
+  _toggleFilterOptions = (key, value) => {
+    const { filterOptions } = this.state;
+
+    if (filterOptions[key].has(value)) {
+      filterOptions[key].delete(value);
+    } else {
+      filterOptions[key].add(value);
+    }
+
+    this.forceUpdate();
+  }
+
+  _toggleSponsor = () => {
+    const { sponsorChecked } = this.state;
+
+    this.setState({
+      sponsorChecked: !sponsorChecked
+    });
+  }
+
   _setComponentState(props) {
     const { company: { Company }, favorites, notes } = props;
     const numOfCompanies = Company.length;
@@ -84,40 +112,6 @@ class Container extends Component {
       numOfNotes
     });
   }
-
-  // _setComponentState(props) {
-  //   const {
-  //     favorites,
-  //     notes,
-  //     company: { Company }
-  //   } = props;
-  //   let { companiesForRender } = this.state;
-  //   const numOfCompanies = Company.length;
-  //   let filteredFavorites = 0;
-  //   let filteredNotes = 0;
-  //   const notesIds = Object.keys(notes);
-  //   for (let i = 0; i < numOfCompanies; i += 1) {
-  //     if (favorites.includes(Company[i].id)) {
-  //       filteredFavorites += 1;
-  //     }
-  //     if (notesIds.includes(Company[i].id.toString())) {
-  //       filteredNotes += 1;
-  //     }
-  //   }
-
-  //   if (this.state.searching === false) {
-  //     companiesForRender = Company;
-  //   }
-  //   this.setState({
-  //     loading: false,
-  //     isFetching: false,
-  //     numOfFavorites: filteredFavorites,
-  //     numOfNotes: filteredNotes,
-  //     numOfCompanies: Company.length,
-  //     companies: Company,
-  //     companiesForRender
-  //   });
-  // }
 
   render() {
     const { loading } = this.state;
@@ -138,6 +132,8 @@ class Container extends Component {
             cancel={this._cancel}
             searchBarFocusFn={this._searchBarFocusFn}
             toggleFilter={this._toggleOverlayFilter}
+            toggleFilterOptions={this._toggleFilterOptions}
+            toggleSponsor={this._toggleSponsor}
           />
         )}
       </Fragment>
