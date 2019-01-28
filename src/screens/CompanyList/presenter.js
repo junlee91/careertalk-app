@@ -5,11 +5,12 @@ import {
   Text,
   RefreshControl,
   FlatList,
+  ScrollView,
   Platform,
   Dimensions,
   TouchableOpacity
 } from 'react-native';
-import { SearchBar, Overlay } from 'react-native-elements';
+import { SearchBar, Overlay, CheckBox, Icon } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 
 import CompanyItem from '../../components/CompanyItem';
@@ -20,9 +21,10 @@ import {
   BackArrowIcon,
   FilterIcon,
   BackIcon,
+  ChipButton
 } from '../../components/commons';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const CompanyList = (props) => {
   const { companiesForRender } = props;
@@ -127,9 +129,14 @@ const FilterButton = props => (
   </TouchableOpacity>
 );
 
-const FilterOverlay = props => (
+const FilterOverlay = props => (Platform.OS === 'android' ? <OverlayAndroid {...props} /> : <OverlayIOS {...props} />);
+
+const OverlayAndroid = props => (
   <Overlay
+    fullScreen
     overlayStyle={styles.overlayStyle}
+    borderRadius={5}
+    height={height - 150}
     isVisible={props.overlayVisible}
     onBackdropPress={props.toggleFilter}
   >
@@ -138,8 +145,128 @@ const FilterOverlay = props => (
         <BackIcon />
       </TouchableOpacity>
     </View>
-    <View style={styles.overlayContent}>
-      <Text>Filter options content</Text>
+    <View>
+      <ScrollView contentContainerStyle={styles.overlayContent}>
+        <Text style={styles.chipTitleText}>Hiring Types</Text>
+        <View style={styles.chipContentStyle}>
+          {props.filterFields.hiring_types.map(field => (
+            <ChipButton
+              type="hiringTypes"
+              key={field.label}
+              field={field}
+              selected={props.filterOptions.hiringTypes.has(field.label)}
+              onPress={props.toggleFilterOptions}
+            />
+          ))}
+        </View>
+
+        <Text style={styles.chipTitleText}>Majors</Text>
+
+        <View style={styles.chipContentStyle}>
+          {props.filterFields.majors.map(field => (
+            <ChipButton
+              key={field.label}
+              type="majors"
+              field={field}
+              selected={props.filterOptions.majors.has(field.label)}
+              onPress={props.toggleFilterOptions}
+            />
+          ))}
+        </View>
+
+        <Text style={styles.chipTitleText}>Degree</Text>
+        <View style={styles.chipContentStyle}>
+          {props.filterFields.degree.map(field => (
+            <ChipButton
+              type="degree"
+              key={field.label}
+              field={field}
+              selected={props.filterOptions.degree.has(field.label)}
+              onPress={props.toggleFilterOptions}
+            />
+          ))}
+        </View>
+
+        <View
+          style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}
+        >
+          <Text style={styles.chipTitleText}>Sponsorship Needed?</Text>
+          <CheckBox checked={props.sponsorChecked} onPress={props.toggleSponsor} />
+        </View>
+      </ScrollView>
+    </View>
+  </Overlay>
+);
+
+const OverlayIOS = props => (
+  <Overlay
+    overlayStyle={styles.overlayStyle}
+    borderRadius={5}
+    isVisible={props.overlayVisible}
+    onBackdropPress={props.toggleFilter}
+  >
+    <View style={styles.overlayHeader}>
+      <TouchableOpacity onPressOut={props.toggleFilter}>
+        <BackIcon />
+      </TouchableOpacity>
+    </View>
+    <View>
+      <ScrollView contentContainerStyle={styles.overlayContent}>
+        <Text style={styles.chipTitleText}>Hiring Types</Text>
+        <View style={styles.chipContentStyle}>
+          {props.filterFields.hiring_types.map(field => (
+            <ChipButton
+              type="hiringTypes"
+              key={field.label}
+              field={field}
+              selected={props.filterOptions.hiringTypes.has(field.label)}
+              onPress={props.toggleFilterOptions}
+            />
+          ))}
+        </View>
+
+        <Text style={styles.chipTitleText}>Majors</Text>
+
+        <View style={styles.chipContentStyle}>
+          <ScrollView style={{ height: height / 3.2 }}>
+            {props.filterFields.majors.map(field => (
+              <ChipButton
+                key={field.label}
+                type="majors"
+                field={field}
+                selected={props.filterOptions.majors.has(field.label)}
+                onPress={props.toggleFilterOptions}
+              />
+            ))}
+          </ScrollView>
+        </View>
+
+        <Text style={styles.chipTitleText}>Degree</Text>
+        <View style={styles.chipContentStyle}>
+          {props.filterFields.degree.map(field => (
+            <ChipButton
+              type="degree"
+              key={field.label}
+              field={field}
+              selected={props.filterOptions.degree.has(field.label)}
+              onPress={props.toggleFilterOptions}
+            />
+          ))}
+        </View>
+
+        <View
+          style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}
+        >
+          <Text style={styles.chipTitleText}>Sponsorship Needed?</Text>
+          <TouchableOpacity onPress={props.toggleSponsor} style={{ padding: 5 }}>
+            <Icon
+              type="ionicon"
+              name={props.sponsorChecked ? 'ios-checkbox' : 'ios-checkbox-outline'}
+              color={props.sponsorChecked ? '#1abc9c' : 'black'}
+            />
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </View>
   </Overlay>
 );
@@ -158,7 +285,7 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: 5,
+    marginLeft: 5
   },
   companyListHeaderStyle: {
     height: 30
@@ -212,16 +339,28 @@ const styles = {
       }
     })
   },
-  overlayStyle: {},
+  overlayStyle: {
+    backgroundColor: '#f9f7f7'
+  },
   overlayHeader: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-end'
   },
   overlayContent: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
+  },
+  chipTitleText: {
+    fontSize: 18,
+    fontFamily: 'Avenir Next',
+    marginVertical: 3
+  },
+  chipContentStyle: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
   }
 };
 
