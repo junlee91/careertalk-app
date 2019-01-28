@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -51,10 +52,6 @@
 		97C53A8BBEA04FE789860804 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9947CBA7D6634BD1AA9A825D /* MaterialCommunityIcons.ttf */; };
 		98B2AF05865E4847AF1F96C5 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA1BB940A23142B8BDB13294 /* Feather.ttf */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
-		BF4F720121F3CA6400EF7913 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF4F71D521F3CA6200EF7913 /* FBSDKShareKit.framework */; };
-		BF4F720221F3CA6400EF7913 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF4F71FE21F3CA6200EF7913 /* Bolts.framework */; };
-		BF4F720321F3CA6400EF7913 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF4F71FF21F3CA6300EF7913 /* FBSDKLoginKit.framework */; };
-		BF4F720421F3CA6400EF7913 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF4F720021F3CA6300EF7913 /* FBSDKCoreKit.framework */; };
 		BF4F748521F80F6500EF7913 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF4F745B21F80F6500EF7913 /* GoogleService-Info.plist */; };
 		C1C03B012CEF77A2893EC6DD /* libPods-CareerTalkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10D39847BBAC261E31F9D19D /* libPods-CareerTalkTests.a */; };
 		E4D53C04B09D4F88B63772BD /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31C3A96A594A467EA010BCBD /* Ionicons.ttf */; };
@@ -404,10 +401,6 @@
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B5E8601FDBBED48703F73060 /* Pods-CareerTalkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CareerTalkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CareerTalkTests/Pods-CareerTalkTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B9B3843D56D040D294D5F1FC /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
-		BF4F71D521F3CA6200EF7913 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
-		BF4F71FE21F3CA6200EF7913 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		BF4F71FF21F3CA6300EF7913 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		BF4F720021F3CA6300EF7913 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		BF4F745B21F80F6500EF7913 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C085A5709301ED693EDD6EF6 /* Pods-CareerTalk-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CareerTalk-tvOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CareerTalk-tvOSTests/Pods-CareerTalk-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		C2E82968F695204866C3F136 /* Pods-CareerTalkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CareerTalkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CareerTalkTests/Pods-CareerTalkTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -439,10 +432,8 @@
 			files = (
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
-				BF4F720121F3CA6400EF7913 /* FBSDKShareKit.framework in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
-				BF4F720421F3CA6400EF7913 /* FBSDKCoreKit.framework in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
@@ -451,10 +442,8 @@
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
-				BF4F720321F3CA6400EF7913 /* FBSDKLoginKit.framework in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				64CA45DBBAA9428292BDC8FD /* libRNVectorIcons.a in Frameworks */,
-				BF4F720221F3CA6400EF7913 /* Bolts.framework in Frameworks */,
 				47E1735845004059B75E16DE /* libSplashScreen.a in Frameworks */,
 				205D2994890342828D7F908E /* libRNGoogleSignin.a in Frameworks */,
 				86FABA05096E0D4F0ED45EA0 /* libPods-CareerTalk.a in Frameworks */,
@@ -748,13 +737,8 @@
 		BF6351CC2140B78700D9BD06 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				BF4F71FE21F3CA6200EF7913 /* Bolts.framework */,
-				BF4F720021F3CA6300EF7913 /* FBSDKCoreKit.framework */,
-				BF4F71FF21F3CA6300EF7913 /* FBSDKLoginKit.framework */,
-				BF4F71D521F3CA6200EF7913 /* FBSDKShareKit.framework */,
 				D523D315292C44D693F8F130 /* libRNVectorIcons.a */,
 				CA84929BF63F418A84407D5F /* libSplashScreen.a */,
-				F76BE475F74948EE8B141726 /* libRCTFBSDK.a */,
 				1E3884052F7D498087B15C8E /* libRNGoogleSignin.a */,
 			);
 			name = "Recovered References";
@@ -1501,9 +1485,7 @@
 				INFOPLIST_FILE = CareerTalkTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1530,9 +1512,7 @@
 				INFOPLIST_FILE = CareerTalkTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1630,9 +1610,7 @@
 				);
 				INFOPLIST_FILE = "CareerTalk-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1666,9 +1644,7 @@
 				);
 				INFOPLIST_FILE = "CareerTalk-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1701,9 +1677,7 @@
 				);
 				INFOPLIST_FILE = "CareerTalk-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1736,9 +1710,7 @@
 				);
 				INFOPLIST_FILE = "CareerTalk-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
