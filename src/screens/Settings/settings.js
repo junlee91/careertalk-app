@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
-import { LoginButton } from 'react-native-fbsdk';
+// import { LoginButton } from 'react-native-fbsdk';
 import { GoogleSignin } from 'react-native-google-signin';
 import { Button, ListItem } from 'react-native-elements';
 
@@ -47,15 +47,11 @@ class SettingsPage extends React.Component {
         </View>
         <View style={styles.logOutBoxStyle}>
           <View style={styles.logOutStyle}>
-            {socialProvider && socialProvider === 'facebook' ? (
-              <LoginButton onLogoutFinished={logout} />
-            ) : (
-              <Button
-                buttonStyle={styles.logOutButtonStyle}
-                onPress={socialProvider === 'google' ? this._googleSignOut : this.props.logout}
-                title="Sign Out"
-              />
-            )}
+            <Button
+              buttonStyle={styles.logOutButtonStyle}
+              onPress={socialProvider === 'google' ? this._googleSignOut : this.props.logout}
+              title="Sign Out"
+            />
           </View>
         </View>
       </SafeAreaView>

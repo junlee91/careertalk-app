@@ -15,7 +15,6 @@
     "react-native": "0.56.0",
     "react-native-elements": "^1.0.0-beta7",
     "react-native-fade-in-image": "^1.4.1",
-    "react-native-fbsdk": "^0.8.0",
     "react-native-google-signin": "^1.0.2",
     "react-native-image-zoom-viewer": "^2.2.18",
     "react-native-paper": "^2.0.1",
