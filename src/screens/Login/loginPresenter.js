@@ -1,5 +1,5 @@
 import React from 'react';
-import { LoginButton } from 'react-native-fbsdk';
+// import { LoginButton } from 'react-native-fbsdk';
 import { GoogleSigninButton } from 'react-native-google-signin';
 import { SafeAreaView, View, Button, StyleSheet, Text, Dimensions, Image } from 'react-native';
 
@@ -27,13 +27,13 @@ const LoginPage = (props) => {
 
         <Text>OR</Text>
 
-        <View style={{ paddingVertical: 15 }}>
+        {/* <View style={{ paddingVertical: 15 }}>
           <LoginButton
             readPermissions={['public_profile']}
             onLoginFinished={props.facebookLoginFinished}
             onLogoutFinished={() => console.log('logout.')}
           />
-        </View>
+        </View> */}
 
         <Button title="Login" onPress={props.login} />
 
