@@ -1,6 +1,7 @@
 import React from 'react';
 import { SafeAreaView, View, Text, StyleSheet, ScrollView } from 'react-native';
 
+import CompanyItem from '../../components/CompanyItem';
 import { InfoBox, PoweredBy } from '../../components/commons';
 
 const Summary = (props) => {
@@ -13,8 +14,11 @@ const Summary = (props) => {
           <Text>Top 5 Liked Companies</Text>
         </View>
       </InfoBox>
-      <ScrollView contentContainerStyle={styles.scrollStyle}>
-        <Text>List goes here</Text>
+      <ScrollView>
+        {props.company
+          && props.company.map(c => (
+            <CompanyItem key={c.id} id={c.id} company={c} likeButton={false} />
+          ))}
       </ScrollView>
     </SafeAreaView>
   );
@@ -26,11 +30,6 @@ const styles = StyleSheet.create({
   },
   headerStyle: {
     padding: 15
-  },
-  scrollStyle: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
   }
 });
 

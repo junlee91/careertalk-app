@@ -1,11 +1,11 @@
 import { AsyncStorage } from 'react-native';
 import { actionCreators as userActions } from './user';
+import config from '../../../config.json';
 
 // More info: https://facebook.github.io/react-native/docs/asyncstorage
 _storeData = async (key, value) => {
   try {
     await AsyncStorage.setItem(key, value);
-    console.log(key, value);
   } catch (error) {
     // Error saving data
     console.error(error);
@@ -54,29 +54,26 @@ function socialLogin(
   socialProvider
 ) {
   return (dispatch) => {
-    console.log(`Email: ${email}`);
-    console.log(`First: ${firstName} Last: ${lastName}`);
-    console.log(`Photo: ${profilePhoto}`);
-    console.log(`Social Token: ${socialToken}`);
+    return fetch(`${config.API_URL}/glogin`, {
+      method: 'POST',
+      headers: {
+        Authorization: idToken,
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.headers.map)
+      .then((map) => {
+        if (map.usertoken) {
+          dispatch(setLogIn(map.usertoken));
+          dispatch(setProvider(socialProvider));
 
-    if (idToken) {
-      console.log(`Google Firebase Id Token: ${idToken}`);
-    }
-
-    if (socialId) {
-      console.log(`Social Id: ${socialId}`);
-    }
-
-    const token = 'Career Talk Token';
-
-    if (firstName && lastName) {
-      dispatch(userActions.setUser({ firstName, lastName, profilePhoto }));
-    }
-
-    dispatch(setProvider(socialProvider));
-    dispatch(setLogIn(token));
-
-    return true;
+          // TODO: Get this info from response.json()
+          if (firstName && lastName) {
+            dispatch(userActions.setUser({ firstName, lastName, profilePhoto }));
+          }
+        }
+      })
+      .catch(error => alert('Something mysterious.. Please login with default.'));
   };
 }
 
@@ -137,7 +134,7 @@ function applySetProvider(state, action) {
 const actionCreators = {
   socialLogin,
   login,
-  logout,
+  logout
 };
 
 export { actionCreators };

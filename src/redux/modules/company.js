@@ -1,5 +1,6 @@
 // Imports
 import sample from '../../lib/sample.json';
+import config from '../../../config.json';
 
 // Actions
 const SET_COMPANY = 'SET_COMPANY';
@@ -54,6 +55,9 @@ function popNoteCompany(cmpId) {
 }
 
 // API Actions
+// ------------------------------------------------------------------------------
+//                                V1 Endpoints
+// ------------------------------------------------------------------------------
 function getCompanyList(fair_id) {
   return (dispatch) => {
     return fetch(`https://reactcareertalk.herokuapp.com/${fair_id}/companies`, {
@@ -86,15 +90,41 @@ function getFairs() {
   };
 }
 
-// TODO: This is not needed for V2 (when we have Like DB)
+// ------------------------------------------------------------------------------
+//                                V2 Endpoints
+// ------------------------------------------------------------------------------
+function v2_getFairs() {
+  return (dispatch, getState) => {
+    console.log(getState());
+
+    return fetch(`${config.API_URL}/v2/careerfairs`, {
+      headers: {
+        Authorization: 'token'
+      }
+    }).then(response => console.log(response));
+  };
+}
+
+function v2_getEmployers(fair_id) {
+  return (dispatch, getState) => {
+    return fetch(`${config.API_URL}/v2/${fair_id}/employers`, {
+      headers: {
+        Authorization: 'token'
+      }
+    }).then(response => console.log(response));
+  };
+}
+
 function likeCompany(cmpId) {
   return (dispatch) => {
+    // TODO: API CALL
     return dispatch(setLikeCompany(cmpId));
   };
 }
 
 function unlikeCompany(cmpId) {
   return (dispatch) => {
+    // TODO: API CALL
     return dispatch(setUnlikeCompany(cmpId));
   };
 }
