@@ -4,6 +4,8 @@ import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
 import { GoogleSignin } from 'react-native-google-signin';
 import { Button, ListItem } from 'react-native-elements';
 
+import { LoginButton as LogoutButton } from '../../components/commons';
+
 const list = [
   {
     title: 'Manage Profile',
@@ -29,7 +31,7 @@ class SettingsPage extends React.Component {
   };
 
   render() {
-    const { socialProvider, logout } = this.props;
+    const { socialProvider } = this.props;
 
     return (
       <SafeAreaView style={styles.container}>
@@ -46,13 +48,10 @@ class SettingsPage extends React.Component {
           ))}
         </View>
         <View style={styles.logOutBoxStyle}>
-          <View style={styles.logOutStyle}>
-            <Button
-              buttonStyle={styles.logOutButtonStyle}
-              onPress={socialProvider === 'google' ? this._googleSignOut : this.props.logout}
-              title="Sign Out"
-            />
-          </View>
+          <LogoutButton
+            onPress={socialProvider === 'google' ? this._googleSignOut : this.props.logout}
+            title="Sign Out"
+          />
         </View>
       </SafeAreaView>
     );
@@ -61,22 +60,12 @@ class SettingsPage extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#FAFAFA'
+    flex: 1
   },
   logOutBoxStyle: {
-    borderRadius: 1,
-    padding: 15,
-    justifyContent: 'flex-end',
-    backgroundColor: '#FAFAFA'
-  },
-  logOutStyle: {
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  logOutButtonStyle: {
-    width: 230,
-    height: 48
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    paddingVertical: 15
   }
 });
 

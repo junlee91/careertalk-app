@@ -2,6 +2,7 @@ import React from 'react';
 // import { LoginButton } from 'react-native-fbsdk';
 import { GoogleSigninButton } from 'react-native-google-signin';
 import { SafeAreaView, View, Button, StyleSheet, Text, Dimensions, Image } from 'react-native';
+import { LoginButton } from '../../components/commons';
 
 const { width } = Dimensions.get('window');
 
@@ -35,8 +36,9 @@ const LoginPage = (props) => {
           />
         </View> */}
 
-        <Button title="Login" onPress={props.login} />
-
+        <View style={{ paddingVertical: 15 }}>
+          <LoginButton title="Sign in with Default" onPress={props.login} />
+        </View>
       </View>
     </SafeAreaView>
   );
