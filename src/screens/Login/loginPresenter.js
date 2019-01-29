@@ -1,7 +1,17 @@
 import React from 'react';
 // import { LoginButton } from 'react-native-fbsdk';
 import { GoogleSigninButton } from 'react-native-google-signin';
-import { SafeAreaView, View, Button, StyleSheet, Text, Dimensions, Image } from 'react-native';
+import {
+  SafeAreaView,
+  View,
+  Platform,
+  StyleSheet,
+  Text,
+  Dimensions,
+  Image,
+  TouchableOpacity
+} from 'react-native';
+
 import { LoginButton } from '../../components/commons';
 
 const { width } = Dimensions.get('window');
@@ -35,9 +45,16 @@ const LoginPage = (props) => {
             onLogoutFinished={() => console.log('logout.')}
           />
         </View> */}
-
         <View style={{ paddingVertical: 15 }}>
-          <LoginButton title="Sign in with Default" onPress={props.login} />
+          {Platform.OS === 'ios' ? (
+            <LoginButton title="Sign in with Default" onPress={props.login} />
+          ) : (
+            <TouchableOpacity style={styles.button} onPressOut={props.login}>
+              <Text style={{ fontFamily: 'Roboto', fontSize: 15, fontWeight: '600' }}>
+                Sign in with Default
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </SafeAreaView>
@@ -82,6 +99,27 @@ const styles = StyleSheet.create({
     height: 200,
     width: 200,
     margin: 20
+  },
+  buttonStyle: {
+    width: 220,
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontFamily: 'Roboto',
+    fontSize: 15
+  },
+  button: {
+    shadowColor: 'rgba(0,0,0, .4)', // IOS
+    shadowOffset: { height: 1, width: 1 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 1, // IOS
+    backgroundColor: '#fff',
+    elevation: 2, // Android
+    height: 48,
+    width: 220,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row'
   }
 });
 
