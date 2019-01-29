@@ -1,8 +1,10 @@
 import React from 'react';
-import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
+import { SafeAreaView, View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 // import { LoginButton } from 'react-native-fbsdk';
 import { GoogleSignin } from 'react-native-google-signin';
-import { Button, ListItem } from 'react-native-elements';
+import { ListItem } from 'react-native-elements';
+
+import { LoginButton as LogoutButton } from '../../components/commons';
 
 const list = [
   {
@@ -29,7 +31,7 @@ class SettingsPage extends React.Component {
   };
 
   render() {
-    const { socialProvider, logout } = this.props;
+    const { socialProvider } = this.props;
 
     return (
       <SafeAreaView style={styles.container}>
@@ -46,13 +48,18 @@ class SettingsPage extends React.Component {
           ))}
         </View>
         <View style={styles.logOutBoxStyle}>
-          <View style={styles.logOutStyle}>
-            <Button
-              buttonStyle={styles.logOutButtonStyle}
+          {Platform.OS === 'ios' ? (
+            <LogoutButton
               onPress={socialProvider === 'google' ? this._googleSignOut : this.props.logout}
               title="Sign Out"
             />
-          </View>
+          ) : (
+            <TouchableOpacity style={styles.button} onPressOut={this.props.logout}>
+              <Text style={{ fontFamily: 'Roboto', fontSize: 15, fontWeight: '600' }}>
+                Sign out
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       </SafeAreaView>
     );
@@ -61,22 +68,25 @@ class SettingsPage extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#FAFAFA'
+    flex: 1
   },
   logOutBoxStyle: {
-    borderRadius: 1,
-    padding: 15,
-    justifyContent: 'flex-end',
-    backgroundColor: '#FAFAFA'
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    paddingVertical: 15
   },
-  logOutStyle: {
+  button: {
+    shadowColor: 'rgba(0,0,0, .4)', // IOS
+    shadowOffset: { height: 1, width: 1 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 1, // IOS
+    backgroundColor: '#fff',
+    elevation: 2, // Android
+    height: 48,
+    width: 220,
     justifyContent: 'center',
-    alignItems: 'center'
-  },
-  logOutButtonStyle: {
-    width: 230,
-    height: 48
+    alignItems: 'center',
+    flexDirection: 'row'
   }
 });
 
