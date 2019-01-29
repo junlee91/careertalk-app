@@ -50,7 +50,13 @@ const LoginPage = (props) => {
             <LoginButton title="Sign in with Default" onPress={props.login} />
           ) : (
             <TouchableOpacity style={styles.button} onPressOut={props.login}>
-              <Text style={{ fontFamily: 'Roboto', fontSize: 15, fontWeight: '600' }}>
+              <Text
+                style={{
+                  fontFamily: Platform.OS === 'android' ? 'Roboto' : 'Avenir Next',
+                  fontSize: 15,
+                  fontWeight: '600'
+                }}
+              >
                 Sign in with Default
               </Text>
             </TouchableOpacity>

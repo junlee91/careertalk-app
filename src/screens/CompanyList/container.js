@@ -5,28 +5,25 @@ import { Spinner } from '../../components/commons';
 import filterFields from '../../lib/fields.json';
 
 class Container extends Component {
-  constructor() {
-    super();
-    this.state = {
-      loading: false,
-      isFetching: false,
-      canSearch: false,
-      searchText: '',
-      searchBarFocus: false,
-      companiesForRender: [],
-      numOfFavorites: 0,
-      numOfNotes: 0,
-      numOfCompanies: 0,
-      overlayVisible: false,
-      filterOptions: {
-        degree: new Set(),
-        majors: new Set(),
-        hiringTypes: new Set(),
-      },
-      sponsorChecked: false,
-      filterFields,
-    };
-  }
+  state = {
+    loading: false,
+    isFetching: false,
+    canSearch: false,
+    searchText: '',
+    searchBarFocus: false,
+    companiesForRender: [],
+    numOfFavorites: 0,
+    numOfNotes: 0,
+    numOfCompanies: 0,
+    overlayVisible: false,
+    filterOptions: {
+      degree: new Set(),
+      majors: new Set(),
+      hiringTypes: new Set(),
+    },
+    sponsorChecked: false,
+    filterFields,
+  };
 
   componentDidMount() {
     const { demoGetCompany, company } = this.props;

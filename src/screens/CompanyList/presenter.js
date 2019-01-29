@@ -42,7 +42,7 @@ const CompanyList = (props) => {
             />)}
           data={companiesForRender}
           keyExtractor={c => c.id.toString()}
-          renderItem={c => <CompanyItem id={c.item.id} company={c.item} likeButton />}
+          renderItem={c => <CompanyItem id={c.item.id} company={c.item} noteIcon likeButton />}
         />
         <PoweredBy poweredby="Logos provided by Clearbit" />
       </View>

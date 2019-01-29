@@ -23,8 +23,15 @@ const CompanyItem = (props) => {
         </View>
         <View style={{ flex: 1 }}>
           <CardSection>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginRight: 10 }}>
-              <NoteIcon visible={props.isNote} />
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-evenly',
+                alignItems: 'center',
+                marginRight: 10
+              }}
+            >
+              {props.displayNote && <NoteIcon visible={props.isNote} />}
               {props.displayLike && <FavIcon {...props} />}
             </View>
           </CardSection>
