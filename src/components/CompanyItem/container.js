@@ -5,7 +5,7 @@ import CompanyItem from './presenter';
 
 class Container extends Component {
   componentDidMount() {
-    const { company, favorites, notes, likeButton } = this.props;
+    const { company, favorites, notes, noteIcon, likeButton } = this.props;
     const isLiked = favorites.includes(company.id);
     const isNote = notes[company.id] !== undefined;
 
@@ -13,6 +13,7 @@ class Container extends Component {
       company,
       isLiked,
       isNote,
+      displayNote: noteIcon,
       displayLike: likeButton,
     });
   }

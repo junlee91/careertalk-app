@@ -17,7 +17,7 @@ const Summary = (props) => {
       <ScrollView>
         {props.company
           && props.company.map(c => (
-            <CompanyItem key={c.id} id={c.id} company={c} likeButton={false} />
+            <CompanyItem key={c.id} id={c.id} company={c} noteIcon={false} likeButton={false} />
           ))}
       </ScrollView>
     </SafeAreaView>
