@@ -55,7 +55,13 @@ class SettingsPage extends React.Component {
             />
           ) : (
             <TouchableOpacity style={styles.button} onPressOut={this.props.logout}>
-              <Text style={{ fontFamily: 'Roboto', fontSize: 15, fontWeight: '600' }}>
+              <Text
+                style={{
+                  fontFamily: Platform.OS === 'android' ? 'Roboto' : 'Avenir Next',
+                  fontSize: 15,
+                  fontWeight: '600'
+                }}
+              >
                 Sign out
               </Text>
             </TouchableOpacity>
