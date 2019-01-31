@@ -107,13 +107,15 @@ function v2_getFairs() {
   };
 }
 
-function v2_getEmployers(fair_id) {
+function v2_getEmployers(fairId) {
   return (dispatch, getState) => {
-    return fetch(`${config.API_URL}/v2/${fair_id}/employers`, {
+    return fetch(`${config.API_URL}/v2/${fairId}/employers`, {
       headers: {
         Authorization: 'token'
       }
-    }).then(response => console.log(response));
+    })
+      .then(response => response.json())
+      .then(json => dispatch(setCompanyList(fairId, json)));
   };
 }
 
@@ -147,6 +149,8 @@ function popNote(cmpId) {
 const initialState = {
   favorites: [],
   notes: {},
+  fairs: {},
+  employers: {},
 };
 
 // Reducer
@@ -227,10 +231,9 @@ function applyPopNoteCompany(state, action) {
 
 // Exports
 const actionCreators = {
-  getCompanyList,
   demoGetCompany,
-  getFairs,
   v2_getFairs,
+  v2_getEmployers,
   likeCompany,
   unlikeCompany,
   setNote,
