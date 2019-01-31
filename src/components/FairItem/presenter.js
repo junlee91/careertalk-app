@@ -8,7 +8,7 @@ const FairItem = (props) => {
   fair = { company_url: props.company_url || 'uic.edu' };
 
   return (
-    <TouchableOpacity onPress={() => props.navigateTo('companyList', props.fair.id)}>
+    <TouchableOpacity onPress={() => props.navigateTo(props.fair.id)}>
       {Platform.OS === 'ios' ? (
         <View style={styles.bigCard}>
           <LogoImage {...fair} size="big" wide />

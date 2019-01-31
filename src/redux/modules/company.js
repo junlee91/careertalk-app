@@ -1,5 +1,4 @@
 // Imports
-import sample from '../../lib/sample.json';
 import config from '../../../config.json';
 import { actionCreators as authActions } from './auth';
 
@@ -10,11 +9,13 @@ const SET_LIKE = 'SET_LIKE';
 const SET_UNLIKE = 'SET_UNLIKE';
 const SET_NOTE = 'SET_NOTE';
 const POP_NOTE = 'POP_NOTE';
+const SET_CURRENT_FAIR = 'SET_CURRENT_FAIR';
 
 // Action Creators
-function setCompanyList(company) {
+function setCompanyList(fairId, company) {
   return {
     type: SET_COMPANY,
+    fairId,
     company,
   };
 }
@@ -55,42 +56,14 @@ function popNoteCompany(cmpId) {
   };
 }
 
+function setCurrentFair(fairId) {
+  return {
+    type: SET_CURRENT_FAIR,
+    fairId,
+  };
+}
+
 // API Actions
-// ------------------------------------------------------------------------------
-//                                V1 Endpoints
-// ------------------------------------------------------------------------------
-function getCompanyList(fair_id) {
-  return (dispatch) => {
-    return fetch(`https://reactcareertalk.herokuapp.com/${fair_id}/companies`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => response.json())
-      .then(json => dispatch(setCompanyList(json)));
-  };
-}
-
-function demoGetCompany() {
-  return (dispatch) => {
-    return dispatch(setCompanyList(sample));
-  };
-}
-
-function getFairs() {
-  return (dispatch) => {
-    return fetch('https://reactcareertalk.herokuapp.com/careerfairs', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => response.json())
-      .then(json => dispatch(setFairs(json)));
-  };
-}
-
 // ------------------------------------------------------------------------------
 //                                V2 Endpoints
 // ------------------------------------------------------------------------------
@@ -149,7 +122,6 @@ function popNote(cmpId) {
 const initialState = {
   favorites: [],
   notes: {},
-  fairs: {},
   employers: {},
 };
 
@@ -168,6 +140,8 @@ function reducer(state = initialState, action) {
       return applySetNoteCompany(state, action);
     case POP_NOTE:
       return applyPopNoteCompany(state, action);
+    case SET_CURRENT_FAIR:
+      return applySetCurrentFair(state, action);
     default:
       return state;
   }
@@ -175,11 +149,13 @@ function reducer(state = initialState, action) {
 
 // Reducer Functions
 function applySetCompany(state, action) {
-  const { company } = action;
+  const { fairId, company: { companies } } = action;
+  state.employers[fairId] = companies;
+  const newEmployers = state.employers;
 
   return {
     ...state,
-    company,
+    employers: Object.assign({}, newEmployers)
   };
 }
 
@@ -229,15 +205,24 @@ function applyPopNoteCompany(state, action) {
   };
 }
 
+function applySetCurrentFair(state, action) {
+  const { fairId } = action;
+
+  return {
+    ...state,
+    currentFair: fairId
+  };
+}
+
 // Exports
 const actionCreators = {
-  demoGetCompany,
   v2_getFairs,
   v2_getEmployers,
   likeCompany,
   unlikeCompany,
   setNote,
   popNote,
+  setCurrentFair,
 };
 
 export { actionCreators };

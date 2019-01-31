@@ -11,11 +11,9 @@ class Container extends Component {
     });
   }
 
-  _navigateTo = (key) => {
-    const { fair } = this.props;
-    const param = { fair_id: fair.id };
-
-    Actions.jump(key, param);
+  _navigateTo = (id) => {
+    this.props.setCurrentFair(id);
+    Actions.companyList();
   };
 
   render() {

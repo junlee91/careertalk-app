@@ -6,7 +6,7 @@ import filterFields from '../../lib/fields.json';
 
 class Container extends Component {
   state = {
-    loading: false,
+    loading: true,
     isFetching: false,
     canSearch: false,
     searchText: '',
@@ -26,17 +26,18 @@ class Container extends Component {
   };
 
   componentDidMount() {
-    const { demoGetCompany, company } = this.props;
+    const { v2_getEmployers, employers, currentFair } = this.props;
 
-    if (!(company && company.Company)) {
-      demoGetCompany();
-    } else {
+    if (employers[currentFair]) {
       this._setComponentState(this.props);
+    } else {
+      v2_getEmployers(currentFair);
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.company) {
+    const { currentFair, employers } = nextProps;
+    if (employers[currentFair]) {
       this._setComponentState(nextProps);
     }
   }
@@ -97,16 +98,18 @@ class Container extends Component {
   }
 
   _setComponentState(props) {
-    const { company: { Company }, favorites, notes } = props;
-    const numOfCompanies = Company.length;
+    const { currentFair, favorites, notes, employers } = props;
+    const employersForRender = employers[currentFair];
+    const numOfCompanies = employersForRender.length;
     const numOfFavorites = favorites.length;
     const numOfNotes = Object.keys(notes).length;
 
     this.setState({
-      companiesForRender: Company,
+      loading: false,
+      employersForRender,
       numOfCompanies,
       numOfFavorites,
-      numOfNotes
+      numOfNotes,
     });
   }
 
