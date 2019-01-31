@@ -4,7 +4,7 @@ import { Badge } from 'react-native-elements';
 const Label = (props) => {
   const hiringTypes = props.hiring_types.join(', ');
   const hiringMajors = props.hiring_majors.join(', ');
-  const sponsor = props.visa === 'yes';
+  const sponsor = props.visa_support === 'yes';
 
   return (
     <Fragment>
