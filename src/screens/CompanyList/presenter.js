@@ -27,7 +27,8 @@ import {
 const { width, height } = Dimensions.get('window');
 
 const CompanyList = (props) => {
-  const { companiesForRender } = props;
+  const { employersForRender } = props;
+
   return (
     <SafeAreaView style={styles.companyListViewStyle}>
       <SearchBarHeader {...props} />
@@ -40,9 +41,11 @@ const CompanyList = (props) => {
               onRefresh={props.refresh}
               tintColor="grey"
             />)}
-          data={companiesForRender}
+          data={employersForRender}
           keyExtractor={c => c.id.toString()}
-          renderItem={c => <CompanyItem id={c.item.id} company={c.item} noteIcon likeButton />}
+          renderItem={c => (
+            <CompanyItem id={c.item.id} company={c.item} noteIcon likeButton showLabel />
+          )}
         />
         <PoweredBy poweredby="Logos provided by Clearbit" />
       </View>

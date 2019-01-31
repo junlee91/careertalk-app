@@ -1,5 +1,4 @@
 // Imports
-import sample from '../../lib/sample.json';
 import config from '../../../config.json';
 import { actionCreators as authActions } from './auth';
 
@@ -10,11 +9,13 @@ const SET_LIKE = 'SET_LIKE';
 const SET_UNLIKE = 'SET_UNLIKE';
 const SET_NOTE = 'SET_NOTE';
 const POP_NOTE = 'POP_NOTE';
+const SET_CURRENT_FAIR = 'SET_CURRENT_FAIR';
 
 // Action Creators
-function setCompanyList(company) {
+function setCompanyList(fairId, company) {
   return {
     type: SET_COMPANY,
+    fairId,
     company,
   };
 }
@@ -55,64 +56,39 @@ function popNoteCompany(cmpId) {
   };
 }
 
+function setCurrentFair(fairId) {
+  return {
+    type: SET_CURRENT_FAIR,
+    fairId,
+  };
+}
+
 // API Actions
 // ------------------------------------------------------------------------------
-//                                V1 Endpoints
+//                                V2 Endpoints
 // ------------------------------------------------------------------------------
-function getCompanyList(fair_id) {
-  return (dispatch) => {
-    return fetch(`https://reactcareertalk.herokuapp.com/${fair_id}/companies`, {
+function v2_getFairs() {
+  return (dispatch, _) => {
+    return fetch(`${config.API_URL}/v2/careerfairs`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => response.json())
-      .then(json => dispatch(setCompanyList(json)));
-  };
-}
-
-function demoGetCompany() {
-  return (dispatch) => {
-    return dispatch(setCompanyList(sample));
-  };
-}
-
-function getFairs() {
-  return (dispatch) => {
-    return fetch('https://reactcareertalk.herokuapp.com/careerfairs', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+        'Content-Type': 'application/json'
+      }
     })
       .then(response => response.json())
       .then(json => dispatch(setFairs(json)));
   };
 }
 
-// ------------------------------------------------------------------------------
-//                                V2 Endpoints
-// ------------------------------------------------------------------------------
-function v2_getFairs() {
+function v2_getEmployers(fairId) {
   return (dispatch, getState) => {
-    console.log(getState());
-
-    return fetch(`${config.API_URL}/v2/careerfairs`, {
+    return fetch(`${config.API_URL}/v2/${fairId}/employers`, {
       headers: {
         Authorization: 'token'
       }
-    }).then(response => console.log(response));
-  };
-}
-
-function v2_getEmployers(fair_id) {
-  return (dispatch, getState) => {
-    return fetch(`${config.API_URL}/v2/${fair_id}/employers`, {
-      headers: {
-        Authorization: 'token'
-      }
-    }).then(response => console.log(response));
+    })
+      .then(response => response.json())
+      .then(json => dispatch(setCompanyList(fairId, json)));
   };
 }
 
@@ -146,6 +122,7 @@ function popNote(cmpId) {
 const initialState = {
   favorites: [],
   notes: {},
+  employers: {},
 };
 
 // Reducer
@@ -163,6 +140,8 @@ function reducer(state = initialState, action) {
       return applySetNoteCompany(state, action);
     case POP_NOTE:
       return applyPopNoteCompany(state, action);
+    case SET_CURRENT_FAIR:
+      return applySetCurrentFair(state, action);
     default:
       return state;
   }
@@ -170,11 +149,13 @@ function reducer(state = initialState, action) {
 
 // Reducer Functions
 function applySetCompany(state, action) {
-  const { company } = action;
+  const { fairId, company: { companies } } = action;
+  state.employers[fairId] = companies;
+  const newEmployers = state.employers;
 
   return {
     ...state,
-    company,
+    employers: Object.assign({}, newEmployers)
   };
 }
 
@@ -224,16 +205,24 @@ function applyPopNoteCompany(state, action) {
   };
 }
 
+function applySetCurrentFair(state, action) {
+  const { fairId } = action;
+
+  return {
+    ...state,
+    currentFair: fairId
+  };
+}
+
 // Exports
 const actionCreators = {
-  getCompanyList,
-  demoGetCompany,
-  getFairs,
   v2_getFairs,
+  v2_getEmployers,
   likeCompany,
   unlikeCompany,
   setNote,
   popNote,
+  setCurrentFair,
 };
 
 export { actionCreators };

@@ -4,10 +4,6 @@ import { Actions } from 'react-native-router-flux';
 import FairItem from './presenter';
 
 class Container extends Component {
-  state = {
-    isLiked: false
-  };
-
   componentDidMount() {
     const { fair } = this.props;
     this.setState({
@@ -15,11 +11,9 @@ class Container extends Component {
     });
   }
 
-  _navigateTo = (key) => {
-    const { fair } = this.props;
-    const param = { fair_id: fair.id };
-
-    Actions.jump(key, param);
+  _navigateTo = (id) => {
+    this.props.setCurrentFair(id);
+    Actions.companyList();
   };
 
   render() {

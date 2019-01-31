@@ -4,60 +4,11 @@ import { Surface } from 'react-native-paper';
 
 import { LogoImage } from '../commons';
 
-// TODO: move to lib folder
-function getMonthName(month) {
-  switch (month) {
-    case 1:
-      return 'January';
-    case 2:
-      return 'Fabruary';
-    case 3:
-      return 'March';
-    case 4:
-      return 'April';
-    case 5:
-      return 'May';
-    case 6:
-      return 'June';
-    case 7:
-      return 'July';
-    case 8:
-      return 'August';
-    case 9:
-      return 'September';
-    case 10:
-      return 'October';
-    case 11:
-      return 'November';
-    default:
-      return 'December';
-  }
-}
-
-function getTimeString(time) {
-  let hour = Math.floor(time / 60);
-  const minutes = time % 60;
-  let suffix = 'AM';
-  let minString;
-  if (hour >= 12) {
-    if (hour > 12) {
-      hour -= 12;
-    }
-    suffix = 'PM';
-  }
-  if (minutes < 10) {
-    minString = `0${minutes.toString()}`;
-  } else {
-    minString = minutes.toString();
-  }
-  const timeString = `${hour.toString()}:${minString}${suffix}`;
-  return timeString;
-}
-
 const FairItem = (props) => {
-  fair = { company_url: 'uic.edu' };
+  fair = { company_url: props.company_url || 'uic.edu' };
+
   return (
-    <TouchableOpacity onPress={() => props.navigateTo('companyList', props.fair.id)}>
+    <TouchableOpacity onPress={() => props.navigateTo(props.fair.id)}>
       {Platform.OS === 'ios' ? (
         <View style={styles.bigCard}>
           <LogoImage {...fair} size="big" wide />
@@ -77,10 +28,9 @@ const FairItem = (props) => {
 
 const NumOfCompanies = (props) => {
   const { fair } = props;
-  const numOfCompanies = fair.companies.length;
   return (
     <View style={styles.numOfCompaniesView}>
-      <Text style={styles.numOfCompaniesText}>{numOfCompanies}</Text>
+      <Text style={styles.numOfCompaniesText}>{fair.num_of_employers}</Text>
       <Text style={styles.numOfcompaniesSmallText}> Employers</Text>
     </View>
   );
@@ -88,11 +38,14 @@ const NumOfCompanies = (props) => {
 
 const FairHeader = (props) => {
   const { fair } = props;
-  const month = getMonthName(fair.date.month);
-  const startTime = getTimeString(fair.start_time_min);
-  const endTime = getTimeString(fair.end_time);
+
+  // TODO: Time does not match!!
+  const formatter = { hour: '2-digit', minute: '2-digit' };
+  const startTime = new Date(fair.start_time).toLocaleTimeString([], formatter);
+  const endTime = new Date(fair.end_time).toLocaleTimeString([], formatter);
+  const fairDate = new Date(fair.date).toDateString();
   const timeString = `${startTime} - ${endTime}`;
-  const dateString = `${month} ${fair.date.day}, ${fair.date.year} ${timeString}`;
+  const dateString = `${fairDate} ${timeString}`;
   return (
     <View>
       <Text style={styles.fairHeaderText}>{fair.name}</Text>
@@ -113,7 +66,8 @@ const styles = {
   },
   fairHeaderText: {
     paddingTop: 20,
-    fontSize: 17,
+    fontSize: 15,
+    fontWeight: '500',
     fontFamily: 'Avenir Next'
   },
   fairInfo: {
@@ -138,7 +92,8 @@ const styles = {
   numOfCompaniesView: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 };
 
