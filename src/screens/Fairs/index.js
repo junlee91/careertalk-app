@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Container from './container';
-import { actionCreators as companyActions } from '../../redux/modules/user';
+import { actionCreators as companyActions } from '../../redux/modules/company';
 
 const mapStateToProps = (state) => {
   const { company: { fairs } } = state;
@@ -11,8 +11,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  getFairs: () => {
-    dispatch(companyActions.getFairs());
+  v2_getFairs: () => {
+    dispatch(companyActions.v2_getFairs());
   }
 });
 

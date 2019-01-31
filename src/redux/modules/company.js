@@ -1,6 +1,7 @@
 // Imports
 import sample from '../../lib/sample.json';
 import config from '../../../config.json';
+import { actionCreators as authActions } from './auth';
 
 // Actions
 const SET_COMPANY = 'SET_COMPANY';
@@ -228,6 +229,7 @@ const actionCreators = {
   getCompanyList,
   demoGetCompany,
   getFairs,
+  v2_getFairs,
   likeCompany,
   unlikeCompany,
   setNote,

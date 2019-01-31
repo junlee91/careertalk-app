@@ -50,7 +50,7 @@ function login() {
 }
 
 function socialLogin(
-  { email, firstName, lastName, profilePhoto, socialToken, idToken, socialId },
+  { idToken },
   socialProvider
 ) {
   return (dispatch) => {
@@ -61,17 +61,26 @@ function socialLogin(
         'Content-Type': 'application/json'
       }
     })
-      .then(response => response.headers.map)
-      .then((map) => {
+      .then((response) => {
+        const { headers: { map } } = response;
+
         if (map.usertoken) {
           dispatch(setLogIn(map.usertoken));
           dispatch(setProvider(socialProvider));
-
-          // TODO: Get this info from response.json()
-          if (firstName && lastName) {
-            dispatch(userActions.setUser({ firstName, lastName, profilePhoto }));
-          }
         }
+        return response.json();
+      })
+      .then((json) => {
+        const { user } = json;
+        const { first_name, last_name, profile_url } = user;
+
+        dispatch(
+          userActions.setUser({
+            firstName: first_name,
+            lastName: last_name,
+            profilePhoto: profile_url
+          })
+        );
       })
       .catch(error => alert('Something mysterious.. Please login with default.'));
   };
