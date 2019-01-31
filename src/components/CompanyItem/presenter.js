@@ -16,7 +16,7 @@ const CompanyItem = (props) => {
             </View>
           </CardSection>
         </View>
-        <View style={{ flex: 4 }}>
+        <View style={props.displayLabel ? { flex: 4 } : { flex: 3 }}>
           <CardSection>
             <EmployerField {...props} />
           </CardSection>

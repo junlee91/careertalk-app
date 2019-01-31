@@ -11,25 +11,41 @@ const Summary = (props) => {
     <SafeAreaView style={styles.container}>
       <InfoBox>
         <View style={styles.headerStyle}>
-          <Text>Top 5 Liked Companies</Text>
+          <Text style={styles.headerTextStyle}>Top 5 Liked Companies</Text>
         </View>
       </InfoBox>
       <ScrollView>
-        {props.company
-          && props.company.map(c => (
-            <CompanyItem key={c.id} id={c.id} company={c} noteIcon={false} likeButton={false} />
-          ))}
+        <InfoBox>
+          <View style={styles.contentStyle}>
+            {props.company
+              && props.company.map(c => (
+                <CompanyItem key={c.id} id={c.id} company={c} noteIcon={false} likeButton={false} />
+              ))}
+          </View>
+        </InfoBox>
       </ScrollView>
+      <PoweredBy poweredby="Logos provided by Clearbit" />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: 'white',
   },
   headerStyle: {
-    padding: 15
+    padding: 15,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  headerTextStyle: {
+    fontSize: 20,
+    fontWeight: '600',
+    fontFamily: 'Avenir Next'
+  },
+  contentStyle: {
+    marginHorizontal: 10
   }
 });
 

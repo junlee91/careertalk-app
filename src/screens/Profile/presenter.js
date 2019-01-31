@@ -10,7 +10,7 @@ const Profile = (props) => {
   const displayName = firstName && lastName ? `${firstName} ${lastName}` : 'Anonymous User';
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       <InfoBox>
         <View style={styles.userInfoStyle}>
           <ProfileImage profilePhoto={profilePhoto} />
@@ -59,6 +59,10 @@ const FairsList = (props) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   userInfoStyle: {
     flexDirection: 'row',
     padding: 5,
