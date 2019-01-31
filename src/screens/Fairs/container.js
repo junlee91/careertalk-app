@@ -25,21 +25,16 @@ class Container extends Component {
     } else {
       v2_getFairs();
     }
-
-    this.setState({
-      loading: false,
-      fairs: hard_fairs.Fairs
-    });
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.fairs) {
-  //     this.setState({
-  //       loading: false,
-  //       fairs: nextProps.fairs
-  //     });
-  //   }
-  // }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.fairs) {
+      this.setState({
+        loading: false,
+        fairs: nextProps.fairs
+      });
+    }
+  }
 
   render() {
     const { loading } = this.state;

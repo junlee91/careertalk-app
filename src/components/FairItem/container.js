@@ -4,10 +4,6 @@ import { Actions } from 'react-native-router-flux';
 import FairItem from './presenter';
 
 class Container extends Component {
-  state = {
-    isLiked: false
-  };
-
   componentDidMount() {
     const { fair } = this.props;
     this.setState({

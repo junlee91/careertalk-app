@@ -95,19 +95,15 @@ function getFairs() {
 //                                V2 Endpoints
 // ------------------------------------------------------------------------------
 function v2_getFairs() {
-  return (dispatch, getState) => {
-    console.log(getState());
-
-    return true;
-
-    // return fetch(`${config.API_URL}/v2/careerfairs`, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   }
-    // })
-    //   .then(response => response.json())
-    //   .then(json => console.log(json));
+  return (dispatch, _) => {
+    return fetch(`${config.API_URL}/v2/careerfairs`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(json => dispatch(setFairs(json)));
   };
 }
 

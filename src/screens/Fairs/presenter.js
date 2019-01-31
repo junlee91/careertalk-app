@@ -5,7 +5,7 @@ import FairItem from '../../components/FairItem';
 import { PoweredBy } from '../../components/commons';
 
 const FairList = (props) => {
-  const { fairs } = props;
+  const { fairs: { fairs } } = props;
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
