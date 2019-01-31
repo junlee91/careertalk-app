@@ -98,11 +98,16 @@ function v2_getFairs() {
   return (dispatch, getState) => {
     console.log(getState());
 
-    return fetch(`${config.API_URL}/v2/careerfairs`, {
-      headers: {
-        Authorization: 'token'
-      }
-    }).then(response => console.log(response));
+    return true;
+
+    // return fetch(`${config.API_URL}/v2/careerfairs`, {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   }
+    // })
+    //   .then(response => response.json())
+    //   .then(json => console.log(json));
   };
 }
 

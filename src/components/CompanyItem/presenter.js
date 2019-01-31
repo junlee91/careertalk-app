@@ -48,9 +48,11 @@ const EmployerField = props => (
         {props.company.name}
       </Text>
     </View>
-    <View style={styles.labelContentStyle}>
-      <Label {...props.company} />
-    </View>
+    {props.displayLabel && (
+      <View style={styles.labelContentStyle}>
+        <Label {...props.company} />
+      </View>
+    )}
   </TouchableOpacity>
 );
 
