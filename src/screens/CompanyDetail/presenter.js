@@ -17,7 +17,7 @@ import { LogoImage, InfoBox, Tag, FavButton, PoweredBy, BackIcon } from '../../c
 import { MapIcon } from '../../components/FairMap';
 
 const CompanyDetail = (props) => {
-  const { companyInfo, date } = props;
+  const { companyInfo } = props;
   const tables = companyInfo.tables.join(', ');
 
   return (
@@ -27,17 +27,17 @@ const CompanyDetail = (props) => {
         {Platform.OS === 'ios' && <CrossButton />}
         <InfoBox>
           <View style={styles.titleContent}>
-            <LogoImage {...companyInfo} size="medium" wide />
-            <Text style={styles.titleTextStyle}>{companyInfo.name}</Text>
+            <LogoImage {...companyInfo.employer} size="medium" wide />
+            <Text style={styles.titleTextStyle}>{companyInfo.employer.name}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Caption>
                 {companyInfo.tables.length === 1 ? `Table: ${tables}` : `Tables: ${tables}`}
               </Caption>
-              <MapIcon
+              {/* <MapIcon
                 fairId={companyInfo.fair_id}
                 companyName={companyInfo.name}
                 tables={tables}
-              />
+              /> */}
             </View>
           </View>
         </InfoBox>
@@ -45,7 +45,7 @@ const CompanyDetail = (props) => {
           <NoteInfo {...props} />
         </InfoBox>
         <InfoBox>
-          <EventInfo {...companyInfo} date={date} />
+          <EventInfo {...props} />
         </InfoBox>
         <InfoBox>
           <DetailInfo {...companyInfo} />
@@ -98,20 +98,21 @@ const NoteInfo = (props) => {
 const EventInfo = (props) => {
   // const index = props.date.indexOf('00:00:00') - 1;
   // const date = props.date.slice(0, index);
+  const { companyInfo, fairInfo, date } = props;
 
   return (
     <View>
       <View style={{ flexDirection: 'row', alignItems: 'center', padding: 5 }}>
         <Icon name="calendar" type="entypo" />
-        <Text style={{ marginLeft: 20 }}>{props.date}</Text>
+        <Text style={{ marginLeft: 20 }}>{fairInfo.date}</Text>
       </View>
-      <Text style={styles.textStyle}>{props.fair}</Text>
+      <Text style={styles.textStyle}>{fairInfo.name}</Text>
       <Text
         style={styles.hrefTextStyle}
-        onPress={() => Linking.openURL(`http://${props.company_url}`)}
+        onPress={() => Linking.openURL(`http://${companyInfo.employer.company_url}`)}
       >
         http://
-        {props.company_url}
+        {companyInfo.employer.company_url}
       </Text>
     </View>
   );
@@ -134,11 +135,11 @@ const DetailInfo = (props) => {
       </View>
       <Text style={styles.detailTextStyle}>Degrees</Text>
       <View style={styles.tagStyle}>
-        {props.degree.map(type => (
+        {props.degree_requirements.map(type => (
           <Tag key={type} type={type} color="#22a6b3" />
         ))}
       </View>
-      {props.visa === 'yes' && <Text style={styles.detailTextStyle}>F1/H1B Sponsor Supported</Text>}
+      {props.visa_support === 'yes' && <Text style={styles.detailTextStyle}>F1/H1B Sponsor Supported</Text>}
     </View>
   );
 };
