@@ -43,7 +43,9 @@ class Container extends Component {
   }
 
   _refresh = () => {
-    console.log('refreshing..');
+    const { v2_getEmployers, currentFair } = this.props;
+
+    v2_getEmployers(currentFair);
   };
 
   _searching = (text) => {
