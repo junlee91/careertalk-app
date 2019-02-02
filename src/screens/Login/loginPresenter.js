@@ -52,7 +52,7 @@ const LoginPage = (props) => {
             <TouchableOpacity style={styles.button} onPressOut={props.login}>
               <Text
                 style={{
-                  fontFamily: Platform.OS === 'android' ? 'Roboto' : 'Avenir Next',
+                  fontFamily: 'Avenir Next',
                   fontSize: 15,
                   fontWeight: '600'
                 }}
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     height: 48,
     justifyContent: 'center',
     alignItems: 'center',
-    fontFamily: 'Roboto',
+    fontFamily: 'Avenir Next',
     fontSize: 15
   },
   button: {

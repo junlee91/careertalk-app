@@ -5,52 +5,53 @@ class Container extends React.Component {
   constructor() {
     super();
     this.state = {
-      filteredFairs: [],
       firstName: '',
       lastName: '',
-      profilePhoto: '',
+      profilePhoto: ''
     };
   }
 
   componentDidMount() {
-    const { firstName, lastName, profilePhoto } = this.props;
+    this._setComponentState(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this._setComponentState(nextProps);
+  }
+
+  _setComponentState(props) {
+    const { firstName, lastName, profilePhoto, favorites, fairs: { fairs }, employers } = props;
+    const keys = Object.keys(employers);
+    const filteredEmployers = [];
+    let isFavoritePresent = false;
+
+    for (let i = 0; i < keys.length; i += 1) {
+      const fairId = keys[i];
+      let employersList = employers[fairId];
+
+      employersList = employersList.filter(e => favorites.includes(e.id));
+
+      if (employersList.length) {
+        isFavoritePresent = true;
+      }
+
+      filteredEmployers.push(Object.assign({
+        fair: fairs[fairId - 1],
+      }, { employersList }));
+    }
 
     this.setState({
       firstName,
       lastName,
       profilePhoto,
+      filteredEmployers,
+      isFavoritePresent,
     });
-    // this._setComponentState(this.props);
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   this._setComponentState(nextProps);
-  // }
-
-  // _setComponentState(props) {
-  //   const { fairs: { Careerfair }, favorites } = props;
-  //   const filteredFairs = [];
-  //   let isFavoritePresent = false;
-
-  //   for (let i = 0; i < Careerfair.length; i += 1) {
-  //     const { companies } = Careerfair[i];
-  //     const filteredCompanies = companies.filter(company => favorites.includes(company.id));
-
-  //     if (filteredCompanies.length > 0) {
-  //       isFavoritePresent = true;
-  //     }
-  //     filteredFairs.push(filteredCompanies);
-  //   }
-
-  //   this.setState({
-  //     filteredFairs,
-  //     isFavoritePresent
-  //   });
-  // }
-
   render() {
-    const { filteredFairs } = this.state;
-    return <Fragment>{filteredFairs && <Profile {...this.state} />}</Fragment>;
+    const { filteredEmployers } = this.state;
+    return <Fragment>{filteredEmployers && <Profile {...this.state} />}</Fragment>;
   }
 }
 
