@@ -14,7 +14,7 @@ const styles = {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    height: 600,
+    height: 300,
     marginHorizontal: 50
   },
   noAccessText: {
