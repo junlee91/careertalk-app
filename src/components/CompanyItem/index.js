@@ -3,12 +3,17 @@ import Container from './container';
 import { actionCreators as companyActions } from '../../redux/modules/company';
 
 const mapStateToProps = (state) => {
-  const { company: { favorites, notes, numOfFavorites, numOfNotes } } = state;
+  const {
+    company: { favorites, notes, numOfFavorites, numOfNotes },
+    auth: { socialProvider }
+  } = state;
+
   return {
     favorites,
     notes,
     numOfFavorites,
-    numOfNotes
+    numOfNotes,
+    socialProvider
   };
 };
 

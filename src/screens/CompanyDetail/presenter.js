@@ -51,25 +51,27 @@ const CompanyDetail = (props) => {
           <DetailInfo {...companyInfo} />
         </InfoBox>
       </ScrollView>
-      <TouchableOpacity
-        onPressOut={props.handleLike}
-        style={{
-          borderWidth: 1,
-          borderColor: 'rgba(0,0,0,0.2)',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: 70,
-          height: 70,
-          position: 'absolute',
-          bottom: 30,
-          right: 15,
-          backgroundColor: props.isLiked ? '#ffdde9' : '#fff',
-          borderRadius: 100,
-          zIndex: 5
-        }}
-      >
-        <FavButton isLiked={props.isLiked} size={35} />
-      </TouchableOpacity>
+      {props.socialProvider && (
+        <TouchableOpacity
+          onPressOut={props.handleLike}
+          style={{
+            borderWidth: 1,
+            borderColor: 'rgba(0,0,0,0.2)',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 70,
+            height: 70,
+            position: 'absolute',
+            bottom: 30,
+            right: 15,
+            backgroundColor: props.isLiked ? '#ffdde9' : '#fff',
+            borderRadius: 100,
+            zIndex: 5
+          }}
+        >
+          <FavButton isLiked={props.isLiked} size={35} />
+        </TouchableOpacity>
+      )}
       <PoweredBy poweredby="Logos provided by Clearbit" />
     </SafeAreaView>
   );
@@ -140,7 +142,9 @@ const DetailInfo = (props) => {
           <Tag key={type} type={type} color="#22a6b3" />
         ))}
       </View>
-      {props.visa_support === 'yes' && <Text style={styles.detailTextStyle}>F1/H1B Sponsor Supported</Text>}
+      {props.visa_support === 'yes' && (
+        <Text style={styles.detailTextStyle}>F1/H1B Sponsor Supported</Text>
+      )}
     </View>
   );
 };

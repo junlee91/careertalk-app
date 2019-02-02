@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
+import { Alert } from 'react-native';
 
 import CompanyItem from './presenter';
 
 class Container extends Component {
   componentDidMount() {
-    const { company, favorites, notes, showLabel, noteIcon, likeButton } = this.props;
+    const {
+      company,
+      favorites,
+      notes,
+      showLabel,
+      noteIcon,
+      likeButton,
+      socialProvider
+    } = this.props;
     const isLiked = favorites.includes(company.id);
     const isNote = notes[company.id] !== undefined;
 
@@ -16,6 +25,7 @@ class Container extends Component {
       displayLabel: showLabel,
       displayNote: noteIcon,
       displayLike: likeButton,
+      socialProvider
     });
   }
 
@@ -46,18 +56,33 @@ class Container extends Component {
   };
 
   _handleLike = () => {
-    const { isLiked, company } = this.state;
-    const { likeCompany, unlikeCompany, company: { fair_id } } = this.props;
+    const { isLiked, company, socialProvider } = this.state;
+    const {
+      likeCompany,
+      unlikeCompany,
+      company: { fair_id }
+    } = this.props;
 
-    if (!isLiked) {
-      likeCompany(company.id, fair_id);
+    if (socialProvider) {
+      if (!isLiked) {
+        likeCompany(company.id, fair_id);
+      } else {
+        unlikeCompany(company.id, fair_id);
+      }
+
+      this.setState({
+        isLiked: !isLiked
+      });
     } else {
-      unlikeCompany(company.id, fair_id);
+      Alert.alert(
+        'No Access Rights',
+        'Login with social account to use this feature.',
+        [
+          { text: 'OK', onPress: () => {} }
+        ],
+        { cancelable: false }
+      );
     }
-
-    this.setState({
-      isLiked: !isLiked,
-    });
   };
 
   render() {
