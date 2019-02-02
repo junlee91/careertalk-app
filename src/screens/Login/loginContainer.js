@@ -1,5 +1,6 @@
 import React from 'react';
 import { GoogleSignin, statusCodes } from 'react-native-google-signin';
+import { Alert } from 'react-native';
 // import { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 
 import LoginPage from './loginPresenter';
@@ -19,7 +20,19 @@ class Container extends React.Component {
 
   // Anonymous login
   _login = (async = () => {
-    this.props.login();
+    Alert.alert(
+      'Attention!',
+      'Using an anonymous account will have limitations using the app.',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel'
+        },
+        { text: 'OK', onPress: () => this.props.login() }
+      ],
+      { cancelable: false }
+    );
   });
 
   //         FACEBOOK       //

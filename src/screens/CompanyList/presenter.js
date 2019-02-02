@@ -40,7 +40,8 @@ const CompanyList = (props) => {
               refreshing={props.isFetching}
               onRefresh={props.refresh}
               tintColor="grey"
-            />)}
+            />
+)}
           data={employersForRender}
           keyExtractor={c => c.id.toString()}
           renderItem={c => (
@@ -150,45 +151,11 @@ const OverlayAndroid = props => (
     </View>
     <View>
       <ScrollView contentContainerStyle={styles.overlayContent}>
-        <Text style={styles.chipTitleText}>Hiring Types</Text>
-        <View style={styles.chipContentStyle}>
-          {props.filterFields.hiring_types.map(field => (
-            <ChipButton
-              type="hiringTypes"
-              key={field.label}
-              field={field}
-              selected={props.filterOptions.hiringTypes.has(field.label)}
-              onPress={props.toggleFilterOptions}
-            />
-          ))}
-        </View>
+        <HiringOptions {...props} />
 
-        <Text style={styles.chipTitleText}>Majors</Text>
+        <MajorOptions {...props} />
 
-        <View style={styles.chipContentStyle}>
-          {props.filterFields.majors.map(field => (
-            <ChipButton
-              key={field.label}
-              type="majors"
-              field={field}
-              selected={props.filterOptions.majors.has(field.label)}
-              onPress={props.toggleFilterOptions}
-            />
-          ))}
-        </View>
-
-        <Text style={styles.chipTitleText}>Degree</Text>
-        <View style={styles.chipContentStyle}>
-          {props.filterFields.degree.map(field => (
-            <ChipButton
-              type="degree"
-              key={field.label}
-              field={field}
-              selected={props.filterOptions.degree.has(field.label)}
-              onPress={props.toggleFilterOptions}
-            />
-          ))}
-        </View>
+        <DegreeOptions {...props} />
 
         <View
           style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}
@@ -213,65 +180,78 @@ const OverlayIOS = props => (
         <BackIcon />
       </TouchableOpacity>
     </View>
-    <View>
-      <ScrollView contentContainerStyle={styles.overlayContent}>
-        <Text style={styles.chipTitleText}>Hiring Types</Text>
-        <View style={styles.chipContentStyle}>
-          {props.filterFields.hiring_types.map(field => (
-            <ChipButton
-              type="hiringTypes"
-              key={field.label}
-              field={field}
-              selected={props.filterOptions.hiringTypes.has(field.label)}
-              onPress={props.toggleFilterOptions}
-            />
-          ))}
-        </View>
+    <View style={styles.overlayContent}>
+      <HiringOptions {...props} />
 
-        <Text style={styles.chipTitleText}>Majors</Text>
+      <MajorOptions {...props} />
 
-        <View style={styles.chipContentStyle}>
-          <ScrollView style={{ height: height / 3.2 }}>
-            {props.filterFields.majors.map(field => (
-              <ChipButton
-                key={field.label}
-                type="majors"
-                field={field}
-                selected={props.filterOptions.majors.has(field.label)}
-                onPress={props.toggleFilterOptions}
-              />
-            ))}
-          </ScrollView>
-        </View>
+      <DegreeOptions {...props} />
 
-        <Text style={styles.chipTitleText}>Degree</Text>
-        <View style={styles.chipContentStyle}>
-          {props.filterFields.degree.map(field => (
-            <ChipButton
-              type="degree"
-              key={field.label}
-              field={field}
-              selected={props.filterOptions.degree.has(field.label)}
-              onPress={props.toggleFilterOptions}
-            />
-          ))}
-        </View>
-
-        <View
-          style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}
-        >
-          <Text style={styles.chipTitleText}>Sponsorship Needed?</Text>
-          <TouchableOpacity onPress={props.toggleSponsor} style={{ padding: 5 }}>
-            <Icon
-              type="ionicon"
-              name={props.sponsorChecked ? 'ios-checkbox' : 'ios-checkbox-outline'}
-              color={props.sponsorChecked ? '#1abc9c' : 'black'}
-            />
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}>
+        <Text style={styles.chipTitleText}>Sponsorship Needed?</Text>
+        <TouchableOpacity onPress={props.toggleSponsor} style={{ padding: 5 }}>
+          <Icon
+            type="ionicon"
+            name={props.sponsorChecked ? 'ios-checkbox' : 'ios-checkbox-outline'}
+            color={props.sponsorChecked ? '#1abc9c' : 'black'}
+          />
+        </TouchableOpacity>
+      </View>
     </View>
   </Overlay>
+);
+
+const HiringOptions = props => (
+  <>
+    <Text style={styles.chipTitleText}>Hiring Types</Text>
+    <View style={styles.chipContentStyle}>
+      {props.filterFields.hiring_types.map(field => (
+        <ChipButton
+          type="hiringTypes"
+          key={field.label}
+          field={field}
+          selected={props.filterOptions.hiringTypes.has(field.label)}
+          onPress={props.toggleFilterOptions}
+        />
+      ))}
+    </View>
+  </>
+);
+
+const MajorOptions = props => (
+  <>
+    <Text style={styles.chipTitleText}>Majors</Text>
+    <View style={styles.chipContentStyle}>
+      <ScrollView style={{ height: height / 3.2 }}>
+        {props.filterFields.majors.map(field => (
+          <ChipButton
+            key={field.label}
+            type="majors"
+            field={field}
+            selected={props.filterOptions.majors.has(field.label)}
+            onPress={props.toggleFilterOptions}
+          />
+        ))}
+      </ScrollView>
+    </View>
+  </>
+);
+
+const DegreeOptions = props => (
+  <>
+    <Text style={styles.chipTitleText}>Degree</Text>
+    <View style={styles.chipContentStyle}>
+      {props.filterFields.degree.map(field => (
+        <ChipButton
+          type="degree"
+          key={field.label}
+          field={field}
+          selected={props.filterOptions.degree.has(field.label)}
+          onPress={props.toggleFilterOptions}
+        />
+      ))}
+    </View>
+  </>
 );
 
 const styles = {
@@ -355,6 +335,11 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center'
   },
+  filterOptionsStyle: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   chipTitleText: {
     fontSize: 18,
     fontFamily: 'Avenir Next',
@@ -363,7 +348,7 @@ const styles = {
   chipContentStyle: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
+    justifyContent: 'center'
   }
 };
 
