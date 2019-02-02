@@ -40,8 +40,7 @@ const CompanyList = (props) => {
               refreshing={props.isFetching}
               onRefresh={props.refresh}
               tintColor="grey"
-            />
-)}
+            />)}
           data={employersForRender}
           keyExtractor={c => c.id.toString()}
           renderItem={c => (
@@ -158,11 +157,16 @@ const OverlayAndroid = props => (
         <DegreeOptions {...props} />
 
         <View
-          style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+            alignItems: 'center'
+          }}
         >
           <Text style={styles.chipTitleText}>Sponsorship Needed?</Text>
           <CheckBox checked={props.sponsorChecked} onPress={props.toggleSponsor} />
         </View>
+        <ApplyButton {...props} />
       </ScrollView>
     </View>
   </Overlay>
@@ -187,7 +191,13 @@ const OverlayIOS = props => (
 
       <DegreeOptions {...props} />
 
-      <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-evenly',
+          alignItems: 'center'
+        }}
+      >
         <Text style={styles.chipTitleText}>Sponsorship Needed?</Text>
         <TouchableOpacity onPress={props.toggleSponsor} style={{ padding: 5 }}>
           <Icon
@@ -197,6 +207,7 @@ const OverlayIOS = props => (
           />
         </TouchableOpacity>
       </View>
+      <ApplyButton {...props} />
     </View>
   </Overlay>
 );
@@ -252,6 +263,20 @@ const DegreeOptions = props => (
       ))}
     </View>
   </>
+);
+
+const ApplyButton = props => (
+  <TouchableOpacity style={styles.button} onPressOut={props.toggleFilter}>
+    <Text
+      style={{
+        fontFamily: 'Avenir Next',
+        fontSize: 15,
+        fontWeight: '600'
+      }}
+    >
+      Apply
+    </Text>
+  </TouchableOpacity>
 );
 
 const styles = {
@@ -343,12 +368,26 @@ const styles = {
   chipTitleText: {
     fontSize: 18,
     fontFamily: 'Avenir Next',
-    marginVertical: 3
+    marginVertical: 8
   },
   chipContentStyle: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center'
+  },
+  button: {
+    shadowColor: 'rgba(0,0,0, .4)', // IOS
+    shadowOffset: { height: 1, width: 1 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 1, // IOS
+    backgroundColor: '#fff',
+    elevation: 2, // Android
+    height: 40,
+    width: 220,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginTop: 10
   }
 };
 
