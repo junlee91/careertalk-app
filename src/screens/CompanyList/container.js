@@ -17,10 +17,11 @@ class Container extends Component {
     filterOptions: {
       degree: new Set(),
       majors: new Set(),
-      hiringTypes: new Set(),
+      hiringTypes: new Set()
     },
     sponsorChecked: false,
     filterFields,
+    filterApply: false
   };
 
   componentDidMount() {
@@ -159,7 +160,34 @@ class Container extends Component {
     this.setState({
       employersForRender: filteredEmployers
     });
+
+    this._isFilterApplied();
   };
+
+  _isFilterApplied() {
+    const { filterOptions, sponsorChecked } = this.state;
+
+    if (
+      filterOptions.degree.size
+      || filterOptions.hiringTypes.size
+      || filterOptions.majors.size
+      || sponsorChecked
+    ) {
+      this.setState((prevState, _) => {
+        return {
+          ...prevState,
+          filterApply: true
+        };
+      });
+    } else {
+      this.setState((prevState, _) => {
+        return {
+          ...prevState,
+          filterApply: false
+        };
+      });
+    }
+  }
 
   _setComponentState(props) {
     const { currentFair, favorites, notes, employers } = props;
@@ -179,7 +207,7 @@ class Container extends Component {
       originalEmployers,
       numOfCompanies,
       numOfFavorites,
-      numOfNotes,
+      numOfNotes
     });
   }
 
