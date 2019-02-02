@@ -8,3 +8,4 @@ export * from './Box';
 export * from './PoweredBy';
 export * from './Chip';
 export * from './AuthButton';
+export * from './AlertText';
