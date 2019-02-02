@@ -1,5 +1,13 @@
 import React from 'react';
-import { SafeAreaView, View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  StyleSheet,
+  Platform,
+  TouchableOpacity,
+  Alert
+} from 'react-native';
 // import { LoginButton } from 'react-native-fbsdk';
 import { GoogleSignin } from 'react-native-google-signin';
 import { ListItem } from 'react-native-elements';
@@ -30,6 +38,17 @@ class SettingsPage extends React.Component {
     }
   };
 
+  _alertMessage = (msg) => {
+    Alert.alert(
+      'Warning',
+      msg,
+      [
+        { text: 'OK', onPress: () => {} }
+      ],
+      { cancelable: false }
+    );
+  };
+
   render() {
     const { socialProvider } = this.props;
 
@@ -38,7 +57,7 @@ class SettingsPage extends React.Component {
         <View style={{ flex: 1 }}>
           {list.map((item, i) => (
             <ListItem
-              onPress={() => alert('Sorry! This does not work yet!')}
+              onPress={() => this._alertMessage('Sorry! This does not work yet!')}
               key={i}
               title={item.title}
               leftIcon={{ name: item.icon }}
