@@ -38,14 +38,10 @@ const NumOfCompanies = (props) => {
 
 const FairHeader = (props) => {
   const { fair } = props;
-
-  // TODO: Time does not match!!
-  const formatter = { hour: '2-digit', minute: '2-digit' };
-  const startTime = new Date(fair.start_time).toLocaleTimeString([], formatter);
-  const endTime = new Date(fair.end_time).toLocaleTimeString([], formatter);
   const fairDate = new Date(fair.date).toDateString();
-  const timeString = `${startTime} - ${endTime}`;
+  const timeString = `${fair.start_time} - ${fair.end_time}`;
   const dateString = `${fairDate} ${timeString}`;
+
   return (
     <View>
       <Text style={styles.fairHeaderText}>{fair.name}</Text>

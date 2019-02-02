@@ -96,15 +96,16 @@ const NoteInfo = (props) => {
 };
 
 const EventInfo = (props) => {
-  // const index = props.date.indexOf('00:00:00') - 1;
-  // const date = props.date.slice(0, index);
   const { companyInfo, fairInfo } = props;
+  const fairDate = new Date(fairInfo.date).toDateString();
+  const timeString = `${fairInfo.start_time} - ${fairInfo.end_time}`;
+  const dateString = `${fairDate} ${timeString}`;
 
   return (
     <View>
       <View style={{ flexDirection: 'row', alignItems: 'center', padding: 5 }}>
         <Icon name="calendar" type="entypo" />
-        <Text style={{ marginLeft: 20 }}>{fairInfo.date}</Text>
+        <Text style={{ marginLeft: 20 }}>{dateString}</Text>
       </View>
       <Text style={styles.textStyle}>{fairInfo.name}</Text>
       <Text
