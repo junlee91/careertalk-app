@@ -128,7 +128,7 @@ const UserNotedCompany = (props) => {
 
 const FilterButton = props => (
   <TouchableOpacity onPressOut={props.toggleFilter}>
-    <FilterIcon />
+    <FilterIcon filterApply={props.filterApply} />
   </TouchableOpacity>
 );
 

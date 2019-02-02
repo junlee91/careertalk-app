@@ -6,7 +6,7 @@ import CompanyItem from '../../components/CompanyItem';
 import { InfoBox, ProfileImage, PoweredBy } from '../../components/commons';
 
 const Profile = (props) => {
-  const { filteredFairs, isFavoritePresent, firstName, lastName, profilePhoto } = props;
+  const { filteredEmployers, isFavoritePresent, firstName, lastName, profilePhoto } = props;
   const displayName = firstName && lastName ? `${firstName} ${lastName}` : 'Anonymous User';
 
   return (
@@ -20,13 +20,18 @@ const Profile = (props) => {
       <ScrollView>
         {isFavoritePresent ? (
           <InfoBox>
-            {filteredFairs
-              && filteredFairs.map((fair, index) => {
-                if (fair.length) {
-                  return <FairsList key={index} fair={fair} />;
-                }
-                return null;
-              })}
+            {filteredEmployers.map((fairMap) => {
+              if (fairMap.employersList.length) {
+                return (
+                  <FairsList
+                    key={fairMap.fair.id}
+                    employers={fairMap.employersList}
+                    fair={fairMap.fair}
+                  />
+                );
+              }
+              return null;
+            })}
           </InfoBox>
         ) : (
           <View>
@@ -42,15 +47,15 @@ const Profile = (props) => {
 };
 
 const FairsList = (props) => {
-  const { fair } = props;
+  const { fair, employers } = props;
   return (
     <View>
-      <Text style={styles.fairNameText}>{fair[0].fair}</Text>
+      <Text style={styles.fairNameText}>{fair.name}</Text>
       <Divider />
       <View style={{ flex: 1 }}>
         <ScrollView>
-          {fair.map(company => (
-            <CompanyItem key={company.id} company={company} likeButton={false} />
+          {employers.map(c => (
+            <CompanyItem key={c.id} id={c.id} company={c} likeButton={false} noteIcon showLabel />
           ))}
         </ScrollView>
       </View>
@@ -61,7 +66,7 @@ const FairsList = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
   userInfoStyle: {
     flexDirection: 'row',

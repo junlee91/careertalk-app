@@ -4,7 +4,7 @@ import { Button } from 'react-native-elements';
 const LoginButton = props => (
   <Button
     style={{ width: 220, height: 48 }}
-    titleStyle={{ fontFamily: 'Roboto', fontSize: 15 }}
+    titleStyle={{ fontFamily: 'Avenir Next', fontSize: 15 }}
     raised
     title={props.title}
     type="outline"

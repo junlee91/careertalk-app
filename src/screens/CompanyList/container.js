@@ -8,10 +8,8 @@ class Container extends Component {
   state = {
     loading: true,
     isFetching: false,
-    canSearch: false,
     searchText: '',
     searchBarFocus: false,
-    companiesForRender: [],
     numOfFavorites: 0,
     numOfNotes: 0,
     numOfCompanies: 0,
@@ -19,10 +17,11 @@ class Container extends Component {
     filterOptions: {
       degree: new Set(),
       majors: new Set(),
-      hiringTypes: new Set(),
+      hiringTypes: new Set()
     },
     sponsorChecked: false,
     filterFields,
+    filterApply: false
   };
 
   componentDidMount() {
@@ -43,17 +42,18 @@ class Container extends Component {
   }
 
   _refresh = () => {
-    console.log('refreshing..');
+    const { v2_getEmployers, currentFair } = this.props;
+
+    v2_getEmployers(currentFair);
   };
 
   _searching = (text) => {
     this.setState({
-      canSearch: false,
       searchText: text
     });
 
     this.searchTimeout = setTimeout(() => {
-      this.setState({ canSearch: true });
+      this._filterEmployers();
     }, 500);
   };
 
@@ -61,6 +61,10 @@ class Container extends Component {
     this.setState({
       searchText: ''
     });
+
+    this.searchTimeout = setTimeout(() => {
+      this._filterEmployers();
+    }, 500);
   };
 
   _searchBarFocusFn = () => {
@@ -75,6 +79,12 @@ class Container extends Component {
     this.setState({
       overlayVisible: !overlayVisible
     });
+
+    if (this.state.overlayVisible) {
+      this.filterTimeout = setTimeout(() => {
+        this._filterEmployers();
+      }, 500);
+    }
   };
 
   _toggleFilterOptions = (key, value) => {
@@ -87,7 +97,7 @@ class Container extends Component {
     }
 
     this.forceUpdate();
-  }
+  };
 
   _toggleSponsor = () => {
     const { sponsorChecked } = this.state;
@@ -95,30 +105,114 @@ class Container extends Component {
     this.setState({
       sponsorChecked: !sponsorChecked
     });
+  };
+
+  _filterBySponsor = (employers) => {
+    return employers.filter(e => e.visa_support === 'yes');
+  };
+
+  _filterEmployers = () => {
+    // Keep an eye on filtering performance..
+    const { searchText, filterOptions, sponsorChecked, originalEmployers } = this.state;
+    let filteredEmployers = originalEmployers;
+    let employerOptSet;
+    let filterOptSet;
+    let intersection;
+
+    filteredEmployers = filteredEmployers.filter(
+      e => e.employer.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+
+    if (filterOptions.hiringTypes.size) {
+      filteredEmployers = filteredEmployers.filter((e) => {
+        employerOptSet = new Set(e.hiring_types);
+        filterOptSet = filterOptions.hiringTypes;
+        intersection = new Set([...employerOptSet].filter(x => filterOptSet.has(x)));
+
+        return intersection.size;
+      });
+    }
+
+    if (filterOptions.degree.size) {
+      filteredEmployers = filteredEmployers.filter((e) => {
+        employerOptSet = new Set(e.degree_requirements);
+        filterOptSet = filterOptions.degree;
+        intersection = new Set([...employerOptSet].filter(x => filterOptSet.has(x)));
+
+        return intersection.size;
+      });
+    }
+
+    if (filterOptions.majors.size) {
+      filteredEmployers = filteredEmployers.filter((e) => {
+        employerOptSet = new Set(e.hiring_majors);
+        filterOptSet = filterOptions.majors;
+        intersection = new Set([...employerOptSet].filter(x => filterOptSet.has(x)));
+
+        return intersection.size;
+      });
+    }
+
+    if (sponsorChecked) {
+      filteredEmployers = this._filterBySponsor(filteredEmployers);
+    }
+
+    this.setState({
+      employersForRender: filteredEmployers
+    });
+
+    this._isFilterApplied();
+  };
+
+  _isFilterApplied() {
+    const { filterOptions, sponsorChecked } = this.state;
+
+    if (
+      filterOptions.degree.size
+      || filterOptions.hiringTypes.size
+      || filterOptions.majors.size
+      || sponsorChecked
+    ) {
+      this.setState((prevState, _) => {
+        return {
+          ...prevState,
+          filterApply: true
+        };
+      });
+    } else {
+      this.setState((prevState, _) => {
+        return {
+          ...prevState,
+          filterApply: false
+        };
+      });
+    }
   }
 
   _setComponentState(props) {
     const { currentFair, favorites, notes, employers } = props;
-    const employersForRender = employers[currentFair];
-    const numOfCompanies = employersForRender.length;
+    let { employersForRender } = this.state;
+    const originalEmployers = employers[currentFair];
+    const numOfCompanies = originalEmployers.length;
     const numOfFavorites = favorites.length;
     const numOfNotes = Object.keys(notes).length;
+
+    if (!employersForRender) {
+      employersForRender = originalEmployers;
+    }
 
     this.setState({
       loading: false,
       employersForRender,
+      originalEmployers,
       numOfCompanies,
       numOfFavorites,
-      numOfNotes,
+      numOfNotes
     });
   }
 
   render() {
     const { loading } = this.state;
-
-    if (this.state.canSearch) {
-      console.log(`searching for ${this.state.searchText}`);
-    }
 
     return (
       <Fragment>

@@ -4,15 +4,16 @@ import CompanyDetail from './presenter';
 
 class Container extends Component {
   componentWillMount() {
-    const { companyInfo, favorites, note } = this.props;
+    const { companyInfo, favorites, note, fairs: { fairs } } = this.props;
     const isLiked = favorites.includes(companyInfo.id);
+    const fairInfo = fairs[companyInfo.careerfair_id - 1];
 
     this.setState({
-      date: '2019/01/01',
       companyInfo,
       isLiked,
       isEditting: false,
-      new_note: note
+      new_note: note,
+      fairInfo,
     });
   }
 

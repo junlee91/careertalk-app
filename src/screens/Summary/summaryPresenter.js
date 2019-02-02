@@ -19,7 +19,7 @@ const Summary = (props) => {
           <View style={styles.contentStyle}>
             {props.company
               && props.company.map(c => (
-                <CompanyItem key={c.id} id={c.id} company={c} noteIcon={false} likeButton={false} />
+                <CompanyItem id={c.id} company={c} noteIcon={false} likeButton={false} />
               ))}
           </View>
         </InfoBox>

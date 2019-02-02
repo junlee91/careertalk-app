@@ -8,12 +8,13 @@ import Container from './container';
 
 const mapStateToProps = (state) => {
   const {
-    company: { company, favorites },
+    company: { employers, fairs, favorites },
     user: { firstName, lastName, profilePhoto }
   } = state;
   return {
-    company,
+    employers,
     favorites,
+    fairs,
     firstName,
     lastName,
     profilePhoto,

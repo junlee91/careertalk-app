@@ -63,6 +63,13 @@ const BackIcon = () => <Icon color="#95afc0" name="cross" type="entypo" size={30
 
 const BackArrowIcon = () => <Icon color="black" name="ios-arrow-back" type="ionicon" size={30} />;
 
-const FilterIcon = () => <Icon color="grey" name="filter" type="feather" size={20} />;
+const FilterIcon = props => (
+  <Icon
+    color={props.filterApply ? 'green' : 'grey'}
+    name={props.filterApply ? 'filter' : 'filter-outline'}
+    type="material-community"
+    size={25}
+  />
+);
 
 export { FavButton, NoteIcon, EditIcon, TabIcon, BackIcon, BackArrowIcon, FilterIcon };
