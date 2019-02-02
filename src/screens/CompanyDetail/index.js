@@ -2,12 +2,15 @@ import { connect } from 'react-redux';
 import Container from './container';
 import { actionCreators as companyActions } from '../../redux/modules/company';
 
-
 const mapStateToProps = (state) => {
-  const { company: { fairs, favorites } } = state;
+  const {
+    company: { fairs, favorites },
+    auth: { socialProvider }
+  } = state;
   return {
     fairs,
     favorites,
+    socialProvider
   };
 };
 
@@ -23,7 +26,7 @@ const mapDispatchToProps = dispatch => ({
   },
   deleteNote: (cmpId) => {
     dispatch(companyActions.popNote(cmpId));
-  },
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Container);
