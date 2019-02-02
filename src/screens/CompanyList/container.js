@@ -78,6 +78,12 @@ class Container extends Component {
     this.setState({
       overlayVisible: !overlayVisible
     });
+
+    if (this.state.overlayVisible) {
+      this.filterTimeout = setTimeout(() => {
+        this._filterEmployers();
+      }, 500);
+    }
   };
 
   _toggleFilterOptions = (key, value) => {
@@ -89,9 +95,7 @@ class Container extends Component {
       filterOptions[key].add(value);
     }
 
-    this.sponsorTimeout = setTimeout(() => {
-      this._filterEmployers();
-    }, 500);
+    this.forceUpdate();
   };
 
   _toggleSponsor = () => {
@@ -100,10 +104,6 @@ class Container extends Component {
     this.setState({
       sponsorChecked: !sponsorChecked
     });
-
-    this.sponsorTimeout = setTimeout(() => {
-      this._filterEmployers();
-    }, 500);
   };
 
   _filterBySponsor = (employers) => {
