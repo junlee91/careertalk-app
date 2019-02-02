@@ -27,7 +27,7 @@ class App extends Component {
         {
           text: 'Update',
           onPress: () => {
-            Linking.openURL(Platform.OS === 'ios' ? config.app_store : config.google_play);
+            // Linking.openURL(Platform.OS === 'ios' ? config.app_store : config.google_play);
 
             // TODO: move this method to componentWillMount
             this.setState({ loading: false });
