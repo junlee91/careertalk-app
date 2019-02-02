@@ -98,7 +98,7 @@ const NoteInfo = (props) => {
 const EventInfo = (props) => {
   // const index = props.date.indexOf('00:00:00') - 1;
   // const date = props.date.slice(0, index);
-  const { companyInfo, fairInfo, date } = props;
+  const { companyInfo, fairInfo } = props;
 
   return (
     <View>

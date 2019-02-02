@@ -6,7 +6,7 @@ class Container extends Component {
   componentWillMount() {
     const { companyInfo, favorites, note, fairs: { fairs } } = this.props;
     const isLiked = favorites.includes(companyInfo.id);
-    const fairInfo = fairs[companyInfo.careerfair_id];
+    const fairInfo = fairs[companyInfo.careerfair_id - 1];
 
     this.setState({
       companyInfo,
