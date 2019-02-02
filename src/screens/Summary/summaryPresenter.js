@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView, View, Text, StyleSheet, ScrollView } from 'react-native';
 
 import CompanyItem from '../../components/CompanyItem';
-import { InfoBox, PoweredBy } from '../../components/commons';
+import { InfoBox, PoweredBy, Spinner, NoAccessText } from '../../components/commons';
 
 const Summary = (props) => {
   console.log(props);
@@ -16,16 +16,24 @@ const Summary = (props) => {
       </InfoBox>
       <ScrollView>
         <InfoBox>
-          <View style={styles.contentStyle}>
-            {props.company
-              && props.company.map(c => (
-                <CompanyItem id={c.id} company={c} noteIcon={false} likeButton={false} />
-              ))}
-          </View>
+          {props.loading ? <Spinner size="large" /> : <ScrollViewContent {...props} />}
         </InfoBox>
       </ScrollView>
       <PoweredBy poweredby="Logos provided by Clearbit" />
     </SafeAreaView>
+  );
+};
+
+const ScrollViewContent = (props) => {
+  return props.anonUser ? (
+    <NoAccessText />
+  ) : (
+    <View style={styles.contentStyle}>
+      {props.company
+        && props.company.map(c => (
+          <CompanyItem id={c.id} company={c} noteIcon={false} likeButton={false} />
+        ))}
+    </View>
   );
 };
 

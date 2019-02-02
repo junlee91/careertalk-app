@@ -20,38 +20,60 @@ class Container extends React.Component {
   }
 
   _setComponentState(props) {
-    const { firstName, lastName, profilePhoto, favorites, fairs: { fairs }, employers } = props;
-    const keys = Object.keys(employers);
-    const filteredEmployers = [];
-    let isFavoritePresent = false;
-
-    for (let i = 0; i < keys.length; i += 1) {
-      const fairId = keys[i];
-      let employersList = employers[fairId];
-
-      employersList = employersList.filter(e => favorites.includes(e.id));
-
-      if (employersList.length) {
-        isFavoritePresent = true;
-      }
-
-      filteredEmployers.push(Object.assign({
-        fair: fairs[fairId - 1],
-      }, { employersList }));
-    }
-
-    this.setState({
+    const {
       firstName,
       lastName,
       profilePhoto,
-      filteredEmployers,
-      isFavoritePresent,
-    });
+      favorites,
+      fairs: { fairs },
+      employers,
+      socialProvider
+    } = props;
+
+    if (socialProvider) {
+      const keys = Object.keys(employers);
+      const filteredEmployers = [];
+      let isFavoritePresent = false;
+
+      for (let i = 0; i < keys.length; i += 1) {
+        const fairId = keys[i];
+        let employersList = employers[fairId];
+
+        employersList = employersList.filter(e => favorites.includes(e.id));
+
+        if (employersList.length) {
+          isFavoritePresent = true;
+        }
+
+        filteredEmployers.push(
+          Object.assign(
+            {
+              fair: fairs[fairId - 1]
+            },
+            { employersList }
+          )
+        );
+      }
+
+      this.setState({
+        firstName,
+        lastName,
+        profilePhoto,
+        filteredEmployers,
+        isFavoritePresent
+      });
+    } else {
+      this.setState({
+        firstName,
+        lastName,
+        profilePhoto,
+        anonUser: true
+      });
+    }
   }
 
   render() {
-    const { filteredEmployers } = this.state;
-    return <Fragment>{filteredEmployers && <Profile {...this.state} />}</Fragment>;
+    return <Profile {...this.state} />;
   }
 }
 

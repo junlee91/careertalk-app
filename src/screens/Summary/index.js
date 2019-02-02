@@ -1,4 +1,12 @@
 import { connect } from 'react-redux';
 import Container from './summaryContainer';
 
-export default connect()(Container);
+const mapStateToProps = (state) => {
+  const { auth: { socialProvider } } = state;
+
+  return {
+    socialProvider,
+  };
+};
+
+export default connect(mapStateToProps)(Container);

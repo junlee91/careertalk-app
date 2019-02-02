@@ -8,6 +8,7 @@ import Container from './container';
 
 const mapStateToProps = (state) => {
   const {
+    auth: { socialProvider },
     company: { employers, fairs, favorites },
     user: { firstName, lastName, profilePhoto }
   } = state;
@@ -18,6 +19,7 @@ const mapStateToProps = (state) => {
     firstName,
     lastName,
     profilePhoto,
+    socialProvider,
   };
 };
 

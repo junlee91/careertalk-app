@@ -89,7 +89,7 @@ function socialLogin(
 // Initial State
 const initialState = {
   isLoggedIn: false,
-  socialProvider: ''
+  socialProvider: undefined
 };
 
 // Reducer

@@ -3,10 +3,15 @@ import { SafeAreaView, View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Divider } from 'react-native-elements';
 
 import CompanyItem from '../../components/CompanyItem';
-import { InfoBox, ProfileImage, PoweredBy } from '../../components/commons';
+import { InfoBox, ProfileImage, PoweredBy, NoAccessText } from '../../components/commons';
 
 const Profile = (props) => {
-  const { filteredEmployers, isFavoritePresent, firstName, lastName, profilePhoto } = props;
+  const {
+    firstName,
+    lastName,
+    profilePhoto,
+    anonUser
+  } = props;
   const displayName = firstName && lastName ? `${firstName} ${lastName}` : 'Anonymous User';
 
   return (
@@ -18,33 +23,47 @@ const Profile = (props) => {
         </View>
       </InfoBox>
       <ScrollView>
-        {isFavoritePresent ? (
+        {anonUser ? (
           <InfoBox>
-            {filteredEmployers.map((fairMap) => {
-              if (fairMap.employersList.length) {
-                return (
-                  <FairsList
-                    key={fairMap.fair.id}
-                    employers={fairMap.employersList}
-                    fair={fairMap.fair}
-                  />
-                );
-              }
-              return null;
-            })}
+            <NoAccessText />
           </InfoBox>
         ) : (
-          <View>
-            <InfoBox>
-              <Text style={styles.textField}>Add companies to your list!</Text>
-            </InfoBox>
-          </View>
+          <FavoriteList {...props} />
         )}
       </ScrollView>
       <PoweredBy poweredby="Logos provided by Clearbit" />
     </SafeAreaView>
   );
 };
+
+const FavoriteList = props => (
+  <>
+    {props.isFavoritePresent ? (
+      <InfoBox>
+        {props.filteredEmployers.map((fairMap) => {
+          if (fairMap.employersList.length) {
+            return (
+              <FairsList
+                key={fairMap.fair.id}
+                employers={fairMap.employersList}
+                fair={fairMap.fair}
+              />
+            );
+          }
+          return null;
+        })}
+      </InfoBox>
+    ) : (
+      <View>
+        <InfoBox>
+          <View style={{ minHeight: 600, justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={styles.textField}>Add companies to your list!</Text>
+          </View>
+        </InfoBox>
+      </View>
+    )}
+  </>
+);
 
 const FairsList = (props) => {
   const { fair, employers } = props;
