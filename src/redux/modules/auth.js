@@ -50,7 +50,7 @@ function login() {
 }
 
 function socialLogin(
-  { idToken },
+  { email, givenName, familyName, photo, idToken, id, name },
   socialProvider
 ) {
   return (dispatch) => {
@@ -59,7 +59,15 @@ function socialLogin(
       headers: {
         Authorization: idToken,
         'Content-Type': 'application/json'
-      }
+      },
+      body: JSON.stringify({
+        email,
+        givenName,
+        familyName,
+        name,
+        photo,
+        id
+      })
     })
       .then((response) => {
         const { headers: { map } } = response;
