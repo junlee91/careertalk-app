@@ -28,17 +28,19 @@ function setFairs(fairs) {
   };
 }
 
-function setLikeCompany(cmpId) {
+function setLikeCompany(cmpId, fairId) {
   return {
     type: SET_LIKE,
-    cmpId
+    cmpId,
+    fairId
   };
 }
 
-function setUnlikeCompany(cmpId) {
+function setUnlikeCompany(cmpId, fairId) {
   return {
     type: SET_UNLIKE,
-    cmpId
+    cmpId,
+    fairId
   };
 }
 
@@ -89,7 +91,23 @@ function v2_getFairs() {
 
 function v2_getEmployers(fairId) {
   return (dispatch, getState) => {
-    return fetch(`${config.API_URL}/v2/${fairId}/employers`, {
+    const {
+      auth: { token }
+    } = getState();
+
+    if (token) {
+      return fetch(`${config.API_URL}/v2/${fairId}/employers`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(json => dispatch(setCompanyList(fairId, json)));
+    }
+
+    return fetch(`${config.API_URL}/v2/${fairId}/anon_user/employers`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -124,12 +142,14 @@ function likeOrUnlikeAPI(cmpId, fairId, token, dispatch) {
 
 function likeCompany(cmpId, fairId) {
   return async (dispatch, getState) => {
-    const { auth: { token } } = getState();
+    const {
+      auth: { token }
+    } = getState();
 
     const result = await likeOrUnlikeAPI(cmpId, fairId, token, dispatch);
 
     if (result) {
-      dispatch(setLikeCompany(cmpId));
+      dispatch(setLikeCompany(cmpId, fairId));
     }
 
     return result;
@@ -138,12 +158,14 @@ function likeCompany(cmpId, fairId) {
 
 function unlikeCompany(cmpId, fairId) {
   return async (dispatch, getState) => {
-    const { auth: { token } } = getState();
+    const {
+      auth: { token }
+    } = getState();
 
-    const result = await likeOrUnlikeAPI(cmpId, fairId, token);
+    const result = await likeOrUnlikeAPI(cmpId, fairId, token, dispatch);
 
     if (result) {
-      dispatch(setUnlikeCompany(cmpId));
+      dispatch(setUnlikeCompany(cmpId, fairId));
     }
 
     return result;
@@ -164,7 +186,7 @@ function popNote(cmpId) {
 
 // Initial State
 const initialState = {
-  favorites: [],
+  favorites: {},
   notes: {},
   employers: {}
 };
@@ -187,13 +209,14 @@ function reducer(state = initialState, action) {
     case SET_CURRENT_FAIR:
       return applySetCurrentFair(state, action);
     case LOGOUT_CLEAN:
-      return initialState;
+      return applySetLogoutClean(state, action);
     default:
       return state;
   }
 }
 
 // Reducer Functions
+// TODO: We need to refactor this!!!
 function applySetCompany(state, action) {
   const {
     fairId,
@@ -201,10 +224,21 @@ function applySetCompany(state, action) {
   } = action;
   state.employers[fairId] = companies;
   const newEmployers = state.employers;
+  const currentFavs = [];
+
+  companies.forEach((c) => {
+    if (c.is_liked) {
+      currentFavs.push(c.employer.id);
+    }
+  });
+
+  state.favorites[fairId] = currentFavs;
+  const downloadedFavs = state.favorites;
 
   return {
     ...state,
-    employers: Object.assign({}, newEmployers)
+    employers: Object.assign({}, newEmployers),
+    favorites: downloadedFavs
   };
 }
 
@@ -218,18 +252,28 @@ function applySetFairs(state, action) {
 }
 
 function applyLikeCompany(state, action) {
-  const { cmpId } = action;
+  const { cmpId, fairId } = action;
+  const originalFavs = state.favorites[fairId];
+
+  state.favorites[fairId] = [...originalFavs, cmpId];
+  const newFavs = state.favorites;
+
   return {
     ...state,
-    favorites: [...state.favorites, cmpId]
+    favorites: Object.assign({}, newFavs)
   };
 }
 
 function applyUnlikeCompany(state, action) {
-  const { cmpId } = action;
+  const { cmpId, fairId } = action;
+  const originalFavs = state.favorites[fairId];
+
+  state.favorites[fairId] = originalFavs.filter(item => item !== cmpId);
+  const newFavs = state.favorites;
+
   return {
     ...state,
-    favorites: state.favorites.filter(item => item !== cmpId)
+    favorites: Object.assign({}, newFavs)
   };
 }
 
@@ -260,6 +304,14 @@ function applySetCurrentFair(state, action) {
   return {
     ...state,
     currentFair: fairId
+  };
+}
+
+function applySetLogoutClean() {
+  return {
+    favorites: [],
+    notes: {},
+    employers: {}
   };
 }
 

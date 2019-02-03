@@ -5,7 +5,7 @@ import CompanyDetail from './presenter';
 class Container extends Component {
   componentWillMount() {
     const { companyInfo, favorites, note, fairs: { fairs }, socialProvider } = this.props;
-    const isLiked = favorites.includes(companyInfo.id);
+    const isLiked = favorites[companyInfo.careerfair_id].includes(companyInfo.employer.id);
     const fairInfo = fairs[companyInfo.careerfair_id - 1];
 
     this.setState({
@@ -23,9 +23,9 @@ class Container extends Component {
     const { likeCompany, unlikeCompany } = this.props;
 
     if (!isLiked) {
-      likeCompany(companyInfo.id, companyInfo.careerfair_id);
+      likeCompany(companyInfo.employer.id, companyInfo.careerfair_id);
     } else {
-      unlikeCompany(companyInfo.id, companyInfo.careerfair_id);
+      unlikeCompany(companyInfo.employer.id, companyInfo.careerfair_id);
     }
 
     this.setState({

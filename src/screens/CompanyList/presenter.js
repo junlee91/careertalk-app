@@ -42,7 +42,7 @@ const CompanyList = (props) => {
               tintColor="grey"
             />)}
           data={employersForRender}
-          keyExtractor={c => c.id.toString()}
+          keyExtractor={c => c.employer.id.toString()}
           renderItem={c => (
             <CompanyItem id={c.item.id} company={c.item} noteIcon likeButton showLabel />
           )}

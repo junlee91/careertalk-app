@@ -15,7 +15,7 @@ class Container extends Component {
       likeButton,
       socialProvider
     } = this.props;
-    const isLiked = favorites.includes(company.id);
+    const isLiked = favorites[company.careerfair_id].includes(company.employer.id);
     const isNote = notes[company.id] !== undefined;
 
     this.setState({
@@ -32,7 +32,7 @@ class Container extends Component {
   componentWillReceiveProps(nextProps) {
     const { favorites, notes } = nextProps;
     const { company } = this.state;
-    const isLiked = favorites.includes(company.id);
+    const isLiked = favorites[company.careerfair_id].includes(company.employer.id);
     const isNote = notes[company.id] !== undefined;
 
     if (isLiked !== this.state.isLiked) {
@@ -61,9 +61,9 @@ class Container extends Component {
 
     if (socialProvider) {
       if (!isLiked) {
-        likeCompany(company.id, company.careerfair_id);
+        likeCompany(company.employer.id, company.careerfair_id);
       } else {
-        unlikeCompany(company.id, company.careerfair_id);
+        unlikeCompany(company.employer.id, company.careerfair_id);
       }
 
       this.setState({
