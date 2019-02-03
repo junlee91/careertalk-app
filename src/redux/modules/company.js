@@ -10,6 +10,7 @@ const SET_UNLIKE = 'SET_UNLIKE';
 const SET_NOTE = 'SET_NOTE';
 const POP_NOTE = 'POP_NOTE';
 const SET_CURRENT_FAIR = 'SET_CURRENT_FAIR';
+const LOGOUT_CLEAN = 'LOGOUT_CLEAN';
 
 // Action Creators
 function setCompanyList(fairId, company) {
@@ -60,6 +61,12 @@ function setCurrentFair(fairId) {
   return {
     type: SET_CURRENT_FAIR,
     fairId
+  };
+}
+
+function logoutClean() {
+  return {
+    type: LOGOUT_CLEAN
   };
 }
 
@@ -179,6 +186,8 @@ function reducer(state = initialState, action) {
       return applyPopNoteCompany(state, action);
     case SET_CURRENT_FAIR:
       return applySetCurrentFair(state, action);
+    case LOGOUT_CLEAN:
+      return initialState;
     default:
       return state;
   }
@@ -262,7 +271,8 @@ const actionCreators = {
   unlikeCompany,
   setNote,
   popNote,
-  setCurrentFair
+  setCurrentFair,
+  logoutClean
 };
 
 export { actionCreators };
