@@ -16,7 +16,12 @@ class Container extends Component {
       socialProvider
     } = this.props;
     const isLiked = favorites[company.careerfair_id].includes(company.employer.id);
-    const isNote = notes[company.id] !== undefined;
+    let isNote = false;
+
+    const curNotes = notes[company.careerfair_id];
+    if (curNotes) {
+      isNote = Object.keys(curNotes).includes(company.employer.id.toString());
+    }
 
     this.setState({
       company,
@@ -33,7 +38,12 @@ class Container extends Component {
     const { favorites, notes } = nextProps;
     const { company } = this.state;
     const isLiked = favorites[company.careerfair_id].includes(company.employer.id);
-    const isNote = notes[company.id] !== undefined;
+    let isNote = false;
+
+    const curNotes = notes[company.careerfair_id];
+    if (curNotes) {
+      isNote = Object.keys(curNotes).includes(company.employer.id.toString());
+    }
 
     if (isLiked !== this.state.isLiked) {
       this.setState({
@@ -50,7 +60,11 @@ class Container extends Component {
   _navigateTo = (key) => {
     const { company } = this.state;
     const { notes } = this.props;
-    const params = { companyInfo: company, note: notes[company.id] };
+
+    const curNotes = notes[company.careerfair_id] || {};
+    const note = curNotes[company.employer.id];
+
+    const params = { companyInfo: company, note };
 
     Actions.push(key, params);
   };

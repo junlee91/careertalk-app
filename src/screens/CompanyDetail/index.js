@@ -21,11 +21,11 @@ const mapDispatchToProps = dispatch => ({
   unlikeCompany: (cmpId, fairId) => {
     return dispatch(companyActions.unlikeCompany(cmpId, fairId));
   },
-  saveNote: (cmpId, note) => {
-    dispatch(companyActions.setNote(cmpId, note));
+  saveNote: (cmpId, fairId, note) => {
+    dispatch(companyActions.setNote(cmpId, fairId, note));
   },
-  deleteNote: (cmpId) => {
-    dispatch(companyActions.popNote(cmpId));
+  deleteNote: (cmpId, fairId) => {
+    dispatch(companyActions.popNote(cmpId, fairId));
   }
 });
 

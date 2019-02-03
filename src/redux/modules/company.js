@@ -44,18 +44,20 @@ function setUnlikeCompany(cmpId, fairId) {
   };
 }
 
-function setNoteCompany(cmpId, note) {
+function setNoteCompany(cmpId, fairId, note) {
   return {
     type: SET_NOTE,
     cmpId,
+    fairId,
     note
   };
 }
 
-function popNoteCompany(cmpId) {
+function popNoteCompany(cmpId, fairId) {
   return {
     type: POP_NOTE,
-    cmpId
+    cmpId,
+    fairId
   };
 }
 
@@ -172,15 +174,15 @@ function unlikeCompany(cmpId, fairId) {
   };
 }
 
-function setNote(cmpId, note) {
+function setNote(cmpId, fairId, note) {
   return (dispatch) => {
-    return dispatch(setNoteCompany(cmpId, note));
+    return dispatch(setNoteCompany(cmpId, fairId, note));
   };
 }
 
-function popNote(cmpId) {
+function popNote(cmpId, fairId) {
   return (dispatch) => {
-    return dispatch(popNoteCompany(cmpId));
+    return dispatch(popNoteCompany(cmpId, fairId));
   };
 }
 
@@ -279,19 +281,30 @@ function applyUnlikeCompany(state, action) {
 
 // we have to return a new object in order to detect a state change
 function applySetNoteCompany(state, action) {
-  const { cmpId, note } = action;
-  state.notes[cmpId] = note;
-  const newNotes = state.notes;
+  const { cmpId, fairId, note } = action;
+
+  // get current notes to update or set empty object
+  const curNotes = state.notes[fairId] || {};
+
+  // store note for the companyId
+  curNotes[cmpId] = note;
+
+  // update the notes for the fairId
+  state.notes[fairId] = curNotes;
+
   return {
     ...state,
-    notes: Object.assign({}, newNotes)
+    notes: Object.assign({}, state.notes)
   };
 }
 
 function applyPopNoteCompany(state, action) {
-  const { cmpId } = action;
-  delete state.notes[cmpId];
+  const { cmpId, fairId } = action;
+
+  delete state.notes[fairId][cmpId];
+
   const newNotes = state.notes;
+
   return {
     ...state,
     notes: Object.assign({}, newNotes)
@@ -307,10 +320,10 @@ function applySetCurrentFair(state, action) {
   };
 }
 
-function applySetLogoutClean() {
+function applySetLogoutClean(state) {
   return {
+    ...state,
     favorites: [],
-    notes: {},
     employers: {}
   };
 }

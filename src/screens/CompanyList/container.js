@@ -195,7 +195,8 @@ class Container extends Component {
     const originalEmployers = employers[currentFair];
     const numOfCompanies = originalEmployers.length;
     const numOfFavorites = favorites[currentFair].length;
-    const numOfNotes = Object.keys(notes).length;
+    const curNotes = notes[currentFair] || {};
+    const numOfNotes = Object.keys(curNotes).length;
 
     if (!employersForRender) {
       employersForRender = originalEmployers;

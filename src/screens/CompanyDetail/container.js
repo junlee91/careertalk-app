@@ -56,15 +56,15 @@ class Container extends Component {
     const { saveNote, deleteNote } = this.props;
 
     if (!new_note) {
-      deleteNote(companyInfo.id);
+      deleteNote(companyInfo.employer.id, companyInfo.careerfair_id);
       return;
     }
     const noteToSave = new_note.trim();
 
     if (noteToSave.length === 0) {
-      deleteNote(companyInfo.id);
+      deleteNote(companyInfo.employer.id, companyInfo.careerfair_id);
     } else {
-      saveNote(companyInfo.id, noteToSave);
+      saveNote(companyInfo.employer.id, companyInfo.careerfair_id, noteToSave);
     }
   };
 
