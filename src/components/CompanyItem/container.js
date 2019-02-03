@@ -57,17 +57,13 @@ class Container extends Component {
 
   _handleLike = () => {
     const { isLiked, company, socialProvider } = this.state;
-    const {
-      likeCompany,
-      unlikeCompany,
-      company: { fair_id }
-    } = this.props;
+    const { likeCompany, unlikeCompany } = this.props;
 
     if (socialProvider) {
       if (!isLiked) {
-        likeCompany(company.id, fair_id);
+        likeCompany(company.id, company.careerfair_id);
       } else {
-        unlikeCompany(company.id, fair_id);
+        unlikeCompany(company.id, company.careerfair_id);
       }
 
       this.setState({

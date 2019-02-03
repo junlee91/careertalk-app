@@ -126,7 +126,7 @@ function applyLogOut() {
   AsyncStorage.clear();
   return {
     isLoggedIn: false,
-    token: ''
+    token: null,
   };
 }
 

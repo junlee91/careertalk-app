@@ -16,28 +16,28 @@ function setCompanyList(fairId, company) {
   return {
     type: SET_COMPANY,
     fairId,
-    company,
+    company
   };
 }
 
 function setFairs(fairs) {
   return {
     type: SET_FAIRS,
-    fairs,
+    fairs
   };
 }
 
 function setLikeCompany(cmpId) {
   return {
     type: SET_LIKE,
-    cmpId,
+    cmpId
   };
 }
 
 function setUnlikeCompany(cmpId) {
   return {
     type: SET_UNLIKE,
-    cmpId,
+    cmpId
   };
 }
 
@@ -45,21 +45,21 @@ function setNoteCompany(cmpId, note) {
   return {
     type: SET_NOTE,
     cmpId,
-    note,
+    note
   };
 }
 
 function popNoteCompany(cmpId) {
   return {
     type: POP_NOTE,
-    cmpId,
+    cmpId
   };
 }
 
 function setCurrentFair(fairId) {
   return {
     type: SET_CURRENT_FAIR,
-    fairId,
+    fairId
   };
 }
 
@@ -83,8 +83,9 @@ function v2_getFairs() {
 function v2_getEmployers(fairId) {
   return (dispatch, getState) => {
     return fetch(`${config.API_URL}/v2/${fairId}/employers`, {
+      method: 'GET',
       headers: {
-        Authorization: 'token'
+        'Content-Type': 'application/json'
       }
     })
       .then(response => response.json())
@@ -92,17 +93,53 @@ function v2_getEmployers(fairId) {
   };
 }
 
-function likeCompany(cmpId) {
-  return (dispatch) => {
-    // TODO: API CALL
-    return dispatch(setLikeCompany(cmpId));
+function likeOrUnlikeAPI(cmpId, fairId, token, dispatch) {
+  return fetch(`${config.API_URL}/v2/like/${fairId}/${cmpId}`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  })
+    .then((response) => {
+      if (response.status === 401) {
+        // Normally we should logout, but not for now.
+        // dispatch(authActions.logout());
+        return false;
+      }
+      return response.json();
+    })
+    .then((json) => {
+      console.log(json);
+      return json;
+    });
+}
+
+function likeCompany(cmpId, fairId) {
+  return async (dispatch, getState) => {
+    const { auth: { token } } = getState();
+
+    const result = await likeOrUnlikeAPI(cmpId, fairId, token, dispatch);
+
+    if (result) {
+      dispatch(setLikeCompany(cmpId));
+    }
+
+    return result;
   };
 }
 
-function unlikeCompany(cmpId) {
-  return (dispatch) => {
-    // TODO: API CALL
-    return dispatch(setUnlikeCompany(cmpId));
+function unlikeCompany(cmpId, fairId) {
+  return async (dispatch, getState) => {
+    const { auth: { token } } = getState();
+
+    const result = await likeOrUnlikeAPI(cmpId, fairId, token);
+
+    if (result) {
+      dispatch(setUnlikeCompany(cmpId));
+    }
+
+    return result;
   };
 }
 
@@ -122,7 +159,7 @@ function popNote(cmpId) {
 const initialState = {
   favorites: [],
   notes: {},
-  employers: {},
+  employers: {}
 };
 
 // Reducer
@@ -149,7 +186,10 @@ function reducer(state = initialState, action) {
 
 // Reducer Functions
 function applySetCompany(state, action) {
-  const { fairId, company: { companies } } = action;
+  const {
+    fairId,
+    company: { companies }
+  } = action;
   state.employers[fairId] = companies;
   const newEmployers = state.employers;
 
@@ -164,7 +204,7 @@ function applySetFairs(state, action) {
 
   return {
     ...state,
-    fairs,
+    fairs
   };
 }
 
@@ -172,7 +212,7 @@ function applyLikeCompany(state, action) {
   const { cmpId } = action;
   return {
     ...state,
-    favorites: [...state.favorites, cmpId],
+    favorites: [...state.favorites, cmpId]
   };
 }
 
@@ -180,7 +220,7 @@ function applyUnlikeCompany(state, action) {
   const { cmpId } = action;
   return {
     ...state,
-    favorites: state.favorites.filter(item => item !== cmpId),
+    favorites: state.favorites.filter(item => item !== cmpId)
   };
 }
 
@@ -191,7 +231,7 @@ function applySetNoteCompany(state, action) {
   const newNotes = state.notes;
   return {
     ...state,
-    notes: Object.assign({}, newNotes),
+    notes: Object.assign({}, newNotes)
   };
 }
 
@@ -201,7 +241,7 @@ function applyPopNoteCompany(state, action) {
   const newNotes = state.notes;
   return {
     ...state,
-    notes: Object.assign({}, newNotes),
+    notes: Object.assign({}, newNotes)
   };
 }
 
@@ -222,7 +262,7 @@ const actionCreators = {
   unlikeCompany,
   setNote,
   popNote,
-  setCurrentFair,
+  setCurrentFair
 };
 
 export { actionCreators };
