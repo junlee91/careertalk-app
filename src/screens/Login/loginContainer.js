@@ -98,18 +98,19 @@ class Container extends React.Component {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       const { accessToken, idToken, user } = userInfo;
-      const { email, givenName, familyName, id, photo } = user;
+      const { email, givenName, familyName, name, id, photo } = user;
 
       // send userInfo to store
       this.props.socialLogin(
         {
           email,
-          firstName: givenName,
-          lastName: familyName,
-          profilePhoto: photo,
-          socialToken: accessToken,
+          givenName,
+          familyName,
+          photo,
+          accessToken,
           idToken,
-          socialId: id
+          id,
+          name
         },
         'google'
       );
