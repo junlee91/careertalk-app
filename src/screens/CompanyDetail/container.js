@@ -23,9 +23,9 @@ class Container extends Component {
     const { likeCompany, unlikeCompany } = this.props;
 
     if (!isLiked) {
-      likeCompany(companyInfo.id);
+      likeCompany(companyInfo.id, companyInfo.careerfair_id);
     } else {
-      unlikeCompany(companyInfo.id);
+      unlikeCompany(companyInfo.id, companyInfo.careerfair_id);
     }
 
     this.setState({

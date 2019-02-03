@@ -15,11 +15,11 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  likeCompany: (cmpId) => {
-    dispatch(companyActions.likeCompany(cmpId));
+  likeCompany: (cmpId, fairId) => {
+    return dispatch(companyActions.likeCompany(cmpId, fairId));
   },
-  unlikeCompany: (cmpId) => {
-    dispatch(companyActions.unlikeCompany(cmpId));
+  unlikeCompany: (cmpId, fairId) => {
+    return dispatch(companyActions.unlikeCompany(cmpId, fairId));
   },
   saveNote: (cmpId, note) => {
     dispatch(companyActions.setNote(cmpId, note));
