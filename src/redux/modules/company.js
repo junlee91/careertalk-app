@@ -301,14 +301,20 @@ function applySetNoteCompany(state, action) {
 function applyPopNoteCompany(state, action) {
   const { cmpId, fairId } = action;
 
-  delete state.notes[fairId][cmpId];
+  const curNotes = state.notes[fairId];
 
-  const newNotes = state.notes;
+  if (curNotes) {
+    delete curNotes[cmpId];
 
-  return {
-    ...state,
-    notes: Object.assign({}, newNotes)
-  };
+    const newNotes = state.notes;
+
+    return {
+      ...state,
+      notes: Object.assign({}, newNotes)
+    };
+  }
+
+  return { state };
 }
 
 function applySetCurrentFair(state, action) {
