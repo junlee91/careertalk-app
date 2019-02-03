@@ -5,7 +5,7 @@ import { Image } from 'react-native';
 function getSize(size) {
   switch (size) {
     case 'small':
-      return 64;
+      return 51;
     case 'medium':
       return 128;
     case 'large':
@@ -45,13 +45,15 @@ const ProfileImage = (props) => {
 const styles = {
   imgStyleSmall: {
     height: 51,
-    width: 51
+    width: 51,
+    alignSelf: 'center',
+    resizeMode: 'contain'
   },
   imgStyleMedium: {
     height: 128,
     width: 128,
     alignSelf: 'center',
-    resizeMode: 'stretch',
+    resizeMode: 'contain',
     borderWidth: 0.5,
     borderRadius: 2,
     borderColor: '#b2bec3',
