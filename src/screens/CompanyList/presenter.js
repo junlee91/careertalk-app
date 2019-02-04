@@ -178,6 +178,8 @@ const OverlayIOS = props => (
     borderRadius={5}
     isVisible={props.overlayVisible}
     onBackdropPress={props.toggleFilter}
+    width={width - 40}
+    height={height - 60}
   >
     <View style={styles.overlayHeader}>
       <TouchableOpacity onPressOut={props.toggleFilter}>
