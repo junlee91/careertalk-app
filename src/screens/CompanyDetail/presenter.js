@@ -126,7 +126,7 @@ const EventInfo = (props) => {
 
 const DetailInfo = (props) => {
   return (
-    <View>
+    <View style={{ minHeight: 250, justifyContent: 'center' }}>
       <Text style={styles.detailTextStyle}>We are hiring</Text>
       <View style={styles.tagStyle}>
         {props.hiring_types.map(type => (
