@@ -15,7 +15,9 @@ class Container extends Component {
     const result = await this.props.setCurrentFair(id);
 
     if (result) {
-      Actions.companyList();
+      this.waitBeforeNavigate = setTimeout(() => {
+        Actions.jump('companyList');
+      }, 200);
     }
   };
 
