@@ -11,9 +11,12 @@ class Container extends Component {
     });
   }
 
-  _navigateTo = (id) => {
-    this.props.setCurrentFair(id);
-    Actions.companyList();
+  _navigateTo = async (id) => {
+    const result = await this.props.setCurrentFair(id);
+
+    if (result) {
+      Actions.companyList();
+    }
   };
 
   render() {

@@ -62,7 +62,7 @@ function popNoteCompany(cmpId, fairId) {
   };
 }
 
-function setCurrentFair(fairId) {
+function setCurrentFairId(fairId) {
   return {
     type: SET_CURRENT_FAIR,
     fairId
@@ -210,6 +210,14 @@ function setNote(cmpId, fairId, note) {
 function popNote(cmpId, fairId) {
   return (dispatch) => {
     return dispatch(popNoteCompany(cmpId, fairId));
+  };
+}
+
+function setCurrentFair(fairId) {
+  return async (dispatch, _) => {
+    await dispatch(setCurrentFairId(fairId));
+
+    return true;
   };
 }
 
