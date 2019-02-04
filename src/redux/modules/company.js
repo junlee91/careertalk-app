@@ -314,7 +314,7 @@ function applyPopNoteCompany(state, action) {
     };
   }
 
-  return { state };
+  return state;
 }
 
 function applySetCurrentFair(state, action) {
