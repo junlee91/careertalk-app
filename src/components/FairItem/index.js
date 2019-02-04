@@ -4,7 +4,7 @@ import { actionCreators as companyActions } from '../../redux/modules/company';
 
 const mapDispatchToProps = dispatch => ({
   setCurrentFair: (fairId) => {
-    dispatch(companyActions.setCurrentFair(fairId));
+    return dispatch(companyActions.setCurrentFair(fairId));
   },
 });
 
