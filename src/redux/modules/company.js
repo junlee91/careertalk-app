@@ -11,6 +11,7 @@ const SET_NOTE = 'SET_NOTE';
 const POP_NOTE = 'POP_NOTE';
 const SET_CURRENT_FAIR = 'SET_CURRENT_FAIR';
 const LOGOUT_CLEAN = 'LOGOUT_CLEAN';
+const SET_TOP_5 = 'SET_TOP_5';
 
 // Action Creators
 function setCompanyList(fairId, company) {
@@ -74,6 +75,13 @@ function logoutClean() {
   };
 }
 
+function setTop5(summary) {
+  return {
+    type: SET_TOP_5,
+    summary
+  };
+}
+
 // API Actions
 // ------------------------------------------------------------------------------
 //                                V2 Endpoints
@@ -93,9 +101,7 @@ function v2_getFairs() {
 
 function v2_getEmployers(fairId) {
   return (dispatch, getState) => {
-    const {
-      auth: { token }
-    } = getState();
+    const { auth: { token } } = getState();
 
     if (token) {
       return fetch(`${config.API_URL}/v2/${fairId}/employers`, {
@@ -117,6 +123,27 @@ function v2_getEmployers(fairId) {
     })
       .then(response => response.json())
       .then(json => dispatch(setCompanyList(fairId, json)));
+  };
+}
+
+function v2_getTop5(fairId) {
+  return (dispatch, getState) => {
+    const { auth: { token } } = getState();
+
+    return fetch(`${config.API_URL}/v2/${fairId}/top5`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((response) => {
+        // TODO: No error handling
+        return response.json();
+      })
+      .then((json) => {
+        return dispatch(setTop5(json));
+      });
   };
 }
 
@@ -212,6 +239,8 @@ function reducer(state = initialState, action) {
       return applySetCurrentFair(state, action);
     case LOGOUT_CLEAN:
       return applySetLogoutClean(state, action);
+    case SET_TOP_5:
+      return applySetTop5(state, action);
     default:
       return state;
   }
@@ -241,6 +270,19 @@ function applySetCompany(state, action) {
     ...state,
     employers: Object.assign({}, newEmployers),
     favorites: downloadedFavs
+  };
+}
+
+function applySetTop5(state, action) {
+  const { summary: { careerfair, top1, top2, top3, top4, top5 } } = action;
+  const topIds = [top1.id, top2.id, top3.id, top4.id, top5.id];
+  const currentEmpls = state.employers[careerfair.id];
+  const filteredEmpls = currentEmpls.filter(c => topIds.includes(c.employer.id));
+  const topList = { filteredEmpls };
+
+  return {
+    ...state,
+    topList
   };
 }
 
@@ -338,6 +380,7 @@ function applySetLogoutClean(state) {
 const actionCreators = {
   v2_getFairs,
   v2_getEmployers,
+  v2_getTop5,
   likeCompany,
   unlikeCompany,
   setNote,

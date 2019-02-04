@@ -2,11 +2,9 @@ import React from 'react';
 import { SafeAreaView, View, Text, StyleSheet, ScrollView } from 'react-native';
 
 import CompanyItem from '../../components/CompanyItem';
-import { InfoBox, PoweredBy, Spinner, NoAccessText } from '../../components/commons';
+import { InfoBox, PoweredBy, Spinner, NoAccessTop5Text } from '../../components/commons';
 
 const Summary = (props) => {
-  console.log(props);
-
   return (
     <SafeAreaView style={styles.container}>
       <InfoBox>
@@ -25,13 +23,22 @@ const Summary = (props) => {
 };
 
 const ScrollViewContent = (props) => {
+  const { topList } = props;
+
   return props.anonUser ? (
-    <NoAccessText />
+    <NoAccessTop5Text />
   ) : (
     <View style={styles.contentStyle}>
-      {props.company
-        && props.company.map(c => (
-          <CompanyItem id={c.id} company={c} noteIcon={false} likeButton={false} />
+      {topList.filteredEmpls
+        && topList.filteredEmpls.map(c => (
+          <CompanyItem
+            key={c.employer.id}
+            id={c.employer.id}
+            company={c}
+            likeButton={false}
+            showLabel={false}
+            noteIcon={false}
+          />
         ))}
     </View>
   );
@@ -40,7 +47,7 @@ const ScrollViewContent = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
   headerStyle: {
     padding: 15,

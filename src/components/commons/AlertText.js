@@ -9,6 +9,14 @@ const NoAccessText = () => (
   </View>
 );
 
+const NoAccessTop5Text = () => (
+  <View style={styles.noAccessContentStyle}>
+    <Text style={styles.noAccessText}>
+      Log in and check where your friends want to work for!
+    </Text>
+  </View>
+);
+
 const styles = {
   noAccessContentStyle: {
     flex: 1,
@@ -24,4 +32,4 @@ const styles = {
   }
 };
 
-export { NoAccessText };
+export { NoAccessText, NoAccessTop5Text };
