@@ -53,6 +53,7 @@ const CompanyDetail = (props) => {
         <InfoBox>
           <DetailInfo {...companyInfo} />
         </InfoBox>
+        <PoweredBy poweredby="Logos provided by Clearbit" />
       </ScrollView>
       {props.socialProvider && (
         <TouchableOpacity
@@ -75,7 +76,6 @@ const CompanyDetail = (props) => {
           <FavButton isLiked={props.isLiked} size={35} />
         </TouchableOpacity>
       )}
-      <PoweredBy poweredby="Logos provided by Clearbit" />
     </SafeAreaView>
   );
 };
