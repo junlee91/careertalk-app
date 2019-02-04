@@ -39,7 +39,7 @@ class Container extends React.Component {
         const fairId = keys[i];
         let employersList = employers[fairId];
 
-        employersList = employersList.filter(e => favorites.includes(e.id));
+        employersList = employersList.filter(e => favorites[fairId].includes(e.employer.id));
 
         if (employersList.length) {
           isFavoritePresent = true;

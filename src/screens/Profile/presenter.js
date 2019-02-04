@@ -6,12 +6,7 @@ import CompanyItem from '../../components/CompanyItem';
 import { InfoBox, ProfileImage, PoweredBy, NoAccessText } from '../../components/commons';
 
 const Profile = (props) => {
-  const {
-    firstName,
-    lastName,
-    profilePhoto,
-    anonUser
-  } = props;
+  const { firstName, lastName, profilePhoto, anonUser } = props;
   const displayName = firstName && lastName ? `${firstName} ${lastName}` : 'Anonymous User';
 
   return (
@@ -74,7 +69,14 @@ const FairsList = (props) => {
       <View style={{ flex: 1 }}>
         <ScrollView>
           {employers.map(c => (
-            <CompanyItem key={c.id} id={c.id} company={c} likeButton={false} noteIcon showLabel />
+            <CompanyItem
+              key={c.employer.id}
+              id={c.employer.id}
+              company={c}
+              likeButton={false}
+              noteIcon
+              showLabel
+            />
           ))}
         </ScrollView>
       </View>

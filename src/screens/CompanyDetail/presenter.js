@@ -17,7 +17,7 @@ import { LogoImage, InfoBox, Tag, FavButton, PoweredBy, BackIcon } from '../../c
 import { MapIcon } from '../../components/FairMap';
 
 const CompanyDetail = (props) => {
-  const { companyInfo } = props;
+  const { companyInfo, fairInfo } = props;
   const tables = companyInfo.tables.join(', ');
 
   return (
@@ -29,16 +29,19 @@ const CompanyDetail = (props) => {
           <View style={styles.titleContent}>
             <LogoImage {...companyInfo.employer} size="medium" wide />
             <Text style={styles.titleTextStyle}>{companyInfo.employer.name}</Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Caption>
-                {companyInfo.tables.length === 1 ? `Table: ${tables}` : `Tables: ${tables}`}
-              </Caption>
-              {/* <MapIcon
-                fairId={companyInfo.fair_id}
-                companyName={companyInfo.name}
-                tables={tables}
-              /> */}
-            </View>
+            {fairInfo.table_map && (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Caption>
+                  {companyInfo.tables.length === 1 ? `Table: ${tables}` : `Tables: ${tables}`}
+                </Caption>
+                <MapIcon
+                  fairId={fairInfo.id}
+                  companyName={companyInfo.employer.name}
+                  tables={tables}
+                  mapUrl={fairInfo.table_map}
+                />
+              </View>
+            )}
           </View>
         </InfoBox>
         <InfoBox>

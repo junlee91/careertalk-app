@@ -1,5 +1,6 @@
 import { AsyncStorage } from 'react-native';
 import { actionCreators as userActions } from './user';
+import { actionCreators as companyActions } from './company';
 import config from '../../../config.json';
 
 // More info: https://facebook.github.io/react-native/docs/asyncstorage
@@ -25,7 +26,7 @@ function setLogIn(token) {
   };
 }
 
-function logout() {
+function setLogout() {
   return {
     type: LOG_OUT
   };
@@ -39,6 +40,13 @@ function setProvider(provider) {
 }
 
 // API Actions
+function logout() {
+  return (dispatch) => {
+    dispatch(setLogout());
+    dispatch(companyActions.logoutClean());
+  };
+}
+
 function login() {
   return (dispatch) => {
     // For anonymous login, we don't have a token and user data
