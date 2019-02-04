@@ -12,7 +12,7 @@ const CompanyItem = (props) => {
         <View style={{ flex: 1 }}>
           <CardSection>
             <View style={styles.logoStyle}>
-              <TouchableOpacity onPressOut={() => props.navigateTo('companyDetail')}>
+              <TouchableOpacity onPress={() => props.navigateTo('companyDetail')}>
                 <LogoImage {...company.employer} size="small" />
               </TouchableOpacity>
             </View>
@@ -44,7 +44,7 @@ const CompanyItem = (props) => {
 };
 
 const EmployerField = props => (
-  <TouchableOpacity onPressOut={() => props.navigateTo('companyDetail')}>
+  <TouchableOpacity onPress={() => props.navigateTo('companyDetail')}>
     <View style={styles.companyContentStyle}>
       <Text style={styles.companyNameTextStyle} numberOfLines={1} ellipsizeMode="tail">
         {props.company.employer.name}
