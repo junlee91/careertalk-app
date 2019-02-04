@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Alert, Linking, Platform } from 'react-native';
+import { View, Text, Alert, Linking, Platform } from 'react-native';
 
 import { PublicRouter, PrivateRouter } from './Router';
 import { Spinner } from './components/commons';
@@ -20,30 +20,44 @@ class App extends Component {
   };
 
   componentDidMount() {
-    Alert.alert(
-      'New version is available!',
-      'Follow the link to update the app.',
-      [
-        {
-          text: 'Update',
-          onPress: () => {
-            // Linking.openURL(Platform.OS === 'ios' ? config.app_store : config.google_play);
-
-            // TODO: move this method to componentWillMount
-            this.setState({ loading: false });
-          }
+    fetch(`${config.API_URL}/careertalk/version`)
+      .then(resp => resp.json())
+      .then((json) => {
+        if (json.version === config.version) {
+          this.setState({ loading: false });
+        } else {
+          Alert.alert(
+            'New version is available!',
+            'Follow the link to update the app.',
+            [
+              {
+                text: 'Update',
+                onPress: () => {
+                  Linking.openURL(Platform.OS === 'ios' ? config.app_store : config.google_play);
+                }
+              }
+            ],
+            { cancelable: false }
+          );
         }
-      ],
-      { cancelable: false }
-    );
-
-    console.log(`Current Version is ${config.version}`);
+      });
   }
 
   render() {
     const { loading } = this.state;
 
-    return <Fragment>{loading ? <Spinner size="large" /> : <Router {...this.props} />}</Fragment>;
+    return (
+      <Fragment>
+        {loading ? (
+          <View style={{ minHeight: 500, justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+            <Spinner size="large" />
+            <Text>Version checking...</Text>
+          </View>
+        ) : (
+          <Router {...this.props} />
+        )}
+      </Fragment>
+    );
   }
 }
 
