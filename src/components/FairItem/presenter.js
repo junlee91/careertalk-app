@@ -8,21 +8,25 @@ const FairItem = (props) => {
   fair = { company_url: props.company_url || 'uic.edu' };
 
   return (
-    <TouchableOpacity onPressOut={() => { props.navigateTo(props.fair.id); }}>
+    <>
       {Platform.OS === 'ios' ? (
         <View style={styles.bigCard}>
-          <LogoImage {...fair} size="big" wide />
-          <NumOfCompanies {...props} />
-          <FairHeader {...props} />
+          <TouchableOpacity onPressOut={() => { props.navigateTo(props.fair.id); }}>
+            <LogoImage {...fair} size="big" wide />
+            <NumOfCompanies {...props} />
+            <FairHeader {...props} />
+          </TouchableOpacity>
         </View>
       ) : (
         <Surface style={[stylesAndroid.surface, { elevation: 6 }]}>
-          <LogoImage {...fair} size="big" wide />
-          <NumOfCompanies {...props} />
-          <FairHeader {...props} />
+          <TouchableOpacity onPressOut={() => { props.navigateTo(props.fair.id); }}>
+            <LogoImage {...fair} size="big" wide />
+            <NumOfCompanies {...props} />
+            <FairHeader {...props} />
+          </TouchableOpacity>
         </Surface>
       )}
-    </TouchableOpacity>
+    </>
   );
 };
 

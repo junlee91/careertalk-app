@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Profile from './presenter';
 
 class Container extends React.Component {
