@@ -9,3 +9,4 @@ export * from './PoweredBy';
 export * from './Chip';
 export * from './AuthButton';
 export * from './AlertText';
+export * from './ActionSheet';

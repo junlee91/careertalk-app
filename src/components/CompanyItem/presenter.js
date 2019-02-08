@@ -73,6 +73,7 @@ const styles = {
     flexDirection: 'row'
   },
   logoStyle: {
+    marginLeft: 5,
     ...Platform.select({
       android: {
         alignSelf: 'center'

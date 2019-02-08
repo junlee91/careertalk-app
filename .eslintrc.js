@@ -43,5 +43,6 @@ module.exports = {
     "react/jsx-one-expression-per-line": 0,
     "no-console": 0,
     "no-unused-vars": 0,
+    "arrow-parens": 0,
   },
 };

@@ -54,7 +54,14 @@ const PrivateRouter = () => (
             />
 
             {/* Tab 4 */}
-            <Scene key="settings" component={Settings} title="Settings" hideNavBar icon={TabIcon} />
+            {/* Remove settings screen for v2 */}
+            {/* <Scene
+              key="settings"
+              component={Settings}
+              title="Settings"
+              hideNavBar
+              icon={TabIcon}
+            /> */}
 
             {/* TODO: more tabs here!! */}
           </Scene>

@@ -3,7 +3,7 @@ import { SafeAreaView, View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Divider } from 'react-native-elements';
 
 import CompanyItem from '../../components/CompanyItem';
-import { InfoBox, ProfileImage, PoweredBy, NoAccessText } from '../../components/commons';
+import { InfoBox, ProfileImage, PoweredBy, NoAccessText, LogoutActionSheet } from '../../components/commons';
 
 const Profile = (props) => {
   const { firstName, lastName, profilePhoto, anonUser } = props;
@@ -13,8 +13,13 @@ const Profile = (props) => {
     <SafeAreaView style={styles.container}>
       <InfoBox>
         <View style={styles.userInfoStyle}>
-          <ProfileImage profilePhoto={profilePhoto} />
-          <Text style={styles.textField}>{displayName}</Text>
+          <View style={{ flex: 3, flexDirection: 'row', alignItems: 'center' }}>
+            <ProfileImage profilePhoto={profilePhoto} />
+            <Text style={styles.textField}>{displayName}</Text>
+          </View>
+          <View style={{ flex: 1 }}>
+            <LogoutActionSheet onPressLogOut={props.logOutPressed} />
+          </View>
         </View>
       </InfoBox>
       <ScrollView>

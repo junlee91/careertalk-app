@@ -72,4 +72,14 @@ const FilterIcon = props => (
   />
 );
 
-export { FavButton, NoteIcon, EditIcon, TabIcon, BackIcon, BackArrowIcon, FilterIcon };
+const LogOutIcon = () => (
+  <Icon
+    color="#95afc0"
+    size={25}
+    name="log-out"
+    type="entypo"
+    containerStyle={{ padding: 3 }}
+  />
+);
+
+export { FavButton, NoteIcon, EditIcon, TabIcon, BackIcon, BackArrowIcon, FilterIcon, LogOutIcon };
