@@ -6,10 +6,15 @@ import ImageViewer from 'react-native-image-zoom-viewer';
 
 class FairMap extends Component {
   componentWillMount() {
-    const { fairId, companyName, tables, mapUrl } = this.props;
+    const { companyName, tables, mapUrl } = this.props;
+    const fairMap = [
+      {
+        url: mapUrl
+      }
+    ];
 
     this.setState({
-      mapUrl,
+      fairMap,
       companyName,
       tables
     });
@@ -29,10 +34,10 @@ class FairMap extends Component {
   };
 
   render() {
-    const { mapUrl } = this.state;
+    const { fairMap } = this.state;
     return (
       <ImageViewer
-        imageUrls={mapUrl}
+        imageUrls={fairMap}
         enableSwipeDown={Platform.OS === 'ios'}
         onCancel={() => Actions.pop()}
         renderIndicator={() => null}
@@ -43,7 +48,7 @@ class FairMap extends Component {
   }
 }
 
-export const MapIcon = (props) => {
+export const MapIcon = props => {
   return (
     <TouchableOpacity onPressOut={() => Actions.push('fairMap', props)}>
       <Icon
