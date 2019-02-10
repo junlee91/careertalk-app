@@ -6,6 +6,8 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "start-ios": "react-native run-ios --simulator=\"iPhone X\"",
     "start-android": "react-native run-android",
+    "start-pack": "cd node_modules/react-native/scripts && ./packager.sh --reset-cache",
+    "check-android": "cd android && ./gradlew app:dependencies",
     "clean": "rm -rf ios/build && rm -rf android/build && rm -rf node_modules && yarn cache clean",
     "test": "jest"
   },
