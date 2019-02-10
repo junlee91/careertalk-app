@@ -4,30 +4,12 @@ import { Icon } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import ImageViewer from 'react-native-image-zoom-viewer';
 
-const images = [
-  {
-    url: '',
-    props: {
-      source: require('../../img/uic_map/d1_uic_map.png'),
-      id: 1
-    }
-  },
-  {
-    url: '',
-    props: {
-      source: require('../../img/uic_map/d2_uic_map.png'),
-      id: 2
-    }
-  }
-];
-
 class FairMap extends Component {
   componentWillMount() {
-    const { fairId, companyName, tables } = this.props;
-    const fairMap = images.filter(img => img.props.id === fairId);
+    const { fairId, companyName, tables, mapUrl } = this.props;
 
     this.setState({
-      fairMap,
+      mapUrl,
       companyName,
       tables
     });
@@ -47,10 +29,10 @@ class FairMap extends Component {
   };
 
   render() {
-    const { fairMap } = this.state;
+    const { mapUrl } = this.state;
     return (
       <ImageViewer
-        imageUrls={fairMap}
+        imageUrls={mapUrl}
         enableSwipeDown={Platform.OS === 'ios'}
         onCancel={() => Actions.pop()}
         renderIndicator={() => null}
