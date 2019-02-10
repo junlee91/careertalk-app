@@ -6,6 +6,7 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "start-ios": "react-native run-ios --simulator=\"iPhone X\"",
     "start-android": "react-native run-android",
+    "clean": "rm -rf ios/build && rm -rf android/build && rm -rf node_modules && yarn cache clean",
     "test": "jest"
   },
   "dependencies": {
@@ -38,6 +39,7 @@
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.1",
     "jest": "23.5.0",
+    "react-native-dotenv": "^0.2.0",
     "react-test-renderer": "16.4.1"
   },
   "jest": {
