@@ -3,8 +3,6 @@ import React, { Component, Fragment } from 'react';
 import FairList from './presenter';
 import { Spinner } from '../../components/commons';
 
-import hard_fairs from '../../lib/sample_fairs.json';
-
 class Container extends Component {
   constructor() {
     super();
@@ -15,16 +13,9 @@ class Container extends Component {
   }
 
   componentDidMount() {
-    const { v2_getFairs, fairs } = this.props;
+    const { v2_getFairs } = this.props;
 
-    if (fairs) {
-      this.setState({
-        loading: false,
-        fairs
-      });
-    } else {
-      v2_getFairs();
-    }
+    v2_getFairs();
   }
 
   componentWillReceiveProps(nextProps) {
