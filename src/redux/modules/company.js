@@ -286,7 +286,18 @@ function applySetTop5(state, action) {
   const topIds = [top1.id, top2.id, top3.id, top4.id, top5.id];
   const currentEmpls = state.employers[careerfair.id];
   const filteredEmpls = currentEmpls.filter(c => topIds.includes(c.employer.id));
-  const topList = { filteredEmpls };
+  const filterByOrder = [];
+
+  // Oh no..
+  filteredEmpls.reduce((acc, emp) => {
+    const empId = emp.employer.id;
+    const topidx = topIds.indexOf(empId);
+    acc[topidx] = emp;
+
+    return acc;
+  }, filterByOrder);
+
+  const topList = { filteredEmpls: filterByOrder };
 
   return {
     ...state,
