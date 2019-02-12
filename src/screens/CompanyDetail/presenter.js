@@ -29,7 +29,7 @@ const CompanyDetail = (props) => {
           <View style={styles.titleContent}>
             <LogoImage {...companyInfo.employer} size="medium" wide />
             <Text style={styles.titleTextStyle}>{companyInfo.employer.name}</Text>
-            {fairInfo && fairInfo.map_url && (
+            {companyInfo.tables.length > 0 && fairInfo && fairInfo.map_url && (
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Caption>
                   {companyInfo.tables.length === 1 ? `Table: ${tables}` : `Tables: ${tables}`}
