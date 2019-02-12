@@ -29,7 +29,7 @@ const CompanyDetail = (props) => {
           <View style={styles.titleContent}>
             <LogoImage {...companyInfo.employer} size="medium" wide />
             <Text style={styles.titleTextStyle}>{companyInfo.employer.name}</Text>
-            {fairInfo.map_url && (
+            {fairInfo && fairInfo.map_url && (
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Caption>
                   {companyInfo.tables.length === 1 ? `Table: ${tables}` : `Tables: ${tables}`}
@@ -48,7 +48,7 @@ const CompanyDetail = (props) => {
           <NoteInfo {...props} />
         </InfoBox>
         <InfoBox>
-          <EventInfo {...props} />
+          {fairInfo && <EventInfo {...props} />}
         </InfoBox>
         <InfoBox>
           <DetailInfo {...companyInfo} />
