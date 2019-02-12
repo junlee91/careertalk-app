@@ -380,7 +380,8 @@ function applySetLogoutClean(state) {
   return {
     ...state,
     favorites: [],
-    employers: {}
+    employers: {},
+    fairs: {},
   };
 }
 
