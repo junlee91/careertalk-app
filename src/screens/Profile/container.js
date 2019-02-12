@@ -69,10 +69,17 @@ class Container extends React.Component {
           isFavoritePresent = true;
         }
 
+        // TODO: refactor this
+        const filteredFairs = fairs.filter(f => f.id === parseInt(fairId, 10));
+        let fairInfo;
+        if (filteredFairs && filteredFairs.length) {
+          [fairInfo] = filteredFairs;
+        }
+
         filteredEmployers.push(
           Object.assign(
             {
-              fair: fairs.filter(f => f.id === parseInt(fairId, 10))[0]
+              fair: fairInfo
             },
             { employersList }
           )

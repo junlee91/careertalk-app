@@ -69,7 +69,7 @@ const FairsList = (props) => {
   const { fair, employers } = props;
   return (
     <View>
-      <Text style={styles.fairNameText}>{fair.name}</Text>
+      {fair && <Text style={styles.fairNameText}>{fair.name}</Text>}
       <Divider />
       <View style={{ flex: 1 }}>
         <ScrollView>
