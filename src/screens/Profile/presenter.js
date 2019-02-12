@@ -40,11 +40,11 @@ const FavoriteList = props => (
   <>
     {props.isFavoritePresent ? (
       <InfoBox>
-        {props.filteredEmployers.map((fairMap) => {
+        {props.filteredEmployers.map((fairMap, index) => {
           if (fairMap.employersList.length) {
             return (
               <FairsList
-                key={fairMap.fair.id}
+                key={index}
                 employers={fairMap.employersList}
                 fair={fairMap.fair}
               />
@@ -69,7 +69,7 @@ const FairsList = (props) => {
   const { fair, employers } = props;
   return (
     <View>
-      <Text style={styles.fairNameText}>{fair.name}</Text>
+      {fair && <Text style={styles.fairNameText}>{fair.name}</Text>}
       <Divider />
       <View style={{ flex: 1 }}>
         <ScrollView>

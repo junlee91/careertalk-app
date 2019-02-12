@@ -6,7 +6,11 @@ class Container extends Component {
   componentWillMount() {
     const { companyInfo, favorites, note, fairs: { fairs }, socialProvider } = this.props;
     const isLiked = favorites[companyInfo.careerfair_id].includes(companyInfo.employer.id);
-    const fairInfo = fairs[companyInfo.careerfair_id - 1];
+    const filteredFairs = fairs.filter(f => f.id === parseInt(companyInfo.careerfair_id, 10));
+    let fairInfo;
+    if (filteredFairs && filteredFairs.length) {
+      [fairInfo] = filteredFairs;
+    }
 
     this.setState({
       companyInfo,
