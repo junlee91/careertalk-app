@@ -5,6 +5,7 @@ import { View, Text, Alert, Linking, Platform } from 'react-native';
 import { PublicRouter, PrivateRouter } from './Router';
 import { Spinner } from './components/commons';
 import config from '../config.json';
+import pjson from '../package.json';
 
 const mapStateToProps = (state) => {
   const { auth: { isLoggedIn } } = state;
@@ -23,7 +24,7 @@ class App extends Component {
     fetch(`${config.API_URL}/careertalk/version`)
       .then(resp => resp.json())
       .then((json) => {
-        if (json.version === config.version) {
+        if (json.version === pjson.version) {
           this.setState({ loading: false });
         } else {
           Alert.alert(
