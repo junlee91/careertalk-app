@@ -40,11 +40,11 @@ const FavoriteList = props => (
   <>
     {props.isFavoritePresent ? (
       <InfoBox>
-        {props.filteredEmployers.map((fairMap) => {
+        {props.filteredEmployers.map((fairMap, index) => {
           if (fairMap.employersList.length) {
             return (
               <FairsList
-                key={fairMap.fair.id}
+                key={index}
                 employers={fairMap.employersList}
                 fair={fairMap.fair}
               />

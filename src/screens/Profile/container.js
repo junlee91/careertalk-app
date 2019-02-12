@@ -72,7 +72,7 @@ class Container extends React.Component {
         filteredEmployers.push(
           Object.assign(
             {
-              fair: fairs[fairId - 1]
+              fair: fairs.filter(f => f.id === parseInt(fairId, 10))[0]
             },
             { employersList }
           )
