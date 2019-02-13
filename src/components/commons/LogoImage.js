@@ -5,7 +5,7 @@ import { Image } from 'react-native';
 function getSize(size) {
   switch (size) {
     case 'small':
-      return 64;
+      return 51;
     case 'medium':
       return 128;
     case 'large':
@@ -17,7 +17,7 @@ function getSize(size) {
 
 const LogoImage = (props) => {
   const size = getSize(props.size);
-  const imgStyle = size === 64 ? styles.imgStyleSmall : styles.imgStyleMedium;
+  const imgStyle = props.wide ? styles.imgStyleMedium : styles.imgStyleSmall;
 
   return (
     <FadeIn>
@@ -30,11 +30,11 @@ const LogoImage = (props) => {
   );
 };
 
-const ProfileImage = () => {
+const ProfileImage = (props) => {
   return (
     <FadeIn>
       <Image
-        source={require('../../img/noPhoto.jpg')}
+        source={props.profilePhoto ? { uri: props.profilePhoto } : require('../../img/noPhoto.jpg')}
         style={styles.imgStyleSmall}
         defaultSource={require('../../img/noPhoto.jpg')}
       />
@@ -45,16 +45,15 @@ const ProfileImage = () => {
 const styles = {
   imgStyleSmall: {
     height: 51,
-    width: 51
+    width: 51,
+    alignSelf: 'center',
+    resizeMode: 'contain'
   },
   imgStyleMedium: {
     height: 128,
     width: 128,
     alignSelf: 'center',
-    resizeMode: 'stretch',
-    borderWidth: 0.5,
-    borderRadius: 2,
-    borderColor: '#b2bec3',
+    resizeMode: 'contain',
     shadowColor: '#8395a7',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,

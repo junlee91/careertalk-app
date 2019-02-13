@@ -7,13 +7,15 @@ class Container extends Component {
   constructor() {
     super();
     this.state = {
-      loading: true
+      loading: true,
+      fairs: []
     };
   }
 
   componentDidMount() {
-    const { getFairs } = this.props;
-    getFairs();
+    const { v2_getFairs } = this.props;
+
+    v2_getFairs();
   }
 
   componentWillReceiveProps(nextProps) {

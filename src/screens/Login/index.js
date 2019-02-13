@@ -1,23 +1,22 @@
-import React from 'react';
-import { View, Button, StyleSheet } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import Container from './loginContainer';
+import { actionCreators as authActions } from '../../redux/modules/auth';
 
-class LoginPage extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Button onPress={() => Actions.push('fairs')} title="Login" />
-      </View>
-    );
-  }
-}
+const mapStateToProps = (state) => {
+  const { auth: { isLoggedIn } } = state;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
+  return {
+    isLoggedIn,
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  login: () => {
+    dispatch(authActions.login());
+  },
+  socialLogin: (info, socialProvider) => {
+    dispatch(authActions.socialLogin(info, socialProvider));
   }
 });
 
-
-export default LoginPage;
+export default connect(mapStateToProps, mapDispatchToProps)(Container);

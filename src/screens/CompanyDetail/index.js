@@ -1,29 +1,32 @@
 import { connect } from 'react-redux';
 import Container from './container';
-import { actionCreators as userActions } from '../../redux/modules/user';
-
+import { actionCreators as companyActions } from '../../redux/modules/company';
 
 const mapStateToProps = (state) => {
-  const { user: { fairs, favorites } } = state;
+  const {
+    company: { fairs, favorites },
+    auth: { socialProvider }
+  } = state;
   return {
     fairs,
     favorites,
+    socialProvider
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  likeCompany: (cmpId) => {
-    dispatch(userActions.likeCompany(cmpId));
+  likeCompany: (cmpId, fairId) => {
+    return dispatch(companyActions.likeCompany(cmpId, fairId));
   },
-  unlikeCompany: (cmpId) => {
-    dispatch(userActions.unlikeCompany(cmpId));
+  unlikeCompany: (cmpId, fairId) => {
+    return dispatch(companyActions.unlikeCompany(cmpId, fairId));
   },
-  saveNote: (cmpId, note) => {
-    dispatch(userActions.setNote(cmpId, note));
+  saveNote: (cmpId, fairId, note) => {
+    dispatch(companyActions.setNote(cmpId, fairId, note));
   },
-  deleteNote: (cmpId) => {
-    dispatch(userActions.popNote(cmpId));
-  },
+  deleteNote: (cmpId, fairId) => {
+    dispatch(companyActions.popNote(cmpId, fairId));
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Container);

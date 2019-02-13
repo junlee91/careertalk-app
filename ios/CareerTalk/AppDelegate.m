@@ -10,6 +10,8 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import "RNSplashScreen.h"
+#import <RNGoogleSignin/RNGoogleSignin.h>
+@import Firebase;
 
 @implementation AppDelegate
 
@@ -25,6 +27,7 @@
                                                    launchOptions:launchOptions];
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
 
+
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];
   rootViewController.view = rootView;
@@ -32,7 +35,18 @@
   [self.window makeKeyAndVisible];
   
   [RNSplashScreen show];
+  [FIRApp configure];
   return YES;
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+  
+  BOOL handled = [RNGoogleSignin application:application openURL:url sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey] annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+  
+  // Add any custom logic here.
+  return handled;
 }
 
 @end

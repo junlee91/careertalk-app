@@ -1,0 +1,17 @@
+{
+  "Fairs": [
+    {
+      "date": { "day": 18, "month": 9, "year": 2018 },
+      "description": "Join us for the Fall Engineering and Computer Science Career Fair! UIC Recruit for full-time positions, co-op, and internship opportunities",
+      "end_date": "Tue, 18 Sep 2018 00:00:00 GMT",
+      "end_time": 960,
+      "id": 1,
+      "location": "Isadore and Sadie Dorin Forum (UIC Forum)",
+      "name": "D-1 UIC Engineering&Computer Science Career Fair",
+      "organization": "University of Illinois at Chicago",
+      "start_date_min": "Tue, 18 Sep 2018 00:00:00 GMT",
+      "start_time_min": 720,
+      "companies": []
+    }
+  ]
+}

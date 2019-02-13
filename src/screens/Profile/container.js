@@ -1,11 +1,15 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import { GoogleSignin } from 'react-native-google-signin';
+
 import Profile from './presenter';
 
 class Container extends React.Component {
   constructor() {
     super();
     this.state = {
-      filteredFairs: []
+      firstName: '',
+      lastName: '',
+      profilePhoto: ''
     };
   }
 
@@ -17,30 +21,90 @@ class Container extends React.Component {
     this._setComponentState(nextProps);
   }
 
-  _setComponentState(props) {
-    const { fairs: { Careerfair }, favorites } = props;
-    const filteredFairs = [];
-    let isFavoritePresent = false;
-
-    for (let i = 0; i < Careerfair.length; i += 1) {
-      const { companies } = Careerfair[i];
-      const filteredCompanies = companies.filter(company => favorites.includes(company.id));
-
-      if (filteredCompanies.length > 0) {
-        isFavoritePresent = true;
-      }
-      filteredFairs.push(filteredCompanies);
+  _googleSignOut = async () => {
+    try {
+      // Finish Google Session
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut();
+      // Clear auth state
+      this.props.logout();
+    } catch (error) {
+      console.error(error);
     }
+  };
 
-    this.setState({
-      filteredFairs,
-      isFavoritePresent
-    });
+  _logOutPressed = () => {
+    const { socialProvider, logout } = this.props;
+
+    if (socialProvider === 'google') {
+      this._googleSignOut();
+    } else {
+      logout();
+    }
+  };
+
+  _setComponentState(props) {
+    const {
+      firstName,
+      lastName,
+      profilePhoto,
+      favorites,
+      fairs: { fairs },
+      employers,
+      socialProvider
+    } = props;
+
+    if (socialProvider) {
+      const keys = Object.keys(employers);
+      const filteredEmployers = [];
+      let isFavoritePresent = false;
+
+      for (let i = 0; i < keys.length; i += 1) {
+        const fairId = keys[i];
+        let employersList = employers[fairId];
+
+        employersList = employersList.filter(e => favorites[fairId].includes(e.employer.id));
+
+        if (employersList.length) {
+          isFavoritePresent = true;
+        }
+
+        // TODO: refactor this
+        const filteredFairs = fairs.filter(f => f.id === parseInt(fairId, 10));
+        let fairInfo;
+        if (filteredFairs && filteredFairs.length) {
+          [fairInfo] = filteredFairs;
+        }
+
+        filteredEmployers.push(
+          Object.assign(
+            {
+              fair: fairInfo
+            },
+            { employersList }
+          )
+        );
+      }
+
+      this.setState({
+        firstName,
+        lastName,
+        profilePhoto,
+        filteredEmployers,
+        isFavoritePresent
+      });
+    } else {
+      this.setState({
+        firstName,
+        lastName,
+        profilePhoto,
+        anonUser: true
+      });
+    }
   }
 
   render() {
-    const { filteredFairs } = this.state;
-    return <Fragment>{filteredFairs && <Profile {...this.state} />}</Fragment>;
+    return <Profile {...this.state} logOutPressed={this._logOutPressed} />;
   }
 }
 

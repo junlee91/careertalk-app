@@ -1,56 +1,82 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Linking,
+  SafeAreaView,
+  Platform
+} from 'react-native';
 import { Icon } from 'react-native-elements';
 import { TextInput, Caption } from 'react-native-paper';
+import { Actions } from 'react-native-router-flux';
 
-import { LogoImage, InfoBox, BottomInfoBox, Tag, FavButton, PoweredBy } from '../../components/commons';
+import { LogoImage, InfoBox, Tag, FavButton, PoweredBy, BackIcon } from '../../components/commons';
 import { MapIcon } from '../../components/FairMap';
 
 const CompanyDetail = (props) => {
-  const { companyInfo, date } = props;
+  const { companyInfo, fairInfo } = props;
   const tables = companyInfo.tables.join(', ');
 
   return (
-    <View style={styles.container}>
-      <ScrollView style={{ height: '89%' }} keyboardDismissMode="on-drag">
+    <SafeAreaView style={styles.container}>
+      {Platform.OS === 'android' && <CrossButton />}
+      <ScrollView keyboardDismissMode="on-drag">
+        {Platform.OS === 'ios' && <CrossButton />}
         <InfoBox>
           <View style={styles.titleContent}>
-            <LogoImage {...companyInfo} size="medium" />
-            <Text style={styles.titleTextStyle}>{companyInfo.name}</Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Caption>
-                {companyInfo.tables.length === 1 ? `Table: ${tables}` : `Tables: ${tables}`}
-              </Caption>
-              <MapIcon
-                fairId={companyInfo.fair_id}
-                companyName={companyInfo.name}
-                tables={tables}
-              />
-            </View>
+            <LogoImage {...companyInfo.employer} size="medium" wide />
+            <Text style={styles.titleTextStyle}>{companyInfo.employer.name}</Text>
+            {companyInfo.tables.length > 0 && fairInfo && fairInfo.map_url && (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Caption>
+                  {companyInfo.tables.length === 1 ? `Table: ${tables}` : `Tables: ${tables}`}
+                </Caption>
+                <MapIcon
+                  fairId={fairInfo.id}
+                  companyName={companyInfo.employer.name}
+                  tables={tables}
+                  mapUrl={fairInfo.map_url}
+                />
+              </View>
+            )}
           </View>
         </InfoBox>
         <InfoBox>
           <NoteInfo {...props} />
         </InfoBox>
         <InfoBox>
-          <EventInfo {...companyInfo} date={date} />
+          {fairInfo && <EventInfo {...props} />}
         </InfoBox>
         <InfoBox>
           <DetailInfo {...companyInfo} />
         </InfoBox>
+        <PoweredBy poweredby="Logos provided by Clearbit" />
       </ScrollView>
-      <PoweredBy poweredby="Logos provided by Clearbit" />
-      <BottomInfoBox>
-        <TouchableOpacity onPressOut={props.handleLike}>
-          <View style={styles.actionButton}>
-            <Text style={{ paddingHorizontal: 10, fontFamily: 'Avenir Next' }}>
-              {props.isLiked ? 'Delete from List' : 'Add to Favorite'}
-            </Text>
-            <FavButton isLiked={props.isLiked} />
-          </View>
+      {props.socialProvider && (
+        <TouchableOpacity
+          onPressOut={props.handleLike}
+          style={{
+            borderWidth: 1,
+            borderColor: 'rgba(0,0,0,0.2)',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 70,
+            height: 70,
+            position: 'absolute',
+            bottom: 30,
+            right: 15,
+            backgroundColor: props.isLiked ? '#ffdde9' : '#fff',
+            borderRadius: 100,
+            zIndex: 5
+          }}
+        >
+          <FavButton isLiked={props.isLiked} size={35} />
         </TouchableOpacity>
-      </BottomInfoBox>
-    </View>
+      )}
+    </SafeAreaView>
   );
 };
 
@@ -75,22 +101,24 @@ const NoteInfo = (props) => {
 };
 
 const EventInfo = (props) => {
-  const index = props.date.indexOf('00:00:00') - 1;
-  const date = props.date.slice(0, index);
+  const { companyInfo, fairInfo } = props;
+  const fairDate = new Date(fairInfo.date).toDateString();
+  const timeString = `${fairInfo.start_time} - ${fairInfo.end_time}`;
+  const dateString = `${fairDate} ${timeString}`;
 
   return (
     <View>
       <View style={{ flexDirection: 'row', alignItems: 'center', padding: 5 }}>
         <Icon name="calendar" type="entypo" />
-        <Text style={{ marginLeft: 20 }}>{date}</Text>
+        <Text style={{ marginLeft: 20 }}>{dateString}</Text>
       </View>
-      <Text style={styles.textStyle}>{props.fair}</Text>
+      <Text style={styles.textStyle}>{fairInfo.name}</Text>
       <Text
         style={styles.hrefTextStyle}
-        onPress={() => Linking.openURL(`http://${props.company_url}`)}
+        onPress={() => Linking.openURL(`http://${companyInfo.employer.company_url}`)}
       >
         http://
-        {props.company_url}
+        {companyInfo.employer.company_url}
       </Text>
     </View>
   );
@@ -98,7 +126,7 @@ const EventInfo = (props) => {
 
 const DetailInfo = (props) => {
   return (
-    <View>
+    <View style={{ minHeight: 250, justifyContent: 'center' }}>
       <Text style={styles.detailTextStyle}>We are hiring</Text>
       <View style={styles.tagStyle}>
         {props.hiring_types.map(type => (
@@ -113,14 +141,34 @@ const DetailInfo = (props) => {
       </View>
       <Text style={styles.detailTextStyle}>Degrees</Text>
       <View style={styles.tagStyle}>
-        {props.degree.map(type => (
+        {props.degree_requirements.map(type => (
           <Tag key={type} type={type} color="#22a6b3" />
         ))}
       </View>
-      {props.visa === 'yes' && <Text style={styles.detailTextStyle}>F1/H1B Sponsor Supported</Text>}
+      {props.visa_support === 'yes' && (
+        <Text style={styles.detailTextStyle}>F1/H1B Sponsor Supported</Text>
+      )}
     </View>
   );
 };
+
+const CrossButton = () => (
+  <TouchableOpacity
+    style={{
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: 50,
+      height: 50,
+      position: 'absolute',
+      right: 1,
+      borderRadius: 50,
+      zIndex: 5
+    }}
+    onPressOut={() => Actions.pop()}
+  >
+    <BackIcon />
+  </TouchableOpacity>
+);
 
 const styles = StyleSheet.create({
   container: {

@@ -4,22 +4,21 @@ import CompanyDetail from './presenter';
 
 class Container extends Component {
   componentWillMount() {
-    const {
-      fairs: { Careerfair },
-      companyInfo,
-      favorites,
-      note,
-    } = this.props;
-    const fair = Careerfair.filter(fair => fair.id === companyInfo.fair_id);
-    const { start_date_min } = fair[0];
-    const isLiked = favorites.includes(companyInfo.id);
+    const { companyInfo, favorites, note, fairs: { fairs }, socialProvider } = this.props;
+    const isLiked = favorites[companyInfo.careerfair_id].includes(companyInfo.employer.id);
+    const filteredFairs = fairs.filter(f => f.id === parseInt(companyInfo.careerfair_id, 10));
+    let fairInfo;
+    if (filteredFairs && filteredFairs.length) {
+      [fairInfo] = filteredFairs;
+    }
 
     this.setState({
-      date: start_date_min,
       companyInfo,
       isLiked,
       isEditting: false,
       new_note: note,
+      fairInfo,
+      socialProvider
     });
   }
 
@@ -28,48 +27,48 @@ class Container extends Component {
     const { likeCompany, unlikeCompany } = this.props;
 
     if (!isLiked) {
-      likeCompany(companyInfo.id);
+      likeCompany(companyInfo.employer.id, companyInfo.careerfair_id);
     } else {
-      unlikeCompany(companyInfo.id);
+      unlikeCompany(companyInfo.employer.id, companyInfo.careerfair_id);
     }
 
     this.setState({
-      isLiked: !isLiked,
+      isLiked: !isLiked
     });
   };
 
   _handleEdit = (text) => {
     this.setState({
-      new_note: text,
+      new_note: text
     });
   };
 
   componentWillUnmount = () => {
     this._handleSave();
-  }
+  };
 
   _inputFocus = () => {
     const { isEditting } = this.state;
 
     this.setState({
-      isEditting: !isEditting,
+      isEditting: !isEditting
     });
-  }
+  };
 
   _handleSave = () => {
     const { new_note, companyInfo } = this.state;
     const { saveNote, deleteNote } = this.props;
 
     if (!new_note) {
-      deleteNote(companyInfo.id);
+      deleteNote(companyInfo.employer.id, companyInfo.careerfair_id);
       return;
     }
     const noteToSave = new_note.trim();
 
     if (noteToSave.length === 0) {
-      deleteNote(companyInfo.id);
+      deleteNote(companyInfo.employer.id, companyInfo.careerfair_id);
     } else {
-      saveNote(companyInfo.id, noteToSave);
+      saveNote(companyInfo.employer.id, companyInfo.careerfair_id, noteToSave);
     }
   };
 

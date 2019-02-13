@@ -12,19 +12,28 @@ const CompanyItem = (props) => {
         <View style={{ flex: 1 }}>
           <CardSection>
             <View style={styles.logoStyle}>
-              <LogoImage {...company} size="small" />
+              <TouchableOpacity onPress={() => props.navigateTo('companyDetail')}>
+                <LogoImage {...company.employer} size="small" />
+              </TouchableOpacity>
             </View>
           </CardSection>
         </View>
-        <View style={{ flex: 4 }}>
+        <View style={props.displayLabel ? { flex: 4 } : { flex: 3 }}>
           <CardSection>
             <EmployerField {...props} />
           </CardSection>
         </View>
         <View style={{ flex: 1 }}>
           <CardSection>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginRight: 10 }}>
-              <NoteIcon visible={props.isNote} />
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-evenly',
+                alignItems: 'center',
+                marginRight: 10
+              }}
+            >
+              {props.displayNote && <NoteIcon visible={props.isNote} />}
               {props.displayLike && <FavIcon {...props} />}
             </View>
           </CardSection>
@@ -38,12 +47,14 @@ const EmployerField = props => (
   <TouchableOpacity onPress={() => props.navigateTo('companyDetail')}>
     <View style={styles.companyContentStyle}>
       <Text style={styles.companyNameTextStyle} numberOfLines={1} ellipsizeMode="tail">
-        {props.company.name}
+        {props.company.employer.name}
       </Text>
     </View>
-    <View style={styles.labelContentStyle}>
-      <Label {...props.company} />
-    </View>
+    {props.displayLabel && (
+      <View style={styles.labelContentStyle}>
+        <Label {...props.company} />
+      </View>
+    )}
   </TouchableOpacity>
 );
 
@@ -54,12 +65,15 @@ const FavIcon = props => (
 );
 
 const styles = {
-  companyContentStyle: {},
+  companyContentStyle: {
+    paddingVertival: 10
+  },
   companyItemStyle: {
     flex: 1,
     flexDirection: 'row'
   },
   logoStyle: {
+    marginLeft: 5,
     ...Platform.select({
       android: {
         alignSelf: 'center'

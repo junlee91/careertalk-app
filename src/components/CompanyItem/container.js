@@ -1,27 +1,49 @@
 import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
+import { Alert } from 'react-native';
 
 import CompanyItem from './presenter';
 
 class Container extends Component {
   componentDidMount() {
-    const { company, favorites, notes, likeButton } = this.props;
-    const isLiked = favorites.includes(company.id);
-    const isNote = notes[company.id] !== undefined;
+    const {
+      company,
+      favorites,
+      notes,
+      showLabel,
+      noteIcon,
+      likeButton,
+      socialProvider
+    } = this.props;
+    const isLiked = favorites[company.careerfair_id].includes(company.employer.id);
+    let isNote = false;
+
+    const curNotes = notes[company.careerfair_id];
+    if (curNotes) {
+      isNote = Object.keys(curNotes).includes(company.employer.id.toString());
+    }
 
     this.setState({
       company,
       isLiked,
       isNote,
+      displayLabel: showLabel,
+      displayNote: noteIcon,
       displayLike: likeButton,
+      socialProvider
     });
   }
 
   componentWillReceiveProps(nextProps) {
     const { favorites, notes } = nextProps;
     const { company } = this.state;
-    const isLiked = favorites.includes(company.id);
-    const isNote = notes[company.id] !== undefined;
+    const isLiked = favorites[company.careerfair_id].includes(company.employer.id);
+    let isNote = false;
+
+    const curNotes = notes[company.careerfair_id];
+    if (curNotes) {
+      isNote = Object.keys(curNotes).includes(company.employer.id.toString());
+    }
 
     if (isLiked !== this.state.isLiked) {
       this.setState({
@@ -38,24 +60,39 @@ class Container extends Component {
   _navigateTo = (key) => {
     const { company } = this.state;
     const { notes } = this.props;
-    const params = { companyInfo: company, note: notes[company.id] };
+
+    const curNotes = notes[company.careerfair_id] || {};
+    const note = curNotes[company.employer.id];
+
+    const params = { companyInfo: company, note };
 
     Actions.push(key, params);
   };
 
   _handleLike = () => {
-    const { isLiked, company } = this.state;
-    const { likeCompany, unlikeCompany, company: { fair_id } } = this.props;
+    const { isLiked, company, socialProvider } = this.state;
+    const { likeCompany, unlikeCompany } = this.props;
 
-    if (!isLiked) {
-      likeCompany(company.id, fair_id);
+    if (socialProvider) {
+      if (!isLiked) {
+        likeCompany(company.employer.id, company.careerfair_id);
+      } else {
+        unlikeCompany(company.employer.id, company.careerfair_id);
+      }
+
+      this.setState({
+        isLiked: !isLiked
+      });
     } else {
-      unlikeCompany(company.id, fair_id);
+      Alert.alert(
+        'No Access Rights',
+        'Login with social account to use this feature.',
+        [
+          { text: 'OK', onPress: () => {} }
+        ],
+        { cancelable: false }
+      );
     }
-
-    this.setState({
-      isLiked: !isLiked,
-    });
   };
 
   render() {
