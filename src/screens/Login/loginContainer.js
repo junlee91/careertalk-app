@@ -10,6 +10,7 @@ import config from '../../../config.json';
 // https://github.com/react-native-community/react-native-google-signin/issues/263#issuecomment-320611997
 GoogleSignin.configure({
   webClientId: config.webClientId,
+  iosClientId: config.iosClientId,
 });
 
 class Container extends React.Component {
