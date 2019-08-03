@@ -24,6 +24,7 @@ const theme = {
 export default () => {
   const [loaded, setLoaded] = useState(false);
   const [client, setClient] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
   const preLoad = async () => {
     try {
       const cache = new InMemoryCache();
@@ -33,8 +34,20 @@ export default () => {
       });
       const client = new ApolloClient({
         cache,
+        request: async operation => {
+          const token = await AsyncStorage.getItem('jwt');
+          return operation.setContext({
+            headers: { Authorization: `Bearer ${token}` }
+          });
+        },
         ...apolloOptions
       });
+      const isLoggedIn = await AsyncStorage.getItem("isLoggedIn");
+      if (!isLoggedIn || isLoggedIn === "false") {
+        setIsLoggedIn(false);
+      } else {
+        setIsLoggedIn(true);
+      }
       setLoaded(true);
       setClient(client);
     } catch (error) {
@@ -47,10 +60,10 @@ export default () => {
     SplashScreen.hide();
   }, []);
 
-  return loaded && client ? (
+  return loaded && client && isLoggedIn !== null ? (
     <ApolloProvider client={client}>
       <PaperProvider theme={theme}>
-        <CareerTalk />
+        <CareerTalk isLoggedIn={isLoggedIn}/>
       </PaperProvider>
     </ApolloProvider>
   ) : (
