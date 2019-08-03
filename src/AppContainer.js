@@ -1,3 +1,9 @@
+/**
+ * This file is deprecated
+ *
+ * Use src/CareerTalk.js
+ */
+
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, Alert, Linking, Platform } from 'react-native';
