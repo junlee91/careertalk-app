@@ -32,14 +32,16 @@ const PublicRouter = ({ setIsLoggedInState }) => (
 const PrivateRouter2 = ({ setIsLoggedInState }) => (
   <Router key="private">
     <Scene key="root" hideNavBar>
-      <Scene
+      {/* <Scene
         key="placeholder"
         initial
         title="Place Holder"
         hideNavBar
         component={TempAuth}
         setIsLoggedInState={setIsLoggedInState}
-      />
+      /> */}
+
+      <Scene key="fairs" component={Fairs} initial title="Career Fairs" hideNavBar />
     </Scene>
   </Router>
 );

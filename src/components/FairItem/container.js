@@ -12,7 +12,7 @@ class Container extends Component {
   }
 
   _navigateTo = async (id) => {
-    const result = await this.props.setCurrentFair(id);
+    // const result = await this.props.setCurrentFair(id);
 
     if (result) {
       this.waitBeforeNavigate = setTimeout(() => {
