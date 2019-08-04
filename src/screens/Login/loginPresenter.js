@@ -47,7 +47,7 @@ const LoginPage = (props) => {
         </View> */}
         <View style={{ paddingVertical: 15 }}>
           {Platform.OS === 'ios' ? (
-            <LoginButton title="Sign in with Default" onPress={props.login} />
+            <LoginButton title="Sign in as public user" onPress={props.login} />
           ) : (
             <TouchableOpacity style={styles.button} onPressOut={props.login}>
               <Text

@@ -23,14 +23,14 @@ class Container extends React.Component {
   _login = (async = () => {
     Alert.alert(
       'Attention!',
-      'Using an anonymous account will have limitations using the app.',
+      'Using a public account will have limitations using the app.',
       [
         {
           text: 'Cancel',
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel'
         },
-        { text: 'OK', onPress: () => this.props.login() }
+        { text: 'OK', onPress: () => console.log('Public Login') }
       ],
       { cancelable: false }
     );
@@ -101,20 +101,21 @@ class Container extends React.Component {
       const { accessToken, idToken, user } = userInfo;
       const { email, givenName, familyName, name, id, photo } = user;
 
+      console.log('google login');
       // send userInfo to store
-      this.props.socialLogin(
-        {
-          email,
-          givenName,
-          familyName,
-          photo,
-          accessToken,
-          idToken,
-          id,
-          name
-        },
-        'google'
-      );
+      // this.props.socialLogin(
+      //   {
+      //     email,
+      //     givenName,
+      //     familyName,
+      //     photo,
+      //     accessToken,
+      //     idToken,
+      //     id,
+      //     name
+      //   },
+      //   'google'
+      // );
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow

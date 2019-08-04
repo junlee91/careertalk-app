@@ -42,8 +42,9 @@ export default () => {
         },
         ...apolloOptions
       });
-      const isLoggedIn = await AsyncStorage.getItem("isLoggedIn");
-      if (!isLoggedIn || isLoggedIn === "false") {
+      // TODO:
+      const isLoggedIn = false; // await AsyncStorage.getItem('isLoggedIn');
+      if (!isLoggedIn || isLoggedIn === 'false') {
         setIsLoggedIn(false);
       } else {
         setIsLoggedIn(true);
@@ -63,7 +64,7 @@ export default () => {
   return loaded && client && isLoggedIn !== null ? (
     <ApolloProvider client={client}>
       <PaperProvider theme={theme}>
-        <CareerTalk isLoggedIn={isLoggedIn}/>
+        <CareerTalk isLoggedIn={isLoggedIn} />
       </PaperProvider>
     </ApolloProvider>
   ) : (
