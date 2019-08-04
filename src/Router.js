@@ -4,6 +4,7 @@ import { Router, Scene, Modal } from 'react-native-router-flux';
 
 import LoginPage from './screens/Login';
 import Fairs from './screens/Fairs';
+import EmployerList from './screens/EmployerList';
 import CompanyList from './screens/CompanyList';
 import CompanyDetail from './screens/CompanyDetail';
 import Profile from './screens/Profile';
@@ -32,16 +33,51 @@ const PublicRouter = ({ setIsLoggedInState }) => (
 const PrivateRouter2 = ({ setIsLoggedInState }) => (
   <Router key="private">
     <Scene key="root" hideNavBar>
-      {/* <Scene
-        key="placeholder"
-        initial
-        title="Place Holder"
-        hideNavBar
-        component={TempAuth}
-        setIsLoggedInState={setIsLoggedInState}
-      /> */}
 
       <Scene key="fairs" component={Fairs} initial title="Career Fairs" hideNavBar />
+
+      {/* Inner Router for Tabs */}
+      <Router key="modalRouter">
+        <Modal key="modalScene" hideNavBar>
+          <Scene key="tabber" tabs hideNavBar tabBarStyle={styles.tabBarStyle} showLabel={false}>
+            {/* Tab 1 */}
+            <Scene
+              key="employerList"
+              initial
+              component={EmployerList}
+              hideNavBar
+              title="Employer"
+              icon={TabIcon}
+            />
+
+            {/* Tab 2 */}
+            {/* <Scene key="profile" component={Profile} hideNavBar title="Profile" icon={TabIcon} /> */}
+
+            {/* Tab 3 */}
+            {/* <Scene
+              key="summary"
+              component={SummaryPage}
+              title="Summary"
+              hideNavBar
+              icon={TabIcon}
+            /> */}
+
+            {/* Tab 4 */}
+            {/* Remove settings screen for v2 */}
+            {/* <Scene
+              key="settings"
+              component={Settings}
+              title="Settings"
+              hideNavBar
+              icon={TabIcon}
+            /> */}
+
+            {/* TODO: more tabs here!! */}
+          </Scene>
+
+          {/* Modal goes here!! */}
+        </Modal>
+      </Router>
     </Scene>
   </Router>
 );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
 
@@ -21,11 +21,20 @@ const FAIRS = gql`
 `;
 
 export default () => {
+  const [fairs, setFairs] = useState(null);
   const {
-    data: { getFair: fairs },
+    data,
     loading,
     error // TODO: error handle
-  } = useQuery(FAIRS);
+  } = useQuery(FAIRS, {
+    fetchPolicy: 'network-only'
+  });
 
-  return loading ? <Spinner size="large" /> : <FairList fairs={fairs} />;
+  useEffect(() => {
+    if (!loading && data.getFair) {
+      setFairs(data.getFair);
+    }
+  }, [loading]);
+
+  return !loading && fairs ? <FairList careerFairs={fairs} /> : <Spinner size="large" />;
 };
