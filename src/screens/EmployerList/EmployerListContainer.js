@@ -9,27 +9,68 @@ export default ({ fairId }) => {
   /** employer list state to be shown in the grid */
   const [employerListState, setEmployerList] = useState(null);
 
+  /** state for showing number of likes and notes */
+  const [numOfCompanies, setNumOfCompanies] = useState(0);
+  const [numOfFavorites, setNumOfFavorites] = useState(0);
+  const [numOfNotes, setNumOfNotes] = useState(0);
+
+  /** search bar state */
+  const [searchTerm, setSearchTerm] = useState(null);
+  const [searchBarFocus, setSearchBarFocus] = useState(false);
+
   /** graphql queries */
   const { data: { isLoggedIn } } = useQuery(ISLOGGEDIN_QUERY);
-  const {
-    data,
-    error,
-    loading
-  } = useQuery(EMPLOYERS, {
-    variables: { fairId, isUser: isLoggedIn === 'true' },
-    fetchPolicy: 'network-only'
+  const { data, error, loading } = useQuery(EMPLOYERS, {
+    variables: { fairId, isUser: isLoggedIn === 'true' }
   });
 
   /** update the employerList state after downloading */
   useEffect(() => {
     if (!loading && data.getEmployerList) {
-      setEmployerList(data.getEmployerList);
+      const { getEmployerList: employerList } = data;
+      const { companies } = employerList;
+      const filteredByLikes = companies.filter(comp => comp.is_liked);
+      const filteredByNotes = companies.filter(comp => comp.is_noted);
+
+      setNumOfCompanies(companies.length);
+      setNumOfFavorites(filteredByLikes.length);
+      setNumOfNotes(filteredByNotes.length);
+      setEmployerList(employerList);
     }
   }, [loading]);
+
+  // ------------------------- Search Bar --------------------------------- //
+  const searching = term => {
+    setSearchTerm(term);
+  }
+
+  const cancelSearch = () => {
+    setSearchTerm(null);
+  }
+
+  const focusSearchBar = () => {
+    setSearchBarFocus(!searchBarFocus);
+  }
+  // --------------------------------------------------------------------- //
+
 
   // --------------------------- Filter ---------------------------------- //
   // TODO
   // --------------------------------------------------------------------- //
 
-  return <EmployerListPresenter loading={loading} employerList={employerListState} error={error} />;
+  return (
+    <EmployerListPresenter
+      loading={loading}
+      employerList={employerListState}
+      error={error}
+      numOfCompanies={numOfCompanies}
+      numOfFavorites={numOfFavorites}
+      numOfNotes={numOfNotes}
+      searchTerm={searchTerm}
+      searching={searching}
+      cancelSearch={cancelSearch}
+      focusSearchBar={focusSearchBar}
+      searchBarFocus={searchBarFocus}
+    />
+  );
 };
