@@ -1,17 +1,14 @@
-/** This file is deprecated */
 import React from 'react';
 import { ScrollView, SafeAreaView } from 'react-native';
 
 import FairItem from '../../components/FairItem';
 import { PoweredBy } from '../../components/commons';
 
-const FairList = (props) => {
-  const { fairs: { fairs } } = props;
-
+export default ({ careerFairs }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
-        {fairs.map(f => (
+        {careerFairs.map(f => (
           <FairItem key={f.id} fair={f} />
         ))}
       </ScrollView>
@@ -19,5 +16,3 @@ const FairList = (props) => {
     </SafeAreaView>
   );
 };
-
-export default FairList;
