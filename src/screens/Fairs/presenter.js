@@ -1,3 +1,4 @@
+/** This file is deprecated */
 import React from 'react';
 import { ScrollView, SafeAreaView } from 'react-native';
 

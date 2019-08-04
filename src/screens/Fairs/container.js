@@ -1,3 +1,4 @@
+/** This file is deprecated */
 import React, { Component, Fragment } from 'react';
 
 import FairList from './presenter';
