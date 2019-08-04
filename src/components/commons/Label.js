@@ -2,9 +2,9 @@ import React, { Fragment } from 'react';
 import { Badge } from 'react-native-elements';
 
 const Label = (props) => {
-  const hiringTypes = props.hiring_types.join(', ');
-  const hiringMajors = props.hiring_majors.join(', ');
-  const sponsor = props.visa_support === 'yes';
+  const hiringTypes = props.hiringTypes.join(', ');
+  const hiringMajors = props.hiringMajors.join(', ');
+  const sponsor = props.visaSupport === 'yes';
 
   return (
     <Fragment>

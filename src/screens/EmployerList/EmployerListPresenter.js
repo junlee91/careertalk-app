@@ -24,6 +24,7 @@ import {
   ChipButton,
   Spinner
 } from '../../components/commons';
+import EmployerCard from '../../components/EmployerCard';
 
 export default ({ loading, employerList, error }) => {
   return (
@@ -31,12 +32,25 @@ export default ({ loading, employerList, error }) => {
       {/* Search Bar */}
       {/* Company List Header */}
       <View style={{ flex: 7.5 }}>
-        {loading && !employerList ? (
-          <Spinner size="large" />
+        {!loading && employerList && employerList.companies ? (
+          <CompanyList companies={employerList.companies} />
         ) : (
-          <Text>Employer List Loaded</Text>
+          <Spinner size="large" />
         )}
       </View>
     </SafeAreaView>
+  );
+};
+
+const CompanyList = ({ companies }) => {
+  return (
+    <FlatList
+      refreshControl={null}
+      data={companies}
+      keyExtractor={c => c.employer.id}
+      renderItem={c => {
+        return <EmployerCard {...c.item} showNote showLike showLabel />;
+      }}
+    />
   );
 };
