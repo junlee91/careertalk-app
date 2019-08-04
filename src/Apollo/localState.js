@@ -1,29 +1,41 @@
 import { AsyncStorage } from 'react-native';
-// More info: https://facebook.github.io/react-native/docs/asyncstorage
-_storeData = async (key, value) => {
-  try {
-    await AsyncStorage.setItem(key, value);
-  } catch (error) {
-    // Error saving data
+
+/**
+ * App supports public logic so we manage the logged in state like this:
+ * AsyncStorage {
+ *  isLoggedIn: 'true' | 'false'
+ *  socialProvider: 'google' | undefined
+ *  token: jwt | null
+ * }
+ */
+
+const callback = (error) => {
+  if (error) {
     console.error(error);
   }
+}
+
+// More info: https://facebook.github.io/react-native/docs/asyncstorage
+_storeData = async (key, value) => {
+  await AsyncStorage.setItem(key, value, callback);
 };
 
 export const resolvers = {
   Mutation: {
-    logUserIn: (_, { token }, { cache }) => {
-      _storeData('token', token);
+    logUserIn: (_, { token }) => {
+      if (token) {
+        _storeData('token', token);
+        _storeData('socialProvider', 'google');
+      }
       _storeData('isLoggedIn', 'true');
-      cache.writeData({
-        data: {
-          isLoggedIn: true
-        }
-      });
+
       return null;
     },
-    logUserOut: () => {
-      AsyncStorage.removeItem('token', res => console.log(res));
+    logUserOut: async () => {
+      await AsyncStorage.removeItem('token', callback);
+      await AsyncStorage.removeItem('socialProvider', callback);
       _storeData('isLoggedIn', 'false');
+
       return null;
     }
   }

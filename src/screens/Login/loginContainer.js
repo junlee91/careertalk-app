@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { GoogleSignin, statusCodes } from 'react-native-google-signin';
 import { Alert } from 'react-native';
+import { useMutation } from 'react-apollo-hooks';
 // import { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 
+import { GOOGLE_SIGN_IN, LOCAL_LOG_IN } from './loginQueries';
 import LoginPage from './loginPresenter';
 import config from '../../../config.json';
 
@@ -13,14 +15,21 @@ GoogleSignin.configure({
   iosClientId: config.iosClientId,
 });
 
-class Container extends React.Component {
-  state = {
-    username: '',
-    password: '',
+export default ({ setIsLoggedInState }) => {
+  const [loading, setLoading] = useState(false);
+  const [localLoginMutation] = useMutation(LOCAL_LOG_IN);
+  const [googleSiginMutation] = useMutation(GOOGLE_SIGN_IN);
+
+  const loginFn = async (token) => {
+    await localLoginMutation({ variables: { token } });
+
+    // Update the LoggedIn state in CareerTalk.js
+    // this will change to use private router
+    setIsLoggedInState(true);
   };
 
-  // Anonymous login
-  _login = (async = () => {
+  // Public signin
+  _publicSignIn = async = () => {
     Alert.alert(
       'Attention!',
       'Using a public account will have limitations using the app.',
@@ -30,92 +39,26 @@ class Container extends React.Component {
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel'
         },
-        { text: 'OK', onPress: () => console.log('Public Login') }
+        { text: 'OK', onPress: () => loginFn(null) }
       ],
       { cancelable: false }
     );
-  });
+  };
 
-  //         FACEBOOK       //
-  // Create facebook signin response callback.
-  // _responseInfoCallback = (error, result) => {
-  //   if (error) {
-  //     console.error(error.toString());
-  //   } else {
-  //     const { fbToken } = this.state;
-  //     const {
-  //       email,
-  //       first_name,
-  //       last_name,
-  //       id,
-  //       picture,
-  //     } = result;
-
-  //     // send userInfo with token to store
-  //     this.props.socialLogin(
-  //       {
-  //         email,
-  //         firstName: first_name,
-  //         lastName: last_name,
-  //         profilePhoto: picture.data.url,
-  //         socialToken: fbToken,
-  //         socialId: id
-  //       },
-  //       'facebook'
-  //     );
-  //   }
-  // };
-
-  // _facebookLoginFinished = (error, result) => {
-  //   if (error) {
-  //     console.error(`login has error: ${result.error}`);
-  //   } else if (result.isCancelled) {
-  //     console.log('login is cancelled.');
-  //   } else {
-  //     AccessToken.getCurrentAccessToken().then((data) => {
-  //       // FB TOKEN
-  //       const token = data.accessToken.toString();
-
-  //       this.setState({ fbToken: token });
-
-  //       // Create a graph request asking for user information
-  //       // with a callback to handle the response.
-  //       const infoRequest = new GraphRequest(
-  //         '/me?fields=email,name,first_name,last_name,picture.type(large)',
-  //         null,
-  //         this._responseInfoCallback
-  //       );
-
-  //       // Request for user data
-  //       new GraphRequestManager().addRequest(infoRequest).start();
-  //     });
-  //   }
-  // };
-
-  //         GOOGLE       //
-  // Google Siginin
   _googleSignIn = async () => {
     try {
+      setLoading(true);
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      const { accessToken, idToken, user } = userInfo;
-      const { email, givenName, familyName, name, id, photo } = user;
-
-      console.log('google login');
-      // send userInfo to store
-      // this.props.socialLogin(
-      //   {
-      //     email,
-      //     givenName,
-      //     familyName,
-      //     photo,
-      //     accessToken,
-      //     idToken,
-      //     id,
-      //     name
-      //   },
-      //   'google'
-      // );
+      const { idToken, user: { id } } = userInfo;
+      const { data: { userLogin: token } } = await googleSiginMutation({
+        variables: {
+          tokenId: idToken,
+          googleId: id
+        }
+      });
+      loginFn(token);
+      setLoading(false);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
@@ -129,36 +72,68 @@ class Container extends React.Component {
     }
   };
 
-  render() {
-    return (
-      <LoginPage
-        {...this.state}
-        facebookLoginFinished={this._facebookLoginFinished}
-        googleSigin={this._googleSignIn}
-        login={this._login}
-      />
-    );
-  }
-}
+  return (
+    <LoginPage
+      facebookLoginFinished={this._facebookLoginFinished}
+      googleSigin={_googleSignIn}
+      login={_publicSignIn}
+      loading={loading}
+    />
+  );
+};
 
-export default Container;
+//         FACEBOOK       //
+// Create facebook signin response callback.
+// _responseInfoCallback = (error, result) => {
+//   if (error) {
+//     console.error(error.toString());
+//   } else {
+//     const { fbToken } = this.state;
+//     const {
+//       email,
+//       first_name,
+//       last_name,
+//       id,
+//       picture,
+//     } = result;
 
-/** Not used
-  _changeUsername = (text) => {
-    this.setState({ username: text });
-  };
+//     // send userInfo with token to store
+//     this.props.socialLogin(
+//       {
+//         email,
+//         firstName: first_name,
+//         lastName: last_name,
+//         profilePhoto: picture.data.url,
+//         socialToken: fbToken,
+//         socialId: id
+//       },
+//       'facebook'
+//     );
+//   }
+// };
 
-  _changePassword = (text) => {
-    this.setState({ password: text });
-  };
+// _facebookLoginFinished = (error, result) => {
+//   if (error) {
+//     console.error(`login has error: ${result.error}`);
+//   } else if (result.isCancelled) {
+//     console.log('login is cancelled.');
+//   } else {
+//     AccessToken.getCurrentAccessToken().then((data) => {
+//       // FB TOKEN
+//       const token = data.accessToken.toString();
 
-  _submit = async () => {
-    console.log('login submit');
-  };
+//       this.setState({ fbToken: token });
 
-  _saveToken = (token) => {
-    this.setState({
-      token
-    });
-  };
-*/
+//       // Create a graph request asking for user information
+//       // with a callback to handle the response.
+//       const infoRequest = new GraphRequest(
+//         '/me?fields=email,name,first_name,last_name,picture.type(large)',
+//         null,
+//         this._responseInfoCallback
+//       );
+
+//       // Request for user data
+//       new GraphRequestManager().addRequest(infoRequest).start();
+//     });
+//   }
+// };

@@ -32,7 +32,6 @@ export default () => {
         cache,
         storage: AsyncStorage // TODO: this is deprecated
       });
-      await AsyncStorage.setItem('isLoggedIn', 'false'); // temporary
       const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
 
       // Initialize ApolloClient

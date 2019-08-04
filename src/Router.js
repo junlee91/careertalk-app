@@ -8,23 +8,38 @@ import CompanyList from './screens/CompanyList';
 import CompanyDetail from './screens/CompanyDetail';
 import Profile from './screens/Profile';
 import SummaryPage from './screens/Summary';
+import TempAuth from './screens/TemporaryAuth';
 import Settings from './screens/Settings';
 
 import FairMap from './components/FairMap';
 import { TabIcon } from './components/commons';
 
-const PublicRouter = () => (
+const PublicRouter = ({ setIsLoggedInState }) => (
   <Router key="public">
     <Scene key="root" hideNavBar>
-      <Scene key="login" component={LoginPage} initial title="Login" />
+      <Scene
+        key="login"
+        component={LoginPage}
+        setIsLoggedInState={setIsLoggedInState}
+        initial
+        title="Login"
+      />
     </Scene>
   </Router>
 );
 
-const PrivateRouter2 = () => (
+// Testing Router
+const PrivateRouter2 = ({ setIsLoggedInState }) => (
   <Router key="private">
     <Scene key="root" hideNavBar>
-      <Scene key="placeholder" initial title="Place Holder" hideNavBar component={() => <View><Text>Place Holder</Text></View>} />
+      <Scene
+        key="placeholder"
+        initial
+        title="Place Holder"
+        hideNavBar
+        component={TempAuth}
+        setIsLoggedInState={setIsLoggedInState}
+      />
     </Scene>
   </Router>
 );

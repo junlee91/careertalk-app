@@ -9,6 +9,8 @@ import pjson from '../package.json';
 /** CareerTalk using React Hooks and Graphql */
 const CareerTalk = ({ isLoggedIn }) => {
   const [loading, setLoading] = useState(true);
+  const [isLoggedInState, setIsLoggedInState] = useState(isLoggedIn);
+
   const checkVersion = () => {
     fetch(`${config.API_URL}/careertalk/version`)
       .then(resp => resp.json())
@@ -52,12 +54,16 @@ const CareerTalk = ({ isLoggedIn }) => {
           <Text>Version checking...</Text>
         </View>
       ) : (
-        <Router isLoggedIn={isLoggedIn} />
+        <Router isLoggedInState={isLoggedInState} setIsLoggedInState={setIsLoggedInState} />
       )}
     </>
   );
 };
 
-const Router = ({ isLoggedIn }) => (isLoggedIn ? <PrivateRouter2 /> : <PublicRouter />);
+const Router = ({ isLoggedInState, setIsLoggedInState }) => (isLoggedInState ? (
+  <PrivateRouter2 setIsLoggedInState={setIsLoggedInState} />
+) : (
+  <PublicRouter setIsLoggedInState={setIsLoggedInState} />
+));
 
 export default CareerTalk;
