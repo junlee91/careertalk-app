@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { Router, Scene, Modal } from 'react-native-router-flux';
 
 import LoginPage from './screens/Login';
@@ -17,6 +17,14 @@ const PublicRouter = () => (
   <Router key="public">
     <Scene key="root" hideNavBar>
       <Scene key="login" component={LoginPage} initial title="Login" />
+    </Scene>
+  </Router>
+);
+
+const PrivateRouter2 = () => (
+  <Router key="private">
+    <Scene key="root" hideNavBar>
+      <Scene key="placeholder" initial title="Place Holder" hideNavBar component={() => <View><Text>Place Holder</Text></View>} />
     </Scene>
   </Router>
 );
@@ -83,4 +91,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export { PublicRouter, PrivateRouter };
+export { PublicRouter, PrivateRouter, PrivateRouter2 };

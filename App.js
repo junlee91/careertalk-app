@@ -9,7 +9,7 @@ import { persistCache } from 'apollo-cache-persist';
 import ApolloClient from 'apollo-boost';
 
 import CareerTalk from './src/CareerTalk';
-import apolloOptions from './Apollo';
+import { resolvers } from './src/Apollo/localState';
 
 const theme = {
   ...DefaultTheme,
@@ -32,18 +32,28 @@ export default () => {
         cache,
         storage: AsyncStorage // TODO: this is deprecated
       });
+      await AsyncStorage.setItem('isLoggedIn', 'false'); // temporary
+      const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
+
+      // Initialize ApolloClient
       const client = new ApolloClient({
         cache,
         request: async operation => {
-          const token = await AsyncStorage.getItem('jwt');
+          const token = await AsyncStorage.getItem('token');
           return operation.setContext({
             headers: { Authorization: `Bearer ${token}` }
           });
         },
-        ...apolloOptions
+        clientState: {
+          defaults: {
+            isLoggedIn
+          },
+          resolvers
+        },
+        uri: 'http://localhost:4000/graphql'
       });
-      // TODO:
-      const isLoggedIn = false; // await AsyncStorage.getItem('isLoggedIn');
+
+      // Set initial state of App
       if (!isLoggedIn || isLoggedIn === 'false') {
         setIsLoggedIn(false);
       } else {
