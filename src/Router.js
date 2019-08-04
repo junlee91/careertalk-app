@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { Router, Scene, Modal } from 'react-native-router-flux';
 
 import LoginPage from './screens/Login';
@@ -8,15 +8,38 @@ import CompanyList from './screens/CompanyList';
 import CompanyDetail from './screens/CompanyDetail';
 import Profile from './screens/Profile';
 import SummaryPage from './screens/Summary';
+import TempAuth from './screens/TemporaryAuth';
 import Settings from './screens/Settings';
 
 import FairMap from './components/FairMap';
 import { TabIcon } from './components/commons';
 
-const PublicRouter = () => (
+const PublicRouter = ({ setIsLoggedInState }) => (
   <Router key="public">
     <Scene key="root" hideNavBar>
-      <Scene key="login" component={LoginPage} initial title="Login" />
+      <Scene
+        key="login"
+        component={LoginPage}
+        setIsLoggedInState={setIsLoggedInState}
+        initial
+        title="Login"
+      />
+    </Scene>
+  </Router>
+);
+
+// Testing Router
+const PrivateRouter2 = ({ setIsLoggedInState }) => (
+  <Router key="private">
+    <Scene key="root" hideNavBar>
+      <Scene
+        key="placeholder"
+        initial
+        title="Place Holder"
+        hideNavBar
+        component={TempAuth}
+        setIsLoggedInState={setIsLoggedInState}
+      />
     </Scene>
   </Router>
 );
@@ -83,4 +106,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export { PublicRouter, PrivateRouter };
+export { PublicRouter, PrivateRouter, PrivateRouter2 };

@@ -9,14 +9,15 @@ import {
   Text,
   Dimensions,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator
 } from 'react-native';
 
 import { LoginButton } from '../../components/commons';
 
 const { width } = Dimensions.get('window');
 
-const LoginPage = (props) => {
+const LoginPage = props => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -28,12 +29,16 @@ const LoginPage = (props) => {
       </View>
       <View style={styles.content}>
         <View style={{ paddingVertical: 15 }}>
-          <GoogleSigninButton
-            style={{ width: 230, height: 48 }}
-            size={GoogleSigninButton.Size.Wide}
-            color={GoogleSigninButton.Color.Light}
-            onPress={props.googleSigin}
-          />
+          {props.loading ? (
+            <ActivityIndicator />
+          ) : (
+            <GoogleSigninButton
+              style={{ width: 230, height: 48 }}
+              size={GoogleSigninButton.Size.Wide}
+              color={GoogleSigninButton.Color.Light}
+              onPress={props.googleSigin}
+            />
+          )}
         </View>
 
         <Text>OR</Text>
@@ -47,7 +52,7 @@ const LoginPage = (props) => {
         </View> */}
         <View style={{ paddingVertical: 15 }}>
           {Platform.OS === 'ios' ? (
-            <LoginButton title="Sign in with Default" onPress={props.login} />
+            <LoginButton title="Sign in as public user" onPress={props.login} />
           ) : (
             <TouchableOpacity style={styles.button} onPressOut={props.login}>
               <Text

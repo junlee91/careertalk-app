@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Alert, Linking, Platform } from 'react-native';
 
+import { PublicRouter, PrivateRouter2 } from './Router';
 import { Spinner } from './components/commons';
 import config from '../config.json';
 import pjson from '../package.json';
 
 /** CareerTalk using React Hooks and Graphql */
-const CareerTalk = () => {
+const CareerTalk = ({ isLoggedIn }) => {
   const [loading, setLoading] = useState(true);
+  const [isLoggedInState, setIsLoggedInState] = useState(isLoggedIn);
+
   const checkVersion = () => {
     fetch(`${config.API_URL}/careertalk/version`)
       .then(resp => resp.json())
@@ -51,10 +54,16 @@ const CareerTalk = () => {
           <Text>Version checking...</Text>
         </View>
       ) : (
-        <Text>Version Checked!</Text>
+        <Router isLoggedInState={isLoggedInState} setIsLoggedInState={setIsLoggedInState} />
       )}
     </>
   );
 };
+
+const Router = ({ isLoggedInState, setIsLoggedInState }) => (isLoggedInState ? (
+  <PrivateRouter2 setIsLoggedInState={setIsLoggedInState} />
+) : (
+  <PublicRouter setIsLoggedInState={setIsLoggedInState} />
+));
 
 export default CareerTalk;

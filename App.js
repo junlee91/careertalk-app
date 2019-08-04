@@ -9,7 +9,7 @@ import { persistCache } from 'apollo-cache-persist';
 import ApolloClient from 'apollo-boost';
 
 import CareerTalk from './src/CareerTalk';
-import apolloOptions from './Apollo';
+import { resolvers } from './src/Apollo/localState';
 
 const theme = {
   ...DefaultTheme,
@@ -24,6 +24,7 @@ const theme = {
 export default () => {
   const [loaded, setLoaded] = useState(false);
   const [client, setClient] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
   const preLoad = async () => {
     try {
       const cache = new InMemoryCache();
@@ -31,10 +32,32 @@ export default () => {
         cache,
         storage: AsyncStorage // TODO: this is deprecated
       });
+      const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
+
+      // Initialize ApolloClient
       const client = new ApolloClient({
         cache,
-        ...apolloOptions
+        request: async operation => {
+          const token = await AsyncStorage.getItem('token');
+          return operation.setContext({
+            headers: { Authorization: `Bearer ${token}` }
+          });
+        },
+        clientState: {
+          defaults: {
+            isLoggedIn
+          },
+          resolvers
+        },
+        uri: 'http://localhost:4000/graphql'
       });
+
+      // Set initial state of App
+      if (!isLoggedIn || isLoggedIn === 'false') {
+        setIsLoggedIn(false);
+      } else {
+        setIsLoggedIn(true);
+      }
       setLoaded(true);
       setClient(client);
     } catch (error) {
@@ -47,10 +70,10 @@ export default () => {
     SplashScreen.hide();
   }, []);
 
-  return loaded && client ? (
+  return loaded && client && isLoggedIn !== null ? (
     <ApolloProvider client={client}>
       <PaperProvider theme={theme}>
-        <CareerTalk />
+        <CareerTalk isLoggedIn={isLoggedIn} />
       </PaperProvider>
     </ApolloProvider>
   ) : (
