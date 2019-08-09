@@ -37,7 +37,9 @@ export default ({
   searching,
   cancelSearch,
   focusSearchBar,
-  searchBarFocus
+  searchBarFocus,
+  isRefreshing,
+  refresh,
 }) => {
   return (
     <SafeAreaView style={styles.companyListViewStyle}>
@@ -55,7 +57,7 @@ export default ({
       />
       <View style={{ flex: 7.5 }}>
         {!loading && employerList && employerList.companies ? (
-          <CompanyList companies={employerList.companies} />
+          <CompanyList companies={employerList.companies} isRefreshing={isRefreshing} refresh={refresh} />
         ) : (
           <Spinner size="large" />
         )}
@@ -64,10 +66,16 @@ export default ({
   );
 };
 
-const CompanyList = ({ companies }) => {
+const CompanyList = ({ companies, isRefreshing, refresh }) => {
   return (
     <FlatList
-      refreshControl={null}
+      refreshControl={(
+        <RefreshControl
+          refreshing={isRefreshing}
+          onRefresh={refresh}
+          tintColor="grey"
+        />
+      )}
       data={companies}
       keyExtractor={c => c.employer.id}
       renderItem={c => {
