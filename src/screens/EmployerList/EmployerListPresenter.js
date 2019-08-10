@@ -5,12 +5,10 @@ import {
   Text,
   RefreshControl,
   FlatList,
-  ScrollView,
   Platform,
-  Dimensions,
   TouchableOpacity
 } from 'react-native';
-import { SearchBar, Overlay, CheckBox, Icon } from 'react-native-elements';
+import { SearchBar } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 
 import styles from './styles';
@@ -21,10 +19,10 @@ import {
   BackArrowIcon,
   FilterIcon,
   BackIcon,
-  ChipButton,
   Spinner
 } from '../../components/commons';
 import EmployerCard from '../../components/EmployerCard';
+import FilterOverlay from './FilterModal';
 
 export default ({
   loading,
@@ -40,6 +38,9 @@ export default ({
   searchBarFocus,
   isRefreshing,
   refresh,
+  toggleFilterModal,
+  overlayVisible,
+  filterApplied,
 }) => {
   return (
     <SafeAreaView style={styles.companyListViewStyle}>
@@ -54,34 +55,40 @@ export default ({
         numOfCompanies={numOfCompanies}
         numOfFavorites={numOfFavorites}
         numOfNotes={numOfNotes}
+        toggleFilterModal={toggleFilterModal}
+        filterApplied={filterApplied}
       />
       <View style={{ flex: 7.5 }}>
         {!loading && employerList && employerList.companies ? (
-          <CompanyList companies={employerList.companies} isRefreshing={isRefreshing} refresh={refresh} />
+          <CompanyList
+            companies={employerList.companies}
+            isRefreshing={isRefreshing}
+            refresh={refresh}
+          />
         ) : (
           <Spinner size="large" />
         )}
       </View>
+      <FilterOverlay toggleFilterModal={toggleFilterModal} overlayVisible={overlayVisible} />
     </SafeAreaView>
   );
 };
 
 const CompanyList = ({ companies, isRefreshing, refresh }) => {
   return (
-    <FlatList
-      refreshControl={(
-        <RefreshControl
-          refreshing={isRefreshing}
-          onRefresh={refresh}
-          tintColor="grey"
-        />
-      )}
-      data={companies}
-      keyExtractor={c => c.employer.id}
-      renderItem={c => {
-        return <EmployerCard {...c.item} showNote showLike showLabel />;
-      }}
-    />
+    <>
+      <FlatList
+        refreshControl={
+          <RefreshControl refreshing={isRefreshing} onRefresh={refresh} tintColor="grey" />
+        }
+        data={companies}
+        keyExtractor={c => c.employer.id}
+        renderItem={c => {
+          return <EmployerCard {...c.item} showNote showLike showLabel />;
+        }}
+      />
+      <PoweredBy poweredby="Logos provided by Clearbit" />
+    </>
   );
 };
 
@@ -160,9 +167,9 @@ const UserNotedCompany = props => {
   );
 };
 
-const FilterButton = () => (
-  <TouchableOpacity onPressOut={() => console.log('not yet implemented')}>
-    <FilterIcon filterApply={false} />
+const FilterButton = ({ toggleFilterModal, filterApplied }) => (
+  <TouchableOpacity onPressOut={toggleFilterModal}>
+    <FilterIcon filterApply={filterApplied} />
   </TouchableOpacity>
 );
 

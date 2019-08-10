@@ -18,6 +18,10 @@ export default ({ fairId }) => {
   const [searchTerm, setSearchTerm] = useState(null);
   const [searchBarFocus, setSearchBarFocus] = useState(false);
 
+  /** filter state */
+  const [overlayVisible, setOverlayVisible] = useState(false);
+  const [filterApplied, setFilterApplied] = useState(false);
+
   /** refresh control state */
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -62,7 +66,31 @@ export default ({ fairId }) => {
 
 
   // --------------------------- Filter ---------------------------------- //
-  // TODO
+  const toggleFilterModal = ({ filterOptions, visaOption }) => {
+    setOverlayVisible(!overlayVisible);
+
+    if (filterOptions || visaOption) {
+      console.log('TODO: Apply Filter from Apollo Cache!!');
+
+      console.log(filterOptions);
+      console.log('visaOption', visaOption);
+
+      isFilterApplied(filterOptions, visaOption);
+    }
+  }
+
+  const isFilterApplied = (filterOptions, visaOption) => {
+    if (
+      filterOptions.degree.size
+      || filterOptions.hiringTypes.size
+      || filterOptions.majors.size
+      || visaOption
+    ) {
+      setFilterApplied(true);
+    } else {
+      setFilterApplied(false);
+    }
+  }
   // --------------------------------------------------------------------- //
 
   // ---------------------- Refresh Control logic ------------------------ //
@@ -90,6 +118,9 @@ export default ({ fairId }) => {
       searchBarFocus={searchBarFocus}
       isRefreshing={isRefreshing}
       refresh={refresh}
+      toggleFilterModal={toggleFilterModal}
+      overlayVisible={overlayVisible}
+      filterApplied={filterApplied}
     />
   );
 };
