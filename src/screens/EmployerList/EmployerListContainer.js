@@ -18,24 +18,31 @@ export default ({ fairId }) => {
   const [searchTerm, setSearchTerm] = useState(null);
   const [searchBarFocus, setSearchBarFocus] = useState(false);
 
+  /** refresh control state */
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
   /** graphql queries */
   const { data: { isLoggedIn } } = useQuery(ISLOGGEDIN_QUERY);
-  const { data, error, loading } = useQuery(EMPLOYERS, {
+  const { data, error, loading, refetch } = useQuery(EMPLOYERS, {
     variables: { fairId, isUser: isLoggedIn === 'true' }
   });
+
+  const updateComponentState = employerList => {
+    const { companies } = employerList;
+    const filteredByLikes = companies.filter(comp => comp.is_liked);
+    const filteredByNotes = companies.filter(comp => comp.is_noted);
+
+    setNumOfCompanies(companies.length);
+    setNumOfFavorites(filteredByLikes.length);
+    setNumOfNotes(filteredByNotes.length);
+    setEmployerList(employerList);
+  }
 
   /** update the employerList state after downloading */
   useEffect(() => {
     if (!loading && data.getEmployerList) {
-      const { getEmployerList: employerList } = data;
-      const { companies } = employerList;
-      const filteredByLikes = companies.filter(comp => comp.is_liked);
-      const filteredByNotes = companies.filter(comp => comp.is_noted);
-
-      setNumOfCompanies(companies.length);
-      setNumOfFavorites(filteredByLikes.length);
-      setNumOfNotes(filteredByNotes.length);
-      setEmployerList(employerList);
+      const { getEmployerList } = data;
+      updateComponentState(getEmployerList)
     }
   }, [loading]);
 
@@ -58,6 +65,16 @@ export default ({ fairId }) => {
   // TODO
   // --------------------------------------------------------------------- //
 
+  // ---------------------- Refresh Control logic ------------------------ //
+  const refresh = async () => {
+    setIsRefreshing(true);
+    const { data: { getEmployerList } } = await Promise.resolve(refetch({ fairId, isUser: isLoggedIn === 'true' }));
+
+    updateComponentState(getEmployerList)
+    setIsRefreshing(false);
+  }
+  // --------------------------------------------------------------------- //
+
   return (
     <EmployerListPresenter
       loading={loading}
@@ -71,6 +88,8 @@ export default ({ fairId }) => {
       cancelSearch={cancelSearch}
       focusSearchBar={focusSearchBar}
       searchBarFocus={searchBarFocus}
+      isRefreshing={isRefreshing}
+      refresh={refresh}
     />
   );
 };
