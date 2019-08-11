@@ -6,6 +6,7 @@ import LoginPage from './screens/Login';
 import Fairs from './screens/Fairs';
 import EmployerList from './screens/EmployerList';
 import CompanyList from './screens/CompanyList';
+import EmployerDetail from './screens/EmployerDetail';
 import CompanyDetail from './screens/CompanyDetail';
 import Profile from './screens/Profile';
 import SummaryPage from './screens/Summary';
@@ -78,6 +79,8 @@ const PrivateRouter2 = ({ setIsLoggedInState }) => (
           {/* Modal goes here!! */}
         </Modal>
       </Router>
+
+      <Scene key="employerDetail" component={EmployerDetail} hideNavBar />
     </Scene>
   </Router>
 );

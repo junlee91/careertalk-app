@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
 import exact from 'prop-types-exact';
 
@@ -47,8 +48,15 @@ const EmpCardContainer = props => {
     console.log('click like');
   };
 
+  const navigateTo = key => {
+    const params = { companyInfo: props };
+
+    Actions.push(key, params);
+  };
+
   return (
     <EmpCardPresenter
+      navigateTo={navigateTo}
       employer={employer}
       isLiked={isLikedS}
       isNoted={isNotedS}

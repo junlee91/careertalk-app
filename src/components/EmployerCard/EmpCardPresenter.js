@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, Platform } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 import { Card, CardSection, Label, LogoImage, FavButton, NoteIcon } from '../commons';
 import styles from './styles';
 
 export default ({
+  navigateTo,
   employer,
   isLiked,
   isNoted,
@@ -22,7 +24,7 @@ export default ({
         <View style={{ flex: 1 }}>
           <CardSection>
             <View style={styles.logoStyle}>
-              <TouchableOpacity onPress={() => console.log('navigate to employer detail')}>
+              <TouchableOpacity onPress={() => navigateTo('employerDetail')}>
                 <LogoImage {...employer} size="small" />
               </TouchableOpacity>
             </View>
@@ -31,6 +33,7 @@ export default ({
         <View style={showLabel ? { flex: 4 } : { flex: 3 }}>
           <CardSection>
             <EmployerField
+              navigateTo={navigateTo}
               employer={employer}
               showLabel={showLabel}
               hiringMajors={hiringMajors}
@@ -59,8 +62,8 @@ export default ({
   );
 };
 
-const EmployerField = ({ employer, showLabel, hiringMajors, hiringTypes, visaSupport }) => (
-  <TouchableOpacity onPress={() => console.log('navigate to employer detail')}>
+const EmployerField = ({ navigateTo, employer, showLabel, hiringMajors, hiringTypes, visaSupport }) => (
+  <TouchableOpacity onPress={() => navigateTo('employerDetail')}>
     <View style={styles.companyContentStyle}>
       <Text style={styles.companyNameTextStyle} numberOfLines={1} ellipsizeMode="tail">
         {employer.name}
