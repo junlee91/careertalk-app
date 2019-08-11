@@ -49,7 +49,11 @@ const EmpCardContainer = props => {
   };
 
   const navigateTo = key => {
-    const params = { companyInfo: props };
+    const params = {
+      companyInfo: props,
+      actions: { setIsLiked, setIsNoted },
+      state: { isLikedS, isNotedS }
+    };
 
     Actions.push(key, params);
   };

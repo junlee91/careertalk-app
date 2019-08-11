@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   Linking,
   SafeAreaView,
-  Platform
+  Platform,
+  ActivityIndicator
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { TextInput, Caption } from 'react-native-paper';
@@ -24,7 +25,8 @@ const CompanyDetail = ({
   isEditting,
   onInputFocus,
   onInputChange,
-  handleSave
+  handleSave,
+  noteLoading
 }) => {
   const tables = companyInfo.tables.join(', ');
 
@@ -59,6 +61,7 @@ const CompanyDetail = ({
             onInputFocus={onInputFocus}
             onInputChange={onInputChange}
             handleSave={handleSave}
+            noteLoading={noteLoading}
           />
         </InfoBox>
         <InfoBox>{fairInfo && <EventInfo companyInfo={companyInfo} fairInfo={fairInfo} />}</InfoBox>
@@ -71,22 +74,26 @@ const CompanyDetail = ({
   );
 };
 
-const NoteInfo = ({ note, isEditting, onInputFocus, onInputChange, handleSave }) => {
+const NoteInfo = ({ note, noteLoading, isEditting, onInputFocus, onInputChange, handleSave }) => {
   return (
     <View style={{ flex: 1 }}>
-      <TextInput
-        mode={isEditting ? 'outlined' : null}
-        label="Note"
-        placeholder="Make note"
-        placeholderTextColor="grey"
-        value={note}
-        onChangeText={onInputChange}
-        autoCorrect={false}
-        multiline
-        onFocus={onInputFocus}
-        onBlur={onInputFocus}
-        onEndEditing={handleSave}
-      />
+      {noteLoading ? (
+        <ActivityIndicator />
+      ) : (
+        <TextInput
+          mode={isEditting ? 'outlined' : null}
+          label="Note"
+          placeholder="Make note"
+          placeholderTextColor="grey"
+          value={note}
+          onChangeText={onInputChange}
+          autoCorrect={false}
+          multiline
+          onFocus={onInputFocus}
+          onBlur={onInputFocus}
+          onEndEditing={handleSave}
+        />
+      )}
     </View>
   );
 };

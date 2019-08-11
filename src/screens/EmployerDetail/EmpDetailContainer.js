@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-apollo-hooks';
 
-import { FAIRS_LOCAL } from './EmpDetailQueries';
+import { FAIRS_LOCAL, GET_NOTE } from './EmpDetailQueries';
 import EmpDetailPresenter from './EmpDetailPresenter';
 
-const Container = props => {
+const Container = ({ companyInfo, state }) => {
   const [fairInfo, setFairInfo] = useState(null);
   /** note state */
   const [isEditting, setIsEditting] = useState(false);
   const [note, setNote] = useState(null);
 
-  const { companyInfo } = props;
+  /** get current fair info from cache */
   const { data: { getFairCache } } = useQuery(FAIRS_LOCAL, { fetchPolicy: 'cache-only' });
 
   useEffect(() => {
@@ -19,6 +19,21 @@ const Container = props => {
       setFairInfo(filtered[0]);
     }
   }, [getFairCache]);
+
+  const { data: noteData, loading: noteLoading } = useQuery(GET_NOTE, {
+    variables: {
+      fairId: companyInfo.careerfair_id,
+      employerId: companyInfo.employer.id
+    },
+    skip: !state.isNotedS,
+  });
+
+  // update the note state when it's ready
+  useEffect(() => {
+    if (noteData) {
+      setNote(noteData.getNote);
+    }
+  }, [noteLoading]);
 
   const onInputFocus = () => {
     setIsEditting(!isEditting);
@@ -42,6 +57,7 @@ const Container = props => {
       onInputFocus={onInputFocus}
       onInputChange={onInputChange}
       handleSave={handleSave}
+      noteLoading={noteLoading}
     />
   );
 };
