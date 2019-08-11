@@ -9,6 +9,7 @@ const Container = ({ companyInfo, state }) => {
   /** note state */
   const [isEditting, setIsEditting] = useState(false);
   const [note, setNote] = useState(null);
+  const [originalNote, setOriginalNote] = useState(null);
 
   /** get current fair info from cache */
   const { data: { getFairCache } } = useQuery(FAIRS_LOCAL, { fetchPolicy: 'cache-only' });
@@ -32,6 +33,7 @@ const Container = ({ companyInfo, state }) => {
   useEffect(() => {
     if (noteData) {
       setNote(noteData.getNote);
+      setOriginalNote(noteData.getNote);
     }
   }, [noteLoading]);
 
@@ -44,8 +46,17 @@ const Container = ({ companyInfo, state }) => {
   };
 
   const handleSave = () => {
-    console.log('Should save or delete note');
-    console.log(note);
+    if ((note === null || note === '') && originalNote) {
+      console.log('Should delete the note');
+
+      setOriginalNote(null);
+    }
+
+    if (originalNote !== note && note !== '') {
+      console.log('Should save the note', note);
+
+      setOriginalNote(note);
+    }
   };
 
   return (
