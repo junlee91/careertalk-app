@@ -17,7 +17,15 @@ import { LogoImage, InfoBox, Tag, FavButton, PoweredBy, BackIcon } from '../../c
 import { MapIcon } from '../../components/FairMap';
 import styles from './styles';
 
-const CompanyDetail = ({ companyInfo, fairInfo }) => {
+const CompanyDetail = ({
+  companyInfo,
+  fairInfo,
+  note,
+  isEditting,
+  onInputFocus,
+  onInputChange,
+  handleSave
+}) => {
   const tables = companyInfo.tables.join(', ');
 
   return (
@@ -45,7 +53,13 @@ const CompanyDetail = ({ companyInfo, fairInfo }) => {
           </View>
         </InfoBox>
         <InfoBox>
-          <NoteInfo />
+          <NoteInfo
+            note={note}
+            isEditting={isEditting}
+            onInputFocus={onInputFocus}
+            onInputChange={onInputChange}
+            handleSave={handleSave}
+          />
         </InfoBox>
         <InfoBox>{fairInfo && <EventInfo companyInfo={companyInfo} fairInfo={fairInfo} />}</InfoBox>
         <InfoBox>
@@ -57,21 +71,21 @@ const CompanyDetail = ({ companyInfo, fairInfo }) => {
   );
 };
 
-const NoteInfo = () => {
+const NoteInfo = ({ note, isEditting, onInputFocus, onInputChange, handleSave }) => {
   return (
     <View style={{ flex: 1 }}>
       <TextInput
-        // mode={props.isEditting ? 'outlined' : null}
+        mode={isEditting ? 'outlined' : null}
         label="Note"
         placeholder="Make note"
         placeholderTextColor="grey"
-        // value={props.new_note}
-        // onChangeText={props.handleEdit}
+        value={note}
+        onChangeText={onInputChange}
         autoCorrect={false}
         multiline
-        // onFocus={props.inputFocus}
-        // onBlur={props.inputFocus}
-        // onEndEditing={props.handleSave}
+        onFocus={onInputFocus}
+        onBlur={onInputFocus}
+        onEndEditing={handleSave}
       />
     </View>
   );
