@@ -21,6 +21,8 @@ export default ({ fairId }) => {
   /** filter state */
   const [overlayVisible, setOverlayVisible] = useState(false);
   const [filterApplied, setFilterApplied] = useState(false);
+  const [filterOptions, setFilterOptions] = useState(null);
+  const [visaOption, setVisa] = useState(null);
 
   /** refresh control state */
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -29,6 +31,11 @@ export default ({ fairId }) => {
   const { data: { isLoggedIn } } = useQuery(ISLOGGEDIN_QUERY);
   const { data, error, loading, refetch } = useQuery(EMPLOYERS, {
     variables: { fairId, isUser: isLoggedIn === 'true' }
+  });
+
+  /** Query employer list from cache */
+  const { refetch: getCache } = useQuery(EMPLOYERS_LOCAL, {
+    skip: true,
   });
 
   const updateComponentState = employerList => {
@@ -69,27 +76,44 @@ export default ({ fairId }) => {
   const toggleFilterModal = ({ filterOptions, visaOption }) => {
     setOverlayVisible(!overlayVisible);
 
-    if (filterOptions || visaOption) {
-      console.log('TODO: Apply Filter from Apollo Cache!!');
+    if (filterOptions) {
+      if (isFilterApplied(filterOptions, visaOption)) {
+        setFilterApplied(true);
+      } else {
+        setFilterApplied(false);
+      }
 
-      console.log(filterOptions);
-      console.log('visaOption', visaOption);
-
-      isFilterApplied(filterOptions, visaOption);
+      setFilterOptions(filterOptions);
+      setVisa(visaOption);
+      setTimeout(() => {
+        getFilteredEmployersFromCache(filterOptions, visaOption);
+      }, 500);
     }
-  }
+  };
 
   const isFilterApplied = (filterOptions, visaOption) => {
-    if (
+    return (
       filterOptions.degree.size
       || filterOptions.hiringTypes.size
       || filterOptions.majors.size
       || visaOption
-    ) {
-      setFilterApplied(true);
-    } else {
-      setFilterApplied(false);
-    }
+    );
+  };
+
+  const getFilteredEmployersFromCache = async (filterOptions, visaOption) => {
+    const { degree, majors, hiringTypes } = filterOptions;
+    const { data: { getEmployerListCache } } = await Promise.resolve(
+      getCache({
+        fairId,
+        isUser: isLoggedIn === 'true',
+        hiringFilter: [...hiringTypes],
+        degreeFilter: [...degree],
+        majorFilter: [...majors],
+        visaFilter: visaOption
+      })
+    );
+
+    updateComponentState(getEmployerListCache);
   }
   // --------------------------------------------------------------------- //
 
@@ -98,7 +122,13 @@ export default ({ fairId }) => {
     setIsRefreshing(true);
     const { data: { getEmployerList } } = await Promise.resolve(refetch({ fairId, isUser: isLoggedIn === 'true' }));
 
-    updateComponentState(getEmployerList)
+    // if filter options are set, filter companies after refresh
+    if (filterOptions || visaOption !== null) {
+      getFilteredEmployersFromCache(filterOptions, visaOption);
+    } else {
+      updateComponentState(getEmployerList)
+    }
+
     setIsRefreshing(false);
   }
   // --------------------------------------------------------------------- //
