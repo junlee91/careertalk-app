@@ -36,6 +36,7 @@ export default ({
   cancelSearch,
   focusSearchBar,
   searchBarFocus,
+  search,
   isRefreshing,
   refresh,
   toggleFilterModal,
@@ -45,6 +46,7 @@ export default ({
   return (
     <SafeAreaView style={styles.companyListViewStyle}>
       <SearchBarHeader
+        search={search}
         searchTerm={searchTerm}
         searching={searching}
         cancelSearch={cancelSearch}
@@ -104,7 +106,7 @@ const SearchBarHeader = props => (
   </View>
 );
 
-const SearchBarComponent = ({ searchTerm, searching, cancelSearch, focusSearchBar }) => {
+const SearchBarComponent = ({ search, searchTerm, searching, cancelSearch, focusSearchBar }) => {
   return (
     <SearchBar
       lightTheme
@@ -119,7 +121,7 @@ const SearchBarComponent = ({ searchTerm, searching, cancelSearch, focusSearchBa
       onFocus={focusSearchBar}
       onBlur={focusSearchBar}
       returnKeyType="search"
-      onSubmitEditing={() => console.log('should search!')}
+      onSubmitEditing={search}
       inputContainerStyle={styles.searchBarInputContainerStyle}
       inputStyle={styles.searchBarInputStyle}
       containerStyle={styles.searchBarContainerStyle}

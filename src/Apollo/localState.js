@@ -47,7 +47,15 @@ export const resolvers = {
      */
     getEmployerListCache: (_, variables, { cache }) => {
       try {
-        const { fairId, isUser, hiringFilter, degreeFilter, majorFilter, visaFilter } = variables;
+        const {
+          fairId,
+          isUser,
+          hiringFilter,
+          degreeFilter,
+          majorFilter,
+          visaFilter,
+          searchTerm
+        } = variables;
         const hirings = new Set(hiringFilter);
         const degrees = new Set(degreeFilter);
         const majors = new Set(majorFilter);
@@ -67,7 +75,10 @@ export const resolvers = {
         let filterOptSet;
         let intersection;
 
-        // TODO: filter by search term
+        // filter by search term
+        if (searchTerm) {
+          filteredEmployers = filteredEmployers.filter(({ employer }) => employer.name.toLowerCase().includes(searchTerm.toLowerCase()));
+        }
 
         // filter by major
         if (majors.size) {

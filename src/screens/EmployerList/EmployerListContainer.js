@@ -59,15 +59,36 @@ export default ({ fairId }) => {
 
   // ------------------------- Search Bar --------------------------------- //
   const searching = term => {
-    setSearchTerm(term);
+    if (term) {
+      setSearchTerm(term.trim());
+    }
   }
 
   const cancelSearch = () => {
     setSearchTerm(null);
+    const filters = filterOptions || {
+      degree: [],
+      majors: [],
+      hiringTypes: []
+    };
+
+    getFilteredEmployersFromCache(filters, visaOption, '');
   }
 
   const focusSearchBar = () => {
     setSearchBarFocus(!searchBarFocus);
+  }
+
+  const search = () => {
+    if (searchTerm) {
+      const filters = filterOptions || {
+        degree: [],
+        majors: [],
+        hiringTypes: []
+      };
+
+      getFilteredEmployersFromCache(filters, visaOption, searchTerm);
+    }
   }
   // --------------------------------------------------------------------- //
 
@@ -100,7 +121,7 @@ export default ({ fairId }) => {
     );
   };
 
-  const getFilteredEmployersFromCache = async (filterOptions, visaOption) => {
+  const getFilteredEmployersFromCache = async (filterOptions, visaOption, term) => {
     const { degree, majors, hiringTypes } = filterOptions;
     const { data: { getEmployerListCache } } = await Promise.resolve(
       getCache({
@@ -109,7 +130,8 @@ export default ({ fairId }) => {
         hiringFilter: [...hiringTypes],
         degreeFilter: [...degree],
         majorFilter: [...majors],
-        visaFilter: visaOption
+        visaFilter: visaOption,
+        searchTerm: term === '' ? null : searchTerm,
       })
     );
 
@@ -146,6 +168,7 @@ export default ({ fairId }) => {
       cancelSearch={cancelSearch}
       focusSearchBar={focusSearchBar}
       searchBarFocus={searchBarFocus}
+      search={search}
       isRefreshing={isRefreshing}
       refresh={refresh}
       toggleFilterModal={toggleFilterModal}

@@ -11,6 +11,7 @@ export const EMPLOYERS_LOCAL = gql`
     $degreeFilter: [String]
     $majorFilter: [String]
     $visaFilter: Boolean
+    $searchTerm: String
   ) {
     getEmployerListCache(
       fairId: $fairId
@@ -19,6 +20,7 @@ export const EMPLOYERS_LOCAL = gql`
       degreeFilter: $degreeFilter
       majorFilter: $majorFilter
       visaFilter: $visaFilter
+      searchTerm: $searchTerm
     ) @client
   }
 `;
