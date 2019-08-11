@@ -12,6 +12,21 @@ export const LOCAL_LOG_OUT = gql`
   }
 `;
 
+export const GET_CACHED_FAIRS = gql`
+  {
+    getFair {
+      id
+      name
+      address
+      num_of_employers
+      date
+      start_time
+      end_time
+      location
+    }
+  }
+`;
+
 export const GET_CACHED_EMPLOYERS = gql`
   query getEmployerListCache($fairId: String!, $isUser: Boolean!) {
     getEmployerList(fairId: $fairId, isUser: $isUser) {

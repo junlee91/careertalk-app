@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native';
 
-import { GET_CACHED_EMPLOYERS } from './sharedQueries';
+import { GET_CACHED_EMPLOYERS, GET_CACHED_FAIRS } from './sharedQueries';
 
 /**
  * App supports public logic so we manage the logged in state like this:
@@ -42,6 +42,19 @@ export const resolvers = {
     }
   },
   Query: {
+    /**
+     * Get Fair info from cache
+     */
+    getFairCache: (_, __, { cache }) => {
+      try {
+        const { getFair } = cache.readQuery({ query: GET_CACHED_FAIRS });
+
+        return getFair;
+      } catch (error) {
+        console.error(error);
+      }
+      return null;
+    },
     /**
      * Get employer list from cache
      */

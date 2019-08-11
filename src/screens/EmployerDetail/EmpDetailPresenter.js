@@ -17,9 +17,8 @@ import { LogoImage, InfoBox, Tag, FavButton, PoweredBy, BackIcon } from '../../c
 import { MapIcon } from '../../components/FairMap';
 import styles from './styles';
 
-const CompanyDetail = ({ companyInfo }) => {
+const CompanyDetail = ({ companyInfo, fairInfo }) => {
   const tables = companyInfo.tables.join(', ');
-  const fairInfo = null;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -48,7 +47,7 @@ const CompanyDetail = ({ companyInfo }) => {
         <InfoBox>
           <NoteInfo />
         </InfoBox>
-        <InfoBox>{fairInfo && <EventInfo {...companyInfo} />}</InfoBox>
+        <InfoBox>{fairInfo && <EventInfo companyInfo={companyInfo} fairInfo={fairInfo} />}</InfoBox>
         <InfoBox>
           <DetailInfo {...companyInfo} />
         </InfoBox>
@@ -78,16 +77,14 @@ const NoteInfo = () => {
   );
 };
 
-const EventInfo = ({ companyInfo }) => {
-  // const { companyInfo, fairInfo } = props;
-  // const fairDate = new Date(fairInfo.date).toDateString();
-  // const timeString = `${fairInfo.start_time} - ${fairInfo.end_time}`;
-  // const dateString = `${fairDate} ${timeString}`;
+const EventInfo = ({ companyInfo, fairInfo }) => {
+  const fairDate = new Date(fairInfo.date).toDateString();
+  const timeString = `${fairInfo.start_time} - ${fairInfo.end_time}`;
+  const dateString = `${fairDate} ${timeString}`;
 
   return (
     <View>
-      <Text>TODO</Text>
-      {/* <View style={{ flexDirection: 'row', alignItems: 'center', padding: 5 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', padding: 5 }}>
         <Icon name="calendar" type="entypo" />
         <Text style={{ marginLeft: 20 }}>{dateString}</Text>
       </View>
@@ -98,7 +95,7 @@ const EventInfo = ({ companyInfo }) => {
       >
         http://
         {companyInfo.employer.company_url}
-      </Text> */}
+      </Text>
     </View>
   );
 };
