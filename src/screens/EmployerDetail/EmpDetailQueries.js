@@ -14,3 +14,21 @@ export const GET_NOTE = gql`
     getNote(fairId: $fairId, employerId: $employerId)
   }
 `;
+
+export const SAVE_NOTE = gql`
+  mutation saveNote($fairId: String!, $employerId: String!, $content: String) {
+    saveNote(fairId: $fairId, employerId: $employerId, content: $content) {
+      message
+      status
+    }
+  }
+`;
+
+export const DELETE_NOTE = gql`
+  mutation deleteNote($fairId: String!, $employerId: String!) {
+    deleteNote(fairId: $fairId, employerId: $employerId) {
+      message
+      status
+    }
+  }
+`;
