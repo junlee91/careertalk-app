@@ -42,6 +42,7 @@ export default ({
   toggleFilterModal,
   overlayVisible,
   filterApplied,
+  toggleLike
 }) => {
   return (
     <SafeAreaView style={styles.companyListViewStyle}>
@@ -66,6 +67,7 @@ export default ({
             companies={employerList.companies}
             isRefreshing={isRefreshing}
             refresh={refresh}
+            toggleLike={toggleLike}
           />
         ) : (
           <Spinner size="large" />
@@ -76,7 +78,7 @@ export default ({
   );
 };
 
-const CompanyList = ({ companies, isRefreshing, refresh }) => {
+const CompanyList = ({ companies, isRefreshing, refresh, toggleLike }) => {
   return (
     <>
       <FlatList
@@ -86,7 +88,7 @@ const CompanyList = ({ companies, isRefreshing, refresh }) => {
         data={companies}
         keyExtractor={c => c.employer.id}
         renderItem={c => {
-          return <EmployerCard {...c.item} showNote showLike showLabel />;
+          return <EmployerCard {...c.item} toggleLike={toggleLike} showNote showLike showLabel />;
         }}
       />
       <PoweredBy poweredby="Logos provided by Clearbit" />

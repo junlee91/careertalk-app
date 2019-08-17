@@ -16,7 +16,8 @@ export default ({
   featured,
   showNote,
   showLike,
-  showLabel
+  showLabel,
+  likeCompany,
 }) => {
   return (
     <Card>
@@ -53,7 +54,7 @@ export default ({
               }}
             >
               {showNote && <NoteIcon visible={isNoted} />}
-              {showLike && <FavIcon isLiked={isLiked} />}
+              {showLike && <FavIcon isLiked={isLiked} likeCompany={likeCompany} />}
             </View>
           </CardSection>
         </View>
@@ -77,8 +78,8 @@ const EmployerField = ({ navigateTo, employer, showLabel, hiringMajors, hiringTy
   </TouchableOpacity>
 );
 
-const FavIcon = ({ isLiked }) => (
-  <TouchableOpacity onPressOut={() => console.log('toggle like')}>
+const FavIcon = ({ isLiked, likeCompany }) => (
+  <TouchableOpacity onPress={likeCompany}>
     <FavButton isLiked={isLiked} />
   </TouchableOpacity>
 );

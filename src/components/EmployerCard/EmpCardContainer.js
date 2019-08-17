@@ -25,7 +25,7 @@ const propTypes = exact({
   showLike: PropTypes.bool,
   showLabel: PropTypes.bool,
   // toggleModal: PropTypes.func.isRequired,
-  // toggleLike: PropTypes.func.isRequired,
+  toggleLike: PropTypes.func.isRequired,
   __typename: PropTypes.string
 });
 
@@ -41,11 +41,25 @@ const EmpCardContainer = props => {
     featured,
     showNote,
     showLike,
-    showLabel
+    showLabel,
+    toggleLike,
   } = props;
 
-  const toggleLike = async () => {
-    console.log('click like');
+  /** Heart button clicked */
+  const likeCompany = async () => {
+    let result;
+    if (isLikedS) {
+      setIsLiked(!isLikedS);
+      result = await toggleLike({ employerId: employer.id, name: employer.name, liked: false });
+    } else {
+      setIsLiked(!isLikedS);
+      result = await toggleLike({ employerId: employer.id, name: employer.name, liked: true });
+    }
+
+    // if toggle like request fails, revert back to original state
+    if (!result) {
+      setIsLiked(isLikedS);
+    }
   };
 
   const navigateTo = key => {
@@ -72,6 +86,7 @@ const EmpCardContainer = props => {
       showNote={showNote}
       showLike={showLike}
       showLabel={showLabel}
+      likeCompany={likeCompany}
     />
   );
 };
