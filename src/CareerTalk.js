@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Alert, Linking, Platform } from 'react-native';
 
-import { PublicRouter, PrivateRouter2 } from './Router';
+import { PublicRouter, PrivateRouter } from './Router';
 import { Spinner } from './components/commons';
 import config from '../config.json';
 import pjson from '../package.json';
@@ -62,7 +62,7 @@ const CareerTalk = ({ isLoggedIn }) => {
 };
 
 const Router = ({ isLoggedInState, setIsLoggedInState }) => (isLoggedInState ? (
-  <PrivateRouter2 setIsLoggedInState={setIsLoggedInState} />
+  <PrivateRouter setIsLoggedInState={setIsLoggedInState} />
 ) : (
   <PublicRouter setIsLoggedInState={setIsLoggedInState} />
 ));

@@ -30,8 +30,7 @@ const PublicRouter = ({ setIsLoggedInState }) => (
   </Router>
 );
 
-// Testing Router
-const PrivateRouter2 = ({ setIsLoggedInState }) => (
+const PrivateRouter = ({ setIsLoggedInState }) => (
   <Router key="private">
     <Scene key="root" hideNavBar>
 
@@ -147,4 +146,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export { PublicRouter, PrivateRouter2 };
+export { PublicRouter, PrivateRouter };
