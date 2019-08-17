@@ -32,7 +32,8 @@ export default ({ fairId }) => {
   const { data: { isLoggedIn } } = useQuery(ISLOGGEDIN_QUERY);
   const { data: { socialProvider } } = useQuery(GET_SOCIAL_PROVIDER);
   const { data, error, loading, refetch } = useQuery(EMPLOYERS, {
-    variables: { fairId, isUser: socialProvider !== null }
+    variables: { fairId, isUser: socialProvider !== null },
+    fetchPolicy: 'network-only',
   });
 
   /** Query employer list from cache */
@@ -147,7 +148,9 @@ export default ({ fairId }) => {
   // ---------------------- Refresh Control logic ------------------------ //
   const refresh = async () => {
     setIsRefreshing(true);
-    const { data: { getEmployerList } } = await Promise.resolve(refetch({ fairId, isUser: isLoggedIn === 'true' }));
+    const { data: { getEmployerList } } = await Promise.resolve(
+      refetch({ fairId, isUser: socialProvider !== null, fetchPolicy: 'network-only' })
+    );
 
     // if filter options are set, filter companies after refresh
     if (filterOptions || visaOption !== null) {
@@ -193,7 +196,12 @@ export default ({ fairId }) => {
   /** Update the total number of notes on saving & deleting notes */
   const changeNumOfNotes = ({ mode, employerId }) => {
     if (mode === 'DELETE') {
-      setNewNotes(notes => notes.clear());
+      setNewNotes(notes => {
+        if (notes.has(employerId)) {
+          notes.delete(employerId);
+        }
+        return notes;
+      });
       setNumOfNotes(numOfNotes - 1);
     } else if (mode === 'SAVE') {
       if (!newNotes.has(employerId)) {
