@@ -1,35 +1,35 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
-import { actionCreators as authActions } from '../../redux/modules/auth';
+// import { actionCreators as authActions } from '../../redux/modules/auth';
 
-import Container from './container';
+import Container from './ProfileContainer';
 
-const mapStateToProps = (state) => {
-  const {
-    auth: { isLoggedIn, socialProvider },
-    company: { employers, fairs, favorites },
-    user: { firstName, lastName, profilePhoto }
-  } = state;
-  return {
-    employers,
-    favorites,
-    fairs,
-    firstName,
-    lastName,
-    profilePhoto,
-    socialProvider,
-    isLoggedIn,
-  };
-};
+// const mapStateToProps = (state) => {
+//   const {
+//     auth: { isLoggedIn, socialProvider },
+//     company: { employers, fairs, favorites },
+//     user: { firstName, lastName, profilePhoto }
+//   } = state;
+//   return {
+//     employers,
+//     favorites,
+//     fairs,
+//     firstName,
+//     lastName,
+//     profilePhoto,
+//     socialProvider,
+//     isLoggedIn,
+//   };
+// };
 
-const mapDispatchToProps = dispatch => ({
-  logout: () => {
-    dispatch(authActions.logout());
-  }
-});
+// const mapDispatchToProps = dispatch => ({
+//   logout: () => {
+//     dispatch(authActions.logout());
+//   }
+// });
 
 export const ProfileIcon = () => {
   return (
@@ -43,4 +43,4 @@ export const ProfileIcon = () => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Container);
+export default Container;

@@ -8,7 +8,7 @@ import EmployerList from './screens/EmployerList';
 // import CompanyList from './screens/CompanyList';
 import EmployerDetail from './screens/EmployerDetail';
 // import CompanyDetail from './screens/CompanyDetail';
-// import Profile from './screens/Profile';
+import Profile from './screens/Profile';
 // import SummaryPage from './screens/Summary';
 // import TempAuth from './screens/TemporaryAuth';
 // import Settings from './screens/Settings';
@@ -51,7 +51,7 @@ const PrivateRouter = ({ setIsLoggedInState }) => (
             />
 
             {/* Tab 2 */}
-            {/* <Scene key="profile" component={Profile} hideNavBar title="Profile" icon={TabIcon} /> */}
+            <Scene key="profile" component={Profile} hideNavBar title="Profile" icon={TabIcon} />
 
             {/* Tab 3 */}
             {/* <Scene

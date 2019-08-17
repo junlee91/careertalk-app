@@ -56,3 +56,13 @@ export const GET_CACHED_EMPLOYERS = gql`
     }
   }
 `;
+
+export const ME = gql`
+  query me {
+    me {
+      personal_email
+      profile_url
+      full_name
+    }
+  }
+`;
