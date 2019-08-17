@@ -24,12 +24,22 @@ _storeData = async (key, value) => {
 
 export const resolvers = {
   Mutation: {
-    logUserIn: (_, { token }) => {
+    logUserIn: (_, { token }, { cache }) => {
+      let socialProvider = null;
       if (token) {
         _storeData('token', token);
         _storeData('socialProvider', 'google');
+        socialProvider = 'google';
       }
       _storeData('isLoggedIn', 'true');
+
+      // update InMemory cache
+      cache.writeData({
+        data: {
+          isLoggedIn: true,
+          socialProvider,
+        }
+      });
 
       return null;
     },
@@ -42,19 +52,6 @@ export const resolvers = {
     }
   },
   Query: {
-    /**
-     * Get Fair info from cache
-     */
-    getFairCache: (_, __, { cache }) => {
-      try {
-        const { getFair } = cache.readQuery({ query: GET_CACHED_FAIRS });
-
-        return getFair;
-      } catch (error) {
-        console.error(error);
-      }
-      return null;
-    },
     /**
      * Get employer list from cache
      */

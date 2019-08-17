@@ -5,7 +5,7 @@ import { gql } from 'apollo-boost';
 import FairList from './fairsPresenter';
 import { Spinner } from '../../components/commons';
 
-const FAIRS = gql`
+export const FAIRS = gql`
   {
     getFair {
       id

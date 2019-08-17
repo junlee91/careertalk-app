@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation } from 'react-apollo-hooks';
 
-import { ISLOGGEDIN_QUERY } from '../../Apollo/sharedQueries';
+import { ISLOGGEDIN_QUERY, GET_SOCIAL_PROVIDER } from '../../Apollo/sharedQueries';
 import { EMPLOYERS, TOGGLE_LIKE, EMPLOYERS_LOCAL } from './EmployerListQueries';
 import EmployerListPresenter from './EmployerListPresenter';
 
@@ -30,8 +30,9 @@ export default ({ fairId }) => {
 
   /** graphql queries */
   const { data: { isLoggedIn } } = useQuery(ISLOGGEDIN_QUERY);
+  const { data: { socialProvider } } = useQuery(GET_SOCIAL_PROVIDER);
   const { data, error, loading, refetch } = useQuery(EMPLOYERS, {
-    variables: { fairId, isUser: isLoggedIn === 'true' }
+    variables: { fairId, isUser: socialProvider !== null }
   });
 
   /** Query employer list from cache */

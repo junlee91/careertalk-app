@@ -33,7 +33,6 @@ const PublicRouter = ({ setIsLoggedInState }) => (
 const PrivateRouter = ({ setIsLoggedInState }) => (
   <Router key="private">
     <Scene key="root" hideNavBar>
-
       <Scene key="fairs" component={Fairs} initial title="Career Fairs" hideNavBar />
 
       {/* Inner Router for Tabs */}
@@ -51,7 +50,14 @@ const PrivateRouter = ({ setIsLoggedInState }) => (
             />
 
             {/* Tab 2 */}
-            <Scene key="profile" component={Profile} hideNavBar title="Profile" icon={TabIcon} />
+            <Scene
+              key="profile"
+              component={Profile}
+              hideNavBar
+              title="Profile"
+              icon={TabIcon}
+              setIsLoggedInState={setIsLoggedInState}
+            />
 
             {/* Tab 3 */}
             {/* <Scene

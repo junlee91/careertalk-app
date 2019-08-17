@@ -12,6 +12,12 @@ export const LOCAL_LOG_OUT = gql`
   }
 `;
 
+export const GET_SOCIAL_PROVIDER = gql`
+  {
+    socialProvider @client
+  }
+`;
+
 export const GET_CACHED_FAIRS = gql`
   {
     getFair {

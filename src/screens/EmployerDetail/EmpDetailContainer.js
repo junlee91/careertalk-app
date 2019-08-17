@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation } from 'react-apollo-hooks';
 
-import { FAIRS_LOCAL, GET_NOTE, SAVE_NOTE, DELETE_NOTE } from './EmpDetailQueries';
+import { FAIRS } from '../Fairs/fairsContainer';
+import { GET_NOTE, SAVE_NOTE, DELETE_NOTE } from './EmpDetailQueries';
 import EmpDetailPresenter from './EmpDetailPresenter';
 
 const Container = ({ companyInfo, state, actions }) => {
@@ -12,14 +13,14 @@ const Container = ({ companyInfo, state, actions }) => {
   const [originalNote, setOriginalNote] = useState(null);
 
   /** get current fair info from cache */
-  const { data: { getFairCache } } = useQuery(FAIRS_LOCAL, { fetchPolicy: 'cache-only' });
+  const { data: { getFair } } = useQuery(FAIRS, { fetchPolicy: 'cache-only' });
 
   useEffect(() => {
-    const filtered = getFairCache.filter(({ id }) => id === companyInfo.careerfair_id);
+    const filtered = getFair.filter(({ id }) => id === companyInfo.careerfair_id);
     if (filtered.length === 1) {
       setFairInfo(filtered[0]);
     }
-  }, [getFairCache]);
+  }, [getFair]);
 
   /** Note graphql */
   const [saveNoteMutation] = useMutation(SAVE_NOTE);

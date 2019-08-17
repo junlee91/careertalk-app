@@ -33,6 +33,7 @@ export default () => {
         storage: AsyncStorage // TODO: this is deprecated
       });
       const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
+      const socialProvider = await AsyncStorage.getItem('socialProvider');
 
       // Initialize ApolloClient
       const client = new ApolloClient({
@@ -45,7 +46,8 @@ export default () => {
         },
         clientState: {
           defaults: {
-            isLoggedIn
+            isLoggedIn,
+            socialProvider,
           },
           resolvers
         },

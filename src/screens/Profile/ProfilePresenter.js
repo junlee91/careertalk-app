@@ -11,7 +11,7 @@ import {
 } from '../../components/commons';
 import styles from './styles';
 
-const Profile = ({ fullName, profileUrl, getMeLoading }) => {
+const Profile = ({ fullName, profileUrl, getMeLoading, logOutPressed }) => {
   return (
     <SafeAreaView style={styles.container}>
       <InfoBox>
@@ -27,7 +27,7 @@ const Profile = ({ fullName, profileUrl, getMeLoading }) => {
             )}
           </View>
           <View style={{ flex: 1 }}>
-            <LogoutActionSheet onPressLogOut={() => console.log('log out press')} />
+            <LogoutActionSheet onPressLogOut={logOutPressed} />
           </View>
         </View>
       </InfoBox>
