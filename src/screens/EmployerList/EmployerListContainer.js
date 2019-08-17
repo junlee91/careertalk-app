@@ -13,6 +13,7 @@ export default ({ fairId }) => {
   const [numOfCompanies, setNumOfCompanies] = useState(0);
   const [numOfFavorites, setNumOfFavorites] = useState(0);
   const [numOfNotes, setNumOfNotes] = useState(0);
+  const [newNotes, setNewNotes] = useState(new Set());
 
   /** search bar state */
   const [searchTerm, setSearchTerm] = useState(null);
@@ -159,7 +160,7 @@ export default ({ fairId }) => {
   // --------------------------------------------------------------------- //
 
   // ---------------------------- Toggle Like ---------------------------- //
-  const toggleLike = async ({ employerId, name }) => {
+  const toggleLike = async ({ employerId, name, liked }) => {
     const { fair: { id: fairId } } = employerListState;
 
     try {
@@ -172,6 +173,12 @@ export default ({ fairId }) => {
       });
       if (status) {
         console.log(`${message} ${name}`);
+        // Increment/Decrement numOfFavorites
+        if (liked) {
+          setNumOfFavorites(numOfFavorites + 1);
+        } else {
+          setNumOfFavorites(numOfFavorites - 1);
+        }
         return true;
       }
     } catch (error) {
@@ -182,6 +189,19 @@ export default ({ fairId }) => {
   }
   // --------------------------------------------------------------------- //
 
+  /** Update the total number of notes on saving & deleting notes */
+  const changeNumOfNotes = ({ mode, employerId }) => {
+    if (mode === 'DELETE') {
+      setNewNotes(notes => notes.clear());
+      setNumOfNotes(numOfNotes - 1);
+    } else if (mode === 'SAVE') {
+      if (!newNotes.has(employerId)) {
+        setNewNotes(notes => notes.add(employerId));
+        setNumOfNotes(numOfNotes + 1);
+      }
+    }
+  };
+
   return (
     <EmployerListPresenter
       loading={loading}
@@ -190,6 +210,7 @@ export default ({ fairId }) => {
       numOfCompanies={numOfCompanies}
       numOfFavorites={numOfFavorites}
       numOfNotes={numOfNotes}
+      changeNumOfNotes={changeNumOfNotes}
       searchTerm={searchTerm}
       searching={searching}
       cancelSearch={cancelSearch}

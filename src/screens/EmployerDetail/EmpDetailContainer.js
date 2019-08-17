@@ -64,6 +64,7 @@ const Container = ({ companyInfo, state, actions }) => {
         console.error(deleteError.message);
       } else {
         console.log(deleteNote.message);
+        actions.changeNumOfNotes({ mode: 'DELETE', employerId: companyInfo.employer.id });
       }
 
       // clear the original note
@@ -86,6 +87,7 @@ const Container = ({ companyInfo, state, actions }) => {
         console.error(saveError.message);
       } else {
         console.log(saveNote.message);
+        actions.changeNumOfNotes({ mode: 'SAVE', employerId: companyInfo.employer.id });
       }
 
       // update the original note to the saved note
