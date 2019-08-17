@@ -65,6 +65,8 @@ export default ({ fairId }) => {
   const searching = term => {
     if (term) {
       setSearchTerm(term.trim());
+    } else {
+      setSearchTerm(null);
     }
   }
 
@@ -84,15 +86,13 @@ export default ({ fairId }) => {
   }
 
   const search = () => {
-    if (searchTerm) {
-      const filters = filterOptions || {
-        degree: [],
-        majors: [],
-        hiringTypes: []
-      };
+    const filters = filterOptions || {
+      degree: [],
+      majors: [],
+      hiringTypes: []
+    };
 
-      getFilteredEmployersFromCache(filters, visaOption, searchTerm);
-    }
+    getFilteredEmployersFromCache(filters, visaOption, searchTerm);
   }
   // --------------------------------------------------------------------- //
 
