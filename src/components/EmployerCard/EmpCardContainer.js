@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Actions } from 'react-native-router-flux';
+import { useQuery } from 'react-apollo-hooks';
 import PropTypes from 'prop-types';
 import exact from 'prop-types-exact';
 
+import { GET_NEW_NOTES } from '../../Apollo/sharedQueries';
 import EmpCardPresenter from './EmpCardPresenter';
 
 const propTypes = exact({
@@ -31,6 +33,7 @@ const propTypes = exact({
 const EmpCardContainer = props => {
   const [isLikedS, setIsLiked] = useState(props.is_liked);
   const [isNotedS, setIsNoted] = useState(props.is_noted);
+  const { data: { newNotes } } = useQuery(GET_NEW_NOTES);
   const {
     employer,
     hiring_majors,
@@ -43,6 +46,16 @@ const EmpCardContainer = props => {
     showLabel,
     toggleLike,
   } = props;
+
+  // recheck if this employer has note in cache and update the isNoted state
+  useEffect(() => {
+    const hasNote = newNotes.includes(employer.id);
+    if (hasNote && !isNotedS) {
+      setIsNoted(true);
+    } else if (!hasNote && isNotedS) {
+      setIsNoted(false);
+    }
+  }, [newNotes]);
 
   /** Heart button clicked */
   const likeCompany = async () => {
