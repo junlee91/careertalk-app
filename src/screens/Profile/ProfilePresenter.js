@@ -55,7 +55,7 @@ const Profile = ({
           />
         )}
       </ScrollView>
-      <Button title="Refresh" onPress={refresh} />
+      {socialProvider && <Button title="Refresh" onPress={refresh} />}
       <PoweredBy poweredby="Logos provided by Clearbit" />
     </SafeAreaView>
   );

@@ -33,7 +33,7 @@ const propTypes = exact({
 const EmpCardContainer = props => {
   const [isLikedS, setIsLiked] = useState(props.is_liked);
   const [isNotedS, setIsNoted] = useState(props.is_noted);
-  const { data: { newNotes } } = useQuery(GET_NEW_NOTES);
+  const { data: noteData} = useQuery(GET_NEW_NOTES);
   const {
     employer,
     hiring_majors,
@@ -49,13 +49,15 @@ const EmpCardContainer = props => {
 
   // recheck if this employer has note in cache and update the isNoted state
   useEffect(() => {
-    const hasNote = newNotes.includes(employer.id);
-    if (hasNote && !isNotedS) {
-      setIsNoted(true);
-    } else if (!hasNote && isNotedS) {
-      setIsNoted(false);
+    if (noteData && noteData.newNotes) {
+      const hasNote = noteData.newNotes.includes(employer.id);
+      if (hasNote && !isNotedS) {
+        setIsNoted(true);
+      } else if (!hasNote && isNotedS) {
+        setIsNoted(false);
+      }
     }
-  }, [newNotes]);
+  }, [noteData]);
 
   /** Heart button clicked */
   const likeCompany = async () => {
