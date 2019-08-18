@@ -14,7 +14,7 @@ class LogoutActionSheet extends React.Component {
         <TouchableOpacity onPressOut={this.showActionSheet}>
           <View style={{ flexDirection: 'column', alignItems: 'center' }}>
             <LogOutIcon />
-            <Text style={{ fontSize: 12, fontFamily: 'Avenir Next' }}>Log Out</Text>
+            <Text style={{ fontSize: 12, fontFamily: 'Avenir Next' }}>Sign out</Text>
           </View>
         </TouchableOpacity>
         <ActionSheet
