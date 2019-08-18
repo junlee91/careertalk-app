@@ -53,7 +53,7 @@ export default () => {
           },
           resolvers
         },
-        uri: 'http://localhost:4000/graphql'
+        uri: 'https://careertalk-graphql.herokuapp.com/graphql'
       });
 
       // Set initial state of App

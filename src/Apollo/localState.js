@@ -50,7 +50,7 @@ export const resolvers = {
 
       return null;
     },
-    updateNumOfNotesCache: (_, variables, { cache }) => {
+    updateNumOfNotesCache: async (_, variables, { cache }) => {
       const { mode, employerId } = variables;
       if (mode === null) return null;
 
@@ -77,7 +77,7 @@ export const resolvers = {
         updatedNotes = variables.newNotes;
         updatedTotal = variables.totalNotes;
       }
-      cache.writeData({
+      await cache.writeData({
         data: {
           newNotes: updatedNotes,
           totalNotes: updatedTotal
