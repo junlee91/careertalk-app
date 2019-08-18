@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation } from 'react-apollo-hooks';
+import { Alert } from 'react-native';
 
 import { FAIRS } from '../Fairs/fairsContainer';
 import { GET_NOTE, SAVE_NOTE, DELETE_NOTE } from './EmpDetailQueries';
-import { UPDATE_NUM_OF_NOTES } from '../../Apollo/sharedQueries';
+import { UPDATE_NUM_OF_NOTES, GET_SOCIAL_PROVIDER, LOCAL_LOG_OUT } from '../../Apollo/sharedQueries';
 import EmpDetailPresenter from './EmpDetailPresenter';
 
 const Container = ({ companyInfo, state, actions }) => {
@@ -12,6 +13,10 @@ const Container = ({ companyInfo, state, actions }) => {
   const [isEditting, setIsEditting] = useState(false);
   const [note, setNote] = useState(null);
   const [originalNote, setOriginalNote] = useState(null);
+
+  /** Sign out state */
+  const { data: { socialProvider } } = useQuery(GET_SOCIAL_PROVIDER);
+  const [localLogoutMutation] = useMutation(LOCAL_LOG_OUT);
 
   /** get current fair info from cache */
   const { data: { getFair } } = useQuery(FAIRS, { fetchPolicy: 'cache-only' });
@@ -52,7 +57,37 @@ const Container = ({ companyInfo, state, actions }) => {
     setNote(text);
   };
 
+  const logOut = async () => {
+    // Clear auth state
+    // TODO: log out
+    // await localLogoutMutation();
+    // client.resetStore();
+    console.log('Log out');
+  }
+
+  const showAlert = () => {
+    Alert.alert(
+      'Oops!',
+      'Please sign in with Google to take note',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel'
+        },
+        { text: 'Sign out', onPress: logOut }
+      ],
+      { cancelable: false }
+    );
+  }
+
   const handleSave = async () => {
+    // only signed in users can take note
+    if (socialProvider !== 'google') {
+      showAlert();
+      return;
+    }
+
     const { setIsNoted } = actions;
 
     if ((note === null || note === '') && originalNote) {

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery, useMutation, useApolloClient } from 'react-apollo-hooks';
 import PropTypes from 'prop-types';
 import exact from 'prop-types-exact';
 
-import { GET_NEW_NOTES } from '../../Apollo/sharedQueries';
+import { GET_NEW_NOTES, GET_SOCIAL_PROVIDER, LOCAL_LOG_OUT } from '../../Apollo/sharedQueries';
 import EmpCardPresenter from './EmpCardPresenter';
 
 const propTypes = exact({
@@ -31,9 +32,13 @@ const propTypes = exact({
 });
 
 const EmpCardContainer = props => {
+  const client = useApolloClient();
   const [isLikedS, setIsLiked] = useState(props.is_liked);
   const [isNotedS, setIsNoted] = useState(props.is_noted);
   const { data: noteData} = useQuery(GET_NEW_NOTES);
+  const { data: { socialProvider } } = useQuery(GET_SOCIAL_PROVIDER);
+  const [localLogoutMutation] = useMutation(LOCAL_LOG_OUT);
+
   const {
     employer,
     hiring_majors,
@@ -59,8 +64,37 @@ const EmpCardContainer = props => {
     }
   }, [noteData]);
 
+  const logOut = async () => {
+    // Clear auth state
+    // TODO: log out
+    // await localLogoutMutation();
+    // client.resetStore();
+    console.log('Log out');
+  }
+
+  const showAlert = () => {
+    Alert.alert(
+      'Oops!',
+      'Please sign in with Google to like this company',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel'
+        },
+        { text: 'Sign out', onPress: logOut }
+      ],
+      { cancelable: false }
+    );
+  }
+
   /** Heart button clicked */
   const likeCompany = async () => {
+    // only signed in users can like employer
+    if (socialProvider !== 'google') {
+      showAlert();
+      return;
+    }
     let result;
     if (isLikedS) {
       setIsLiked(!isLikedS);
