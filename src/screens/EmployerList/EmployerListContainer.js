@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation } from 'react-apollo-hooks';
 
-import { ISLOGGEDIN_QUERY, GET_SOCIAL_PROVIDER } from '../../Apollo/sharedQueries';
+import { ISLOGGEDIN_QUERY, GET_SOCIAL_PROVIDER, UPDATE_NUM_OF_NOTES, GET_TOTAL_NOTES } from '../../Apollo/sharedQueries';
 import { EMPLOYERS, TOGGLE_LIKE, EMPLOYERS_LOCAL } from './EmployerListQueries';
 import EmployerListPresenter from './EmployerListPresenter';
 
@@ -13,7 +13,6 @@ export default ({ fairId }) => {
   const [numOfCompanies, setNumOfCompanies] = useState(0);
   const [numOfFavorites, setNumOfFavorites] = useState(0);
   const [numOfNotes, setNumOfNotes] = useState(0);
-  const [newNotes, setNewNotes] = useState(new Set());
 
   /** search bar state */
   const [searchTerm, setSearchTerm] = useState(null);
@@ -36,6 +35,15 @@ export default ({ fairId }) => {
     fetchPolicy: 'network-only',
   });
 
+  const { data: { totalNotes } } = useQuery(GET_TOTAL_NOTES);
+  const [updateNoteCountMutation] = useMutation(UPDATE_NUM_OF_NOTES);
+
+  useEffect(() => {
+    if (totalNotes !== numOfNotes) {
+      setNumOfNotes(totalNotes);
+    }
+  }, [totalNotes]);
+
   /** Query employer list from cache */
   const { refetch: getCache } = useQuery(EMPLOYERS_LOCAL, {
     skip: true,
@@ -48,11 +56,20 @@ export default ({ fairId }) => {
     const { companies } = employerList;
     const filteredByLikes = companies.filter(comp => comp.is_liked);
     const filteredByNotes = companies.filter(comp => comp.is_noted);
+    const newNotes = [];
+    filteredByNotes.forEach(item => newNotes.push(item.employer.id));
 
     setNumOfCompanies(companies.length);
     setNumOfFavorites(filteredByLikes.length);
     setNumOfNotes(filteredByNotes.length);
     setEmployerList(employerList);
+    updateNoteCountMutation({
+      variables: {
+        mode: 'SETUP',
+        newNotes,
+        totalNotes: filteredByNotes.length
+      }
+    });
   }
 
   /** update the employerList state after downloading */
@@ -193,24 +210,6 @@ export default ({ fairId }) => {
   }
   // --------------------------------------------------------------------- //
 
-  /** Update the total number of notes on saving & deleting notes */
-  const changeNumOfNotes = ({ mode, employerId }) => {
-    if (mode === 'DELETE') {
-      setNewNotes(notes => {
-        if (notes.has(employerId)) {
-          notes.delete(employerId);
-        }
-        return notes;
-      });
-      setNumOfNotes(numOfNotes - 1);
-    } else if (mode === 'SAVE') {
-      if (!newNotes.has(employerId)) {
-        setNewNotes(notes => notes.add(employerId));
-        setNumOfNotes(numOfNotes + 1);
-      }
-    }
-  };
-
   return (
     <EmployerListPresenter
       loading={loading}
@@ -219,7 +218,6 @@ export default ({ fairId }) => {
       numOfCompanies={numOfCompanies}
       numOfFavorites={numOfFavorites}
       numOfNotes={numOfNotes}
-      changeNumOfNotes={changeNumOfNotes}
       searchTerm={searchTerm}
       searching={searching}
       cancelSearch={cancelSearch}

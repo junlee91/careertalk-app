@@ -18,20 +18,35 @@ export const GET_SOCIAL_PROVIDER = gql`
   }
 `;
 
-export const GET_CACHED_FAIRS = gql`
+// ------------ NOTES ------------ //
+export const GET_NEW_NOTES = gql`
   {
-    getFair {
-      id
-      name
-      address
-      num_of_employers
-      date
-      start_time
-      end_time
-      location
-    }
+    newNotes @client
   }
 `;
+
+export const GET_TOTAL_NOTES = gql`
+  {
+    totalNotes @client
+  }
+`;
+
+export const UPDATE_NUM_OF_NOTES = gql`
+  mutation updateNumOfNotesCache(
+    $mode: String!
+    $employerId: String
+    $totalNotes: Int
+    $newNotes: [String]
+  ) {
+    updateNumOfNotesCache(
+      mode: $mode
+      employerId: $employerId
+      totalNotes: $totalNotes
+      newNotes: $newNotes
+    ) @client
+  }
+`;
+// -------------------------------- //
 
 export const GET_CACHED_EMPLOYERS = gql`
   query getEmployerListCache($fairId: String!, $isUser: Boolean!) {

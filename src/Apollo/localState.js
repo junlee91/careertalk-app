@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native';
 
-import { GET_CACHED_EMPLOYERS, GET_CACHED_FAIRS } from './sharedQueries';
+import { GET_CACHED_EMPLOYERS, GET_NEW_NOTES, GET_TOTAL_NOTES } from './sharedQueries';
 
 /**
  * App supports public logic so we manage the logged in state like this:
@@ -47,6 +47,42 @@ export const resolvers = {
       await AsyncStorage.removeItem('token', callback);
       await AsyncStorage.removeItem('socialProvider', callback);
       _storeData('isLoggedIn', 'false');
+
+      return null;
+    },
+    updateNumOfNotesCache: (_, variables, { cache }) => {
+      const { mode, employerId } = variables;
+      if (mode === null) return null;
+
+      /** newNotes: list of employerIds that have note */
+      const { newNotes } = cache.readQuery({
+        query: GET_NEW_NOTES
+      });
+      /** total number of employers that have note */
+      const { totalNotes } = cache.readQuery({
+        query: GET_TOTAL_NOTES
+      });
+      let updatedNotes;
+      let updatedTotal;
+
+      if (mode === 'DELETE') {
+        updatedNotes = newNotes.filter(id => id !== employerId);
+        updatedTotal = totalNotes - 1;
+      } else if (mode === 'SAVE') {
+        if (!newNotes.includes(employerId)) {
+          updatedNotes = [...newNotes, employerId];
+          updatedTotal = totalNotes + 1;
+        }
+      } else if (mode === 'SETUP') {
+        updatedNotes = variables.newNotes;
+        updatedTotal = variables.totalNotes;
+      }
+      cache.writeData({
+        data: {
+          newNotes: updatedNotes,
+          totalNotes: updatedTotal
+        }
+      });
 
       return null;
     }

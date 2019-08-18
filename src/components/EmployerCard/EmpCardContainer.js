@@ -24,7 +24,6 @@ const propTypes = exact({
   showNote: PropTypes.bool,
   showLike: PropTypes.bool,
   showLabel: PropTypes.bool,
-  changeNumOfNotes: PropTypes.func.isRequired,
   toggleLike: PropTypes.func.isRequired,
   __typename: PropTypes.string
 });
@@ -43,7 +42,6 @@ const EmpCardContainer = props => {
     showLike,
     showLabel,
     toggleLike,
-    changeNumOfNotes,
   } = props;
 
   /** Heart button clicked */
@@ -66,7 +64,7 @@ const EmpCardContainer = props => {
   const navigateTo = key => {
     const params = {
       companyInfo: props,
-      actions: { setIsLiked, setIsNoted, changeNumOfNotes },
+      actions: { setIsLiked, setIsNoted },
       state: { isLikedS, isNotedS }
     };
 

@@ -43,7 +43,6 @@ export default ({
   overlayVisible,
   filterApplied,
   toggleLike,
-  changeNumOfNotes,
 }) => {
   return (
     <SafeAreaView style={styles.companyListViewStyle}>
@@ -69,7 +68,6 @@ export default ({
             isRefreshing={isRefreshing}
             refresh={refresh}
             toggleLike={toggleLike}
-            changeNumOfNotes={changeNumOfNotes}
           />
         ) : (
           <Spinner size="large" />
@@ -80,7 +78,7 @@ export default ({
   );
 };
 
-const CompanyList = ({ companies, isRefreshing, refresh, toggleLike, changeNumOfNotes }) => {
+const CompanyList = ({ companies, isRefreshing, refresh, toggleLike }) => {
   return (
     <>
       <FlatList
@@ -94,7 +92,6 @@ const CompanyList = ({ companies, isRefreshing, refresh, toggleLike, changeNumOf
             <EmployerCard
               {...c.item}
               toggleLike={toggleLike}
-              changeNumOfNotes={changeNumOfNotes}
               showNote
               showLike
               showLabel

@@ -3,6 +3,7 @@ import { useQuery, useMutation } from 'react-apollo-hooks';
 
 import { FAIRS } from '../Fairs/fairsContainer';
 import { GET_NOTE, SAVE_NOTE, DELETE_NOTE } from './EmpDetailQueries';
+import { UPDATE_NUM_OF_NOTES } from '../../Apollo/sharedQueries';
 import EmpDetailPresenter from './EmpDetailPresenter';
 
 const Container = ({ companyInfo, state, actions }) => {
@@ -25,6 +26,7 @@ const Container = ({ companyInfo, state, actions }) => {
   /** Note graphql */
   const [saveNoteMutation] = useMutation(SAVE_NOTE);
   const [deleteNoteMutation] = useMutation(DELETE_NOTE);
+  const [updateNoteCountMutation] = useMutation(UPDATE_NUM_OF_NOTES);
   const { data: noteData, loading: noteLoading } = useQuery(GET_NOTE, {
     variables: {
       fairId: companyInfo.careerfair_id,
@@ -65,7 +67,12 @@ const Container = ({ companyInfo, state, actions }) => {
         console.error(deleteError.message);
       } else {
         console.log(deleteNote.message);
-        actions.changeNumOfNotes({ mode: 'DELETE', employerId: companyInfo.employer.id });
+        updateNoteCountMutation({
+          variables: {
+            mode: 'DELETE',
+            employerId: companyInfo.employer.id
+          }
+        });
       }
 
       // clear the original note
@@ -88,7 +95,12 @@ const Container = ({ companyInfo, state, actions }) => {
         console.error(saveError.message);
       } else {
         console.log(saveNote.message);
-        actions.changeNumOfNotes({ mode: 'SAVE', employerId: companyInfo.employer.id });
+        updateNoteCountMutation({
+          variables: {
+            mode: 'SAVE',
+            employerId: companyInfo.employer.id
+          }
+        });
       }
 
       // update the original note to the saved note

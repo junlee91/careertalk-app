@@ -106,7 +106,6 @@ const FairsList = props => {
               {...c}
               key={c.employer.id}
               toggleLike={() => console.log('Toggle Like is not actionable in profile page.')}
-              changeNumOfNotes={() => console.log('Change num of notes is not actionable in profile page.')}
               showLike={false}
               showNote
               showLabel
