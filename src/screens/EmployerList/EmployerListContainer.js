@@ -32,7 +32,7 @@ export default ({ fairId }) => {
   const { data: { socialProvider } } = useQuery(GET_SOCIAL_PROVIDER);
   const { data, error, loading, refetch } = useQuery(EMPLOYERS, {
     variables: { fairId, isUser: socialProvider !== null },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
 
   const { data: { totalNotes } } = useQuery(GET_TOTAL_NOTES);
