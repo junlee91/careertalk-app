@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation } from 'react-apollo-hooks';
 
-import { ISLOGGEDIN_QUERY, GET_SOCIAL_PROVIDER, UPDATE_NUM_OF_NOTES, GET_TOTAL_NOTES } from '../../Apollo/sharedQueries';
+import {
+  ISLOGGEDIN_QUERY,
+  GET_SOCIAL_PROVIDER,
+  UPDATE_NUM_OF_NOTES,
+  GET_TOTAL_NOTES,
+  GET_FAVORITES,
+  UPDATE_FAVORITES
+} from '../../Apollo/sharedQueries';
 import { EMPLOYERS, TOGGLE_LIKE, EMPLOYERS_LOCAL } from './EmployerListQueries';
 import EmployerListPresenter from './EmployerListPresenter';
 
@@ -35,6 +42,7 @@ export default ({ fairId }) => {
     fetchPolicy: 'network-only',
   });
 
+  /** notes cache */
   const { data: { totalNotes } } = useQuery(GET_TOTAL_NOTES);
   const [updateNoteCountMutation] = useMutation(UPDATE_NUM_OF_NOTES);
 
@@ -43,6 +51,24 @@ export default ({ fairId }) => {
       setNumOfNotes(totalNotes);
     }
   }, [totalNotes]);
+
+  /** favorites cache */
+  const { data: { favorites } } = useQuery(GET_FAVORITES);
+  const [updateFavoritesMutation] = useMutation(UPDATE_FAVORITES);
+
+  useEffect(() => {
+    if (employerListState) {
+      const { fair: { id } } = employerListState;
+      const fairFavorites = favorites.find(item => item.id === id);
+
+      if (fairFavorites) {
+        const totalFavorites = fairFavorites.employerIds.length;
+        if (totalFavorites !== numOfFavorites) {
+          setNumOfFavorites(totalFavorites);
+        }
+      }
+    }
+  }, [favorites]);
 
   /** Query employer list from cache */
   const { refetch: getCache } = useQuery(EMPLOYERS_LOCAL, {
@@ -53,21 +79,32 @@ export default ({ fairId }) => {
   const [toggleLikeMutation] = useMutation(TOGGLE_LIKE);
 
   const updateComponentState = employerList => {
-    const { companies } = employerList;
+    const { fair, companies } = employerList;
     const filteredByLikes = companies.filter(comp => comp.is_liked);
     const filteredByNotes = companies.filter(comp => comp.is_noted);
     const newNotes = [];
+    const employerIds = [];
+    filteredByLikes.forEach(item => employerIds.push(item.employer.id));
     filteredByNotes.forEach(item => newNotes.push(item.employer.id));
 
     setNumOfCompanies(companies.length);
     setNumOfFavorites(filteredByLikes.length);
     setNumOfNotes(filteredByNotes.length);
     setEmployerList(employerList);
+
+    // update cache
     updateNoteCountMutation({
       variables: {
         mode: 'SETUP',
         newNotes,
         totalNotes: filteredByNotes.length
+      }
+    });
+    updateFavoritesMutation({
+      variables: {
+        mode: 'SETUP',
+        fairId: fair.id,
+        employerIds,
       }
     });
   }
@@ -195,11 +232,23 @@ export default ({ fairId }) => {
       });
       if (status) {
         console.log(`${message} ${name}`);
-        // Increment/Decrement numOfFavorites
+        // Update favorites cache
         if (liked) {
-          setNumOfFavorites(numOfFavorites + 1);
+          updateFavoritesMutation({
+            variables: {
+              mode: 'LIKE',
+              fairId,
+              employerId,
+            }
+          });
         } else {
-          setNumOfFavorites(numOfFavorites - 1);
+          updateFavoritesMutation({
+            variables: {
+              mode: 'UNLIKE',
+              fairId,
+              employerId,
+            }
+          });
         }
         return true;
       }

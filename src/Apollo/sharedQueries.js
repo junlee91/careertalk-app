@@ -1,5 +1,7 @@
 import { gql } from 'apollo-boost';
 
+import { FAVORITE_FRAGMENT } from './fragments';
+
 export const ISLOGGEDIN_QUERY = gql`
   {
     isLoggedIn @client
@@ -17,6 +19,33 @@ export const GET_SOCIAL_PROVIDER = gql`
     socialProvider @client
   }
 `;
+
+// ---------- FAVORITES ---------- //
+export const GET_FAVORITES = gql`
+  {
+    favorites @client {
+      ...FavoriteParts
+    }
+  }
+  ${FAVORITE_FRAGMENT}
+`;
+
+export const UPDATE_FAVORITES = gql`
+  mutation updateFavoritesCache(
+    $mode: String!
+    $fairId: String!
+    $employerId: String!
+    $employerIds: [String]
+  ) {
+    updateFavoritesCache(
+      mode: $mode
+      fairId: $fairId
+      employerId: $employerId
+      employerIds: $employerIds
+    ) @client
+  }
+`;
+// -------------------------------- //
 
 // ------------ NOTES ------------ //
 export const GET_NEW_NOTES = gql`

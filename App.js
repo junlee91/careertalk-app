@@ -49,6 +49,7 @@ export default () => {
             isLoggedIn,
             socialProvider,
             newNotes: [],
+            favorites: [],
             totalNotes: 0,
           },
           resolvers

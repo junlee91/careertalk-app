@@ -1,6 +1,7 @@
 import { AsyncStorage } from 'react-native';
 
 import { GET_CACHED_EMPLOYERS, GET_NEW_NOTES, GET_TOTAL_NOTES } from './sharedQueries';
+import { FAVORITE_FRAGMENT } from './fragments';
 
 /**
  * App supports public logic so we manage the logged in state like this:
@@ -85,6 +86,56 @@ export const resolvers = {
       });
 
       return null;
+    },
+    updateFavoritesCache: async (_, variables, { cache }) => {
+      const { mode, fairId, employerId, employerIds } = variables;
+      if (mode === null) return null;
+
+      if (mode === 'SETUP') {
+        const newFavorite = {
+          __typename: 'Favorite',
+          id: fairId,
+          employerIds,
+        };
+
+        // update cache
+        await cache.writeData({
+          data: {
+            favorites: [newFavorite]
+          }
+        });
+
+        return newFavorite;
+      } else {
+        // unique id: Favorite:${fairId}
+        const favoriteId = cache.config.dataIdFromObject({
+          __typename: 'Favorite',
+          id: fairId,
+        });
+        // get Favorite fragment from cache with given unique id
+        const favorite = cache.readFragment({ fragment: FAVORITE_FRAGMENT, id: favoriteId });
+        let updatedFavorites = [];
+
+        if (mode === 'LIKE') {
+          updatedFavorites = [...favorite.employerIds, employerId];
+        } else if (mode === 'UNLIKE') {
+          updatedFavorites = favorite.employerIds.filter(id => id !== employerId);
+        }
+
+        const updatedFavorite = {
+          ...favorite,
+          employerIds: updatedFavorites
+        };
+
+        // update cache
+        cache.writeFragment({
+          id: favoriteId,
+          fragment: FAVORITE_FRAGMENT,
+          data: updatedFavorite
+        });
+
+        return updatedFavorite;
+      }
     }
   },
   Query: {
