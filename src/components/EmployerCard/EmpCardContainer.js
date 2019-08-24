@@ -74,15 +74,10 @@ const EmpCardContainer = props => {
 
   const showAlert = () => {
     Alert.alert(
-      'Oops!',
-      'Please sign in with Google to like this company',
+      'No Access Rights',
+      'Login with social account to use this feature.',
       [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel'
-        },
-        { text: 'Sign out', onPress: logOut }
+        { text: 'OK', onPress: () => {} }
       ],
       { cancelable: false }
     );
