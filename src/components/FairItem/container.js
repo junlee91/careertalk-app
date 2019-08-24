@@ -5,7 +5,9 @@ import FairItem from './presenter';
 
 export default ({ fair }) => {
   _navigateTo = id => {
-    Actions.jump('_employerList', { fairId: id });
+    setTimeout(() => {
+      Actions.jump('_employerList', { fairId: id });
+    }, 250);
   };
 
   return <FairItem fair={fair} navigateTo={_navigateTo} />;

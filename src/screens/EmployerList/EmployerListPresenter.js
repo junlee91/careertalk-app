@@ -88,15 +88,7 @@ const CompanyList = ({ companies, isRefreshing, refresh, toggleLike }) => {
         data={companies}
         keyExtractor={c => c.employer.id}
         renderItem={c => {
-          return (
-            <EmployerCard
-              {...c.item}
-              toggleLike={toggleLike}
-              showNote
-              showLike
-              showLabel
-            />
-          );
+          return <EmployerCard {...c.item} toggleLike={toggleLike} showNote showLike showLabel />;
         }}
       />
       <PoweredBy poweredby="Logos provided by Clearbit" />

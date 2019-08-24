@@ -32,7 +32,7 @@ export default ({ fairId }) => {
   const { data: { socialProvider } } = useQuery(GET_SOCIAL_PROVIDER);
   const { data, error, loading, refetch } = useQuery(EMPLOYERS, {
     variables: { fairId, isUser: socialProvider !== null },
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'cache-and-network',
   });
 
   const { data: { totalNotes } } = useQuery(GET_TOTAL_NOTES);
@@ -76,7 +76,13 @@ export default ({ fairId }) => {
   useEffect(() => {
     if (!loading && data.getEmployerList) {
       const { getEmployerList } = data;
-      updateComponentState(getEmployerList)
+
+      // if filter options are set, filter companies after refresh
+      if (filterOptions || visaOption !== null) {
+        getFilteredEmployersFromCache(filterOptions, visaOption);
+      } else {
+        updateComponentState(getEmployerList)
+      }
     }
   }, [loading]);
 
@@ -164,19 +170,14 @@ export default ({ fairId }) => {
 
   // ---------------------- Refresh Control logic ------------------------ //
   const refresh = async () => {
-    setIsRefreshing(true);
-    const { data: { getEmployerList } } = await Promise.resolve(
-      refetch({ fairId, isUser: socialProvider !== null, fetchPolicy: 'network-only' })
-    );
-
-    // if filter options are set, filter companies after refresh
-    if (filterOptions || visaOption !== null) {
-      getFilteredEmployersFromCache(filterOptions, visaOption);
-    } else {
-      updateComponentState(getEmployerList)
+    try {
+      setIsRefreshing(true);
+      await refetch({ fairId, isUser: socialProvider !== null, fetchPolicy: 'network-only' });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsRefreshing(false);
     }
-
-    setIsRefreshing(false);
   }
   // --------------------------------------------------------------------- //
 
