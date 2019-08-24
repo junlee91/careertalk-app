@@ -26,7 +26,10 @@ const CompanyDetail = ({
   onInputFocus,
   onInputChange,
   handleSave,
-  noteLoading
+  noteLoading,
+  toggleLike,
+  isLikedS,
+  socialProvider
 }) => {
   const tables = companyInfo.tables.join(', ');
 
@@ -70,6 +73,27 @@ const CompanyDetail = ({
         </InfoBox>
         <PoweredBy poweredby="Logos provided by Clearbit" />
       </ScrollView>
+      {socialProvider && (
+        <TouchableOpacity
+          onPressOut={toggleLike}
+          style={{
+            borderWidth: 1,
+            borderColor: 'rgba(0,0,0,0.2)',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 70,
+            height: 70,
+            position: 'absolute',
+            bottom: 40,
+            right: 15,
+            backgroundColor: isLikedS ? '#ffdde9' : '#fff',
+            borderRadius: 100,
+            zIndex: 5
+          }}
+        >
+          <FavButton isLiked={isLikedS} size={35} />
+        </TouchableOpacity>
+      )}
     </SafeAreaView>
   );
 };

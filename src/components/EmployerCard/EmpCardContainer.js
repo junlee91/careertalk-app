@@ -103,12 +103,14 @@ const EmpCardContainer = props => {
     if (!result) {
       setIsLiked(isLikedS);
     }
+
+    return result;
   };
 
   const navigateTo = key => {
     const params = {
       companyInfo: props,
-      actions: { setIsLiked, setIsNoted },
+      actions: { likeCompany, setIsLiked, setIsNoted },
       state: { isLikedS, isNotedS }
     };
 

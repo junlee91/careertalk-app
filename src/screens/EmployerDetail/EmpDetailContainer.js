@@ -18,6 +18,9 @@ const Container = ({ companyInfo, state, actions }) => {
   const { data: { socialProvider } } = useQuery(GET_SOCIAL_PROVIDER);
   const [localLogoutMutation] = useMutation(LOCAL_LOG_OUT);
 
+  /** Like State */
+  const [isLikedS, setIsLiked] = useState(state.isLikedS);
+
   /** get current fair info from cache */
   const { data: { getFair } } = useQuery(FAIRS, { fetchPolicy: 'cache-only' });
 
@@ -79,6 +82,16 @@ const Container = ({ companyInfo, state, actions }) => {
       ],
       { cancelable: false }
     );
+  }
+
+  const toggleLike = async () => {
+    setIsLiked(!isLikedS);
+    const result = await actions.likeCompany();
+
+    // if toggle like request fails, revert back to original state
+    if (!result) {
+      setIsLiked(isLikedS);
+    }
   }
 
   const handleSave = async () => {
@@ -156,6 +169,9 @@ const Container = ({ companyInfo, state, actions }) => {
       onInputChange={onInputChange}
       handleSave={handleSave}
       noteLoading={noteLoading}
+      isLikedS={isLikedS}
+      socialProvider={socialProvider}
+      toggleLike={toggleLike}
     />
   );
 };
