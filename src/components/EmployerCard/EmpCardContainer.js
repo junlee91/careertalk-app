@@ -42,7 +42,7 @@ const EmpCardContainer = props => {
   const [isNotedS, setIsNoted] = useState(props.is_noted);
   const { data: noteData } = useQuery(GET_NEW_NOTES);
   const { data: { socialProvider } } = useQuery(GET_SOCIAL_PROVIDER);
-  const { data: { favorites } } = useQuery(GET_FAVORITES);
+  const { data: favoritesData } = useQuery(GET_FAVORITES);
   const [localLogoutMutation] = useMutation(LOCAL_LOG_OUT);
 
   const {
@@ -73,16 +73,19 @@ const EmpCardContainer = props => {
 
   // recheck if this employer is in favorites cache and update the isLiked state
   useEffect(() => {
-    const fairFavorites = favorites.find(item => item.id === careerfair_id);
-    if (fairFavorites) {
-      const isInFavorites = fairFavorites.employerIds.includes(employer.id);
-      if (isInFavorites && !isLikedS) {
-        setIsLiked(true);
-      } else if (!isInFavorites && isLikedS) {
-        setIsLiked(false);
+    if (favoritesData && favoritesData.favorites) {
+      const { favorites } = favoritesData;
+      const fairFavorites = favorites.find(item => item.id === careerfair_id);
+      if (fairFavorites) {
+        const isInFavorites = fairFavorites.employerIds.includes(employer.id);
+        if (isInFavorites && !isLikedS) {
+          setIsLiked(true);
+        } else if (!isInFavorites && isLikedS) {
+          setIsLiked(false);
+        }
       }
     }
-  }, [favorites]);
+  }, [favoritesData]);
 
   const logOut = async () => {
     // Clear auth state

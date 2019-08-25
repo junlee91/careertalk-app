@@ -43,22 +43,26 @@ export default ({ fairId }) => {
   });
 
   /** notes cache */
-  const { data: { totalNotes } } = useQuery(GET_TOTAL_NOTES);
+  const { data: totalNotesData} = useQuery(GET_TOTAL_NOTES);
   const [updateNoteCountMutation] = useMutation(UPDATE_NUM_OF_NOTES);
 
   useEffect(() => {
-    if (totalNotes !== numOfNotes) {
-      setNumOfNotes(totalNotes);
+    if (totalNotesData) {
+      const { totalNotes } = totalNotesData;
+      if (totalNotes !== numOfNotes) {
+        setNumOfNotes(totalNotes);
+      }
     }
-  }, [totalNotes]);
+  }, [totalNotesData]);
 
   /** favorites cache */
-  const { data: { favorites } } = useQuery(GET_FAVORITES);
+  const { data: favoritesData } = useQuery(GET_FAVORITES);
   const [updateFavoritesMutation] = useMutation(UPDATE_FAVORITES);
 
   useEffect(() => {
-    if (employerListState && favorites) {
+    if (employerListState && favoritesData && favoritesData.favorites) {
       const { fair: { id } } = employerListState;
+      const { favorites } = favoritesData;
       const fairFavorites = favorites.find(item => item.id === id);
 
       if (fairFavorites) {
@@ -68,7 +72,7 @@ export default ({ fairId }) => {
         }
       }
     }
-  }, [favorites]);
+  }, [favoritesData]);
 
   /** Query employer list from cache */
   const { refetch: getCache } = useQuery(EMPLOYERS_LOCAL, {
