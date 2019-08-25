@@ -102,14 +102,7 @@ const FairsList = props => {
       <View style={{ flex: 1 }}>
         <ScrollView>
           {employers.map(c => (
-            <EmployerCard
-              {...c}
-              key={c.employer.id}
-              toggleLike={() => console.log('Toggle Like is not actionable in profile page.')}
-              showLike={false}
-              showNote
-              showLabel
-            />
+            <EmployerCard {...c} key={c.employer.id} showLike={false} showNote showLabel />
           ))}
         </ScrollView>
       </View>

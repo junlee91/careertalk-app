@@ -5,7 +5,12 @@ import { useQuery, useMutation, useApolloClient } from 'react-apollo-hooks';
 import PropTypes from 'prop-types';
 import exact from 'prop-types-exact';
 
-import { GET_NEW_NOTES, GET_SOCIAL_PROVIDER, LOCAL_LOG_OUT } from '../../Apollo/sharedQueries';
+import {
+  GET_FAVORITES,
+  GET_NEW_NOTES,
+  GET_SOCIAL_PROVIDER,
+  LOCAL_LOG_OUT
+} from '../../Apollo/sharedQueries';
 import EmpCardPresenter from './EmpCardPresenter';
 
 const propTypes = exact({
@@ -27,7 +32,7 @@ const propTypes = exact({
   showNote: PropTypes.bool,
   showLike: PropTypes.bool,
   showLabel: PropTypes.bool,
-  toggleLike: PropTypes.func.isRequired,
+  toggleLike: PropTypes.func,
   __typename: PropTypes.string
 });
 
@@ -35,11 +40,13 @@ const EmpCardContainer = props => {
   const client = useApolloClient();
   const [isLikedS, setIsLiked] = useState(props.is_liked);
   const [isNotedS, setIsNoted] = useState(props.is_noted);
-  const { data: noteData} = useQuery(GET_NEW_NOTES);
+  const { data: noteData } = useQuery(GET_NEW_NOTES);
   const { data: { socialProvider } } = useQuery(GET_SOCIAL_PROVIDER);
+  const { data: { favorites } } = useQuery(GET_FAVORITES);
   const [localLogoutMutation] = useMutation(LOCAL_LOG_OUT);
 
   const {
+    careerfair_id,
     employer,
     hiring_majors,
     hiring_types,
@@ -63,6 +70,19 @@ const EmpCardContainer = props => {
       }
     }
   }, [noteData]);
+
+  // recheck if this employer is in favorites cache and update the isLiked state
+  useEffect(() => {
+    const fairFavorites = favorites.find(item => item.id === careerfair_id);
+    if (fairFavorites) {
+      const isInFavorites = fairFavorites.employerIds.includes(employer.id);
+      if (isInFavorites && !isLikedS) {
+        setIsLiked(true);
+      } else if (!isInFavorites && isLikedS) {
+        setIsLiked(false);
+      }
+    }
+  }, [favorites]);
 
   const logOut = async () => {
     // Clear auth state

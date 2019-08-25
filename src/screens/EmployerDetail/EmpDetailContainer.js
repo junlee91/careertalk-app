@@ -4,7 +4,13 @@ import { Alert } from 'react-native';
 
 import { FAIRS } from '../Fairs/fairsContainer';
 import { GET_NOTE, SAVE_NOTE, DELETE_NOTE } from './EmpDetailQueries';
-import { UPDATE_NUM_OF_NOTES, GET_SOCIAL_PROVIDER, LOCAL_LOG_OUT } from '../../Apollo/sharedQueries';
+import { TOGGLE_LIKE } from '../EmployerList/EmployerListQueries';
+import {
+  UPDATE_NUM_OF_NOTES,
+  GET_SOCIAL_PROVIDER,
+  LOCAL_LOG_OUT,
+  UPDATE_FAVORITES
+} from '../../Apollo/sharedQueries';
 import EmpDetailPresenter from './EmpDetailPresenter';
 
 const Container = ({ companyInfo, state, actions }) => {
@@ -20,6 +26,12 @@ const Container = ({ companyInfo, state, actions }) => {
 
   /** Like State */
   const [isLikedS, setIsLiked] = useState(state.isLikedS);
+
+  /** Like Mutation */
+  const [toggleLikeMutation] = useMutation(TOGGLE_LIKE);
+
+  /** favorites cache */
+  const [updateFavoritesMutation] = useMutation(UPDATE_FAVORITES);
 
   /** get current fair info from cache */
   const { data: { getFair } } = useQuery(FAIRS, { fetchPolicy: 'cache-only' });
@@ -84,14 +96,59 @@ const Container = ({ companyInfo, state, actions }) => {
     );
   }
 
+  /** Heart button clicked */
   const toggleLike = async () => {
+    // only signed in users can like employer
+    if (socialProvider !== 'google') {
+      showAlert();
+      return;
+    }
+    const {
+      careerfair_id: fairId,
+      employer: { id: employerId }
+    } = companyInfo;
+    let shouldLike = !isLikedS;
+
+    // update like state
     setIsLiked(!isLikedS);
-    const result = await actions.likeCompany();
+
+    try {
+      const {
+        data: {
+          likeEmployer: { message, status }
+        },
+      } = await toggleLikeMutation({
+        variables: { fairId, employerId },
+      });
+      if (status) {
+        console.log(`${message} ${name}`);
+        // Update favorites cache
+        if (shouldLike) {
+          updateFavoritesMutation({
+            variables: {
+              mode: 'LIKE',
+              fairId,
+              employerId,
+            }
+          });
+        } else {
+          updateFavoritesMutation({
+            variables: {
+              mode: 'UNLIKE',
+              fairId,
+              employerId,
+            }
+          });
+        }
+      }
+      return;
+    } catch (error) {
+      console.error(error.message);
+    }
 
     // if toggle like request fails, revert back to original state
-    if (!result) {
-      setIsLiked(isLikedS);
-    }
+    setIsLiked(isLikedS);
+    return;
   }
 
   const handleSave = async () => {
