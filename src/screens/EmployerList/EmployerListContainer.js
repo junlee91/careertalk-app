@@ -57,7 +57,7 @@ export default ({ fairId }) => {
   const [updateFavoritesMutation] = useMutation(UPDATE_FAVORITES);
 
   useEffect(() => {
-    if (employerListState) {
+    if (employerListState && favorites) {
       const { fair: { id } } = employerListState;
       const fairFavorites = favorites.find(item => item.id === id);
 
@@ -192,7 +192,7 @@ export default ({ fairId }) => {
     const { data: { getEmployerListCache } } = await Promise.resolve(
       getCache({
         fairId,
-        isUser: isLoggedIn === 'true',
+        isUser: socialProvider !== null,
         hiringFilter: [...hiringTypes],
         degreeFilter: [...degree],
         majorFilter: [...majors],
