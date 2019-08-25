@@ -22,8 +22,6 @@ const CompanyDetail = ({
   companyInfo,
   fairInfo,
   note,
-  isEditting,
-  onInputFocus,
   onInputChange,
   handleSave,
   noteLoading,
@@ -60,8 +58,6 @@ const CompanyDetail = ({
         <InfoBox>
           <NoteInfo
             note={note}
-            isEditting={isEditting}
-            onInputFocus={onInputFocus}
             onInputChange={onInputChange}
             handleSave={handleSave}
             noteLoading={noteLoading}
@@ -98,14 +94,14 @@ const CompanyDetail = ({
   );
 };
 
-const NoteInfo = ({ note, noteLoading, isEditting, onInputFocus, onInputChange, handleSave }) => {
+const NoteInfo = ({ note, noteLoading, onInputChange, handleSave }) => {
   return (
     <View style={{ flex: 1 }}>
       {noteLoading ? (
         <ActivityIndicator />
       ) : (
         <TextInput
-          mode={isEditting ? 'outlined' : null}
+          mode="outlined"
           label="Note"
           placeholder="Make note"
           placeholderTextColor="grey"
@@ -113,8 +109,6 @@ const NoteInfo = ({ note, noteLoading, isEditting, onInputFocus, onInputChange, 
           onChangeText={onInputChange}
           autoCorrect={false}
           multiline
-          onFocus={onInputFocus}
-          onBlur={onInputFocus}
           onEndEditing={handleSave}
         />
       )}

@@ -6,7 +6,7 @@
     "start-ios": "react-native run-ios --simulator=\"iPhone X\"",
     "start-android": "react-native run-android",
     "start-pack": "cd node_modules/react-native/scripts && ./packager.sh --reset-cache",
-    "start": "react-native start -- --reset-cache",
+    "start": "react-native start --reset-cache",
     "check-android": "cd android && ./gradlew app:dependencies",
     "clean": "rm -rf ios/build && rm -rf android/build && rm -rf node_modules && yarn cache clean",
     "test": "jest"
@@ -27,7 +27,7 @@
     "react-native-fade-in-image": "^1.4.1",
     "react-native-google-signin": "^1.0.2",
     "react-native-image-zoom-viewer": "^2.2.18",
-    "react-native-paper": "^2.0.1",
+    "react-native-paper": "^2.15.0",
     "react-native-router-flux": "^4.0.1",
     "react-native-splash-screen": "^3.1.1",
     "react-native-vector-icons": "^4.6.0",

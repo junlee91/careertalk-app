@@ -16,7 +16,6 @@ import EmpDetailPresenter from './EmpDetailPresenter';
 const Container = ({ companyInfo, state, actions }) => {
   const [fairInfo, setFairInfo] = useState(null);
   /** note state */
-  const [isEditting, setIsEditting] = useState(false);
   const [note, setNote] = useState(null);
   const [originalNote, setOriginalNote] = useState(null);
 
@@ -63,10 +62,6 @@ const Container = ({ companyInfo, state, actions }) => {
       setOriginalNote(noteData.getNote);
     }
   }, [noteLoading]);
-
-  const onInputFocus = () => {
-    setIsEditting(!isEditting);
-  };
 
   const onInputChange = text => {
     setNote(text);
@@ -221,8 +216,6 @@ const Container = ({ companyInfo, state, actions }) => {
       companyInfo={companyInfo}
       fairInfo={fairInfo}
       note={note}
-      isEditting={isEditting}
-      onInputFocus={onInputFocus}
       onInputChange={onInputChange}
       handleSave={handleSave}
       noteLoading={noteLoading}

@@ -5289,7 +5289,7 @@ react-native-image-zoom-viewer@^2.2.18:
   dependencies:
     react-native-image-pan-zoom "^2.1.9"
 
-react-native-paper@^2.0.1:
+react-native-paper@^2.15.0:
   version "2.16.0"
   resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-2.16.0.tgz#5a9edd5615bb010ec0d29cbfd5524c2944b2505d"
   dependencies:
