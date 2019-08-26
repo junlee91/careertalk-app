@@ -6,3 +6,10 @@ export const FAVORITE_FRAGMENT = gql`
     employerIds
   }
 `;
+
+export const NOTE_FRAGMENT = gql`
+  fragment NoteParts on Note {
+    id
+    employerIds
+  }
+`;

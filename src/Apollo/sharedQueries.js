@@ -1,6 +1,6 @@
 import { gql } from 'apollo-boost';
 
-import { FAVORITE_FRAGMENT } from './fragments';
+import { FAVORITE_FRAGMENT, NOTE_FRAGMENT } from './fragments';
 
 export const ISLOGGEDIN_QUERY = gql`
   {
@@ -48,30 +48,27 @@ export const UPDATE_FAVORITES = gql`
 // -------------------------------- //
 
 // ------------ NOTES ------------ //
-export const GET_NEW_NOTES = gql`
+export const GET_NOTES = gql`
   {
-    newNotes @client
+    notes @client {
+      ...NoteParts
+    }
   }
+  ${NOTE_FRAGMENT}
 `;
 
-export const GET_TOTAL_NOTES = gql`
-  {
-    totalNotes @client
-  }
-`;
-
-export const UPDATE_NUM_OF_NOTES = gql`
-  mutation updateNumOfNotesCache(
+export const UPDATE_NOTES = gql`
+  mutation updateNotesCache(
     $mode: String!
-    $employerId: String
-    $totalNotes: Int
-    $newNotes: [String]
+    $fairId: String!
+    $employerId: String!
+    $employerIds: [String]
   ) {
-    updateNumOfNotesCache(
+    updateNotesCache(
       mode: $mode
+      fairId: $fairId
       employerId: $employerId
-      totalNotes: $totalNotes
-      newNotes: $newNotes
+      employerIds: $employerIds
     ) @client
   }
 `;

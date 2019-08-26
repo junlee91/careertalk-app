@@ -9,7 +9,8 @@ import {
   UPDATE_NUM_OF_NOTES,
   GET_SOCIAL_PROVIDER,
   LOCAL_LOG_OUT,
-  UPDATE_FAVORITES
+  UPDATE_FAVORITES,
+  UPDATE_NOTES,
 } from '../../Apollo/sharedQueries';
 import EmpDetailPresenter from './EmpDetailPresenter';
 
@@ -45,7 +46,7 @@ const Container = ({ companyInfo, state, actions }) => {
   /** Note graphql */
   const [saveNoteMutation] = useMutation(SAVE_NOTE);
   const [deleteNoteMutation] = useMutation(DELETE_NOTE);
-  const [updateNoteCountMutation] = useMutation(UPDATE_NUM_OF_NOTES);
+  const [updateNotesMutation] = useMutation(UPDATE_NOTES);
   const { data: noteData, loading: noteLoading } = useQuery(GET_NOTE, {
     variables: {
       fairId: companyInfo.careerfair_id,
@@ -167,9 +168,10 @@ const Container = ({ companyInfo, state, actions }) => {
         console.error(deleteError.message);
       } else {
         console.log(deleteNote.message);
-        updateNoteCountMutation({
+        updateNotesMutation({
           variables: {
             mode: 'DELETE',
+            fairId: fair.id,
             employerId: companyInfo.employer.id
           }
         });
@@ -195,9 +197,10 @@ const Container = ({ companyInfo, state, actions }) => {
         console.error(saveError.message);
       } else {
         console.log(saveNote.message);
-        updateNoteCountMutation({
+        updateNotesMutation({
           variables: {
             mode: 'SAVE',
+            fairId: companyInfo.careerfair_id,
             employerId: companyInfo.employer.id
           }
         });
