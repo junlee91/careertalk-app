@@ -219,7 +219,13 @@ export default ({ fairId }) => {
   const refresh = async () => {
     try {
       setIsRefreshing(true);
-      await refetch({ fairId, isUser: socialProvider !== null, fetchPolicy: 'network-only' });
+      const { data: { getEmployerList } } = await refetch({ fairId, isUser: socialProvider !== null, fetchPolicy: 'network-only' });
+      // if filter options are set, filter companies after refresh
+      if (filterOptions || visaOption !== null) {
+        getFilteredEmployersFromCache(filterOptions, visaOption);
+      } else {
+        updateComponentState(getEmployerList)
+      }
     } catch (error) {
       console.log(error);
     } finally {
