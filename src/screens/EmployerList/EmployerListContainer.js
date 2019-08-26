@@ -4,10 +4,10 @@ import { useQuery, useMutation } from 'react-apollo-hooks';
 import {
   ISLOGGEDIN_QUERY,
   GET_SOCIAL_PROVIDER,
-  UPDATE_NUM_OF_NOTES,
-  GET_TOTAL_NOTES,
   GET_FAVORITES,
-  UPDATE_FAVORITES
+  UPDATE_FAVORITES,
+  GET_NOTES,
+  UPDATE_NOTES
 } from '../../Apollo/sharedQueries';
 import { EMPLOYERS, TOGGLE_LIKE, EMPLOYERS_LOCAL } from './EmployerListQueries';
 import EmployerListPresenter from './EmployerListPresenter';
@@ -43,17 +43,23 @@ export default ({ fairId }) => {
   });
 
   /** notes cache */
-  const { data: totalNotesData} = useQuery(GET_TOTAL_NOTES);
-  const [updateNoteCountMutation] = useMutation(UPDATE_NUM_OF_NOTES);
+  const { data: noteData } = useQuery(GET_NOTES);
+  const [updateNotesMutation] = useMutation(UPDATE_NOTES);
 
   useEffect(() => {
-    if (totalNotesData) {
-      const { totalNotes } = totalNotesData;
-      if (totalNotes !== numOfNotes) {
-        setNumOfNotes(totalNotes);
+    if (employerListState && noteData && noteData.notes) {
+      const { fair: { id } } = employerListState;
+      const { notes } = noteData;
+      const fairNotes = notes.find(item => item.id === id);
+
+      if (fairNotes) {
+        const totalNotes = fairNotes.employerIds.length;
+        if (totalNotes !== numOfNotes) {
+          setNumOfNotes(totalNotes);
+        }
       }
     }
-  }, [totalNotesData]);
+  }, [noteData]);
 
   /** favorites cache */
   const { data: favoritesData } = useQuery(GET_FAVORITES);
@@ -86,10 +92,10 @@ export default ({ fairId }) => {
     const { fair, companies } = employerList;
     const filteredByLikes = companies.filter(comp => comp.is_liked);
     const filteredByNotes = companies.filter(comp => comp.is_noted);
-    const newNotes = [];
-    const employerIds = [];
-    filteredByLikes.forEach(item => employerIds.push(item.employer.id));
-    filteredByNotes.forEach(item => newNotes.push(item.employer.id));
+    const likedEmployerIds = [];
+    const notedEmployerIds = [];
+    filteredByLikes.forEach(item => likedEmployerIds.push(item.employer.id));
+    filteredByNotes.forEach(item => notedEmployerIds.push(item.employer.id));
 
     setNumOfCompanies(companies.length);
     setNumOfFavorites(filteredByLikes.length);
@@ -97,18 +103,18 @@ export default ({ fairId }) => {
     setEmployerList(employerList);
 
     // update cache
-    updateNoteCountMutation({
+    updateNotesMutation({
       variables: {
         mode: 'SETUP',
-        newNotes,
-        totalNotes: filteredByNotes.length
+        fairId: fair.id,
+        employerIds: notedEmployerIds,
       }
     });
     updateFavoritesMutation({
       variables: {
         mode: 'SETUP',
         fairId: fair.id,
-        employerIds,
+        employerIds: likedEmployerIds,
       }
     });
   }

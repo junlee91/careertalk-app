@@ -7,7 +7,7 @@ import exact from 'prop-types-exact';
 
 import {
   GET_FAVORITES,
-  GET_NEW_NOTES,
+  GET_NOTES,
   GET_SOCIAL_PROVIDER,
   LOCAL_LOG_OUT
 } from '../../Apollo/sharedQueries';
@@ -40,7 +40,7 @@ const EmpCardContainer = props => {
   const client = useApolloClient();
   const [isLikedS, setIsLiked] = useState(props.is_liked);
   const [isNotedS, setIsNoted] = useState(props.is_noted);
-  const { data: noteData } = useQuery(GET_NEW_NOTES);
+  const { data: noteData } = useQuery(GET_NOTES);
   const { data: { socialProvider } } = useQuery(GET_SOCIAL_PROVIDER);
   const { data: favoritesData } = useQuery(GET_FAVORITES);
   const [localLogoutMutation] = useMutation(LOCAL_LOG_OUT);
@@ -61,12 +61,16 @@ const EmpCardContainer = props => {
 
   // recheck if this employer has note in cache and update the isNoted state
   useEffect(() => {
-    if (noteData && noteData.newNotes) {
-      const hasNote = noteData.newNotes.includes(employer.id);
-      if (hasNote && !isNotedS) {
-        setIsNoted(true);
-      } else if (!hasNote && isNotedS) {
-        setIsNoted(false);
+    if (noteData && noteData.notes) {
+      const { notes } = noteData;
+      const fairNotes = notes.find(item => item.id === careerfair_id);
+      if (fairNotes) {
+        const isInNotes = fairNotes.employerIds.includes(employer.id);
+        if (isInNotes && !isNotedS) {
+          setIsNoted(true);
+        } else if (!isInNotes && isNotedS) {
+          setIsNoted(false);
+        }
       }
     }
   }, [noteData]);

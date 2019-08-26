@@ -48,7 +48,7 @@ export default () => {
           defaults: {
             isLoggedIn,
             socialProvider,
-            newNotes: [],
+            notes: [],
             favorites: [],
             totalNotes: 0,
           },

@@ -1,7 +1,7 @@
 import { AsyncStorage } from 'react-native';
 
-import { GET_CACHED_EMPLOYERS, GET_NEW_NOTES, GET_TOTAL_NOTES } from './sharedQueries';
-import { FAVORITE_FRAGMENT } from './fragments';
+import { GET_CACHED_EMPLOYERS } from './sharedQueries';
+import { FAVORITE_FRAGMENT, NOTE_FRAGMENT } from './fragments';
 
 /**
  * App supports public logic so we manage the logged in state like this:
@@ -51,41 +51,54 @@ export const resolvers = {
 
       return null;
     },
-    updateNumOfNotesCache: async (_, variables, { cache }) => {
-      const { mode, employerId } = variables;
+    updateNotesCache: async (_, variables, { cache }) => {
+      const { mode, fairId, employerId, employerIds } = variables;
       if (mode === null) return null;
 
-      /** newNotes: list of employerIds that have note */
-      const { newNotes } = cache.readQuery({
-        query: GET_NEW_NOTES
-      });
-      /** total number of employers that have note */
-      const { totalNotes } = cache.readQuery({
-        query: GET_TOTAL_NOTES
-      });
-      let updatedNotes;
-      let updatedTotal;
+      if (mode === 'SETUP') {
+        const newNotes = {
+          __typename: 'Note',
+          id: fairId,
+          employerIds
+        };
 
-      if (mode === 'DELETE') {
-        updatedNotes = newNotes.filter(id => id !== employerId);
-        updatedTotal = totalNotes - 1;
-      } else if (mode === 'SAVE') {
-        if (!newNotes.includes(employerId)) {
-          updatedNotes = [...newNotes, employerId];
-          updatedTotal = totalNotes + 1;
+        // update cache
+        await cache.writeData({
+          data: {
+            notes: [newNotes]
+          }
+        });
+
+        return newNotes;
+      } else {
+        // unique id: Note:${fairId}
+        const noteId = cache.config.dataIdFromObject({
+          __typename: 'Note',
+          id: fairId,
+        });
+        const note = cache.readFragment({ fragment: NOTE_FRAGMENT, id: noteId });
+        let updatedNotes = [];
+
+        if (mode === 'SAVE') {
+          updatedNotes = [...note.employerIds, employerId];
+        } else if (mode === 'DELETE') {
+          updatedNotes = note.employerId.filter(id => id !== employerId);
         }
-      } else if (mode === 'SETUP') {
-        updatedNotes = variables.newNotes;
-        updatedTotal = variables.totalNotes;
+
+        const updatedNote = {
+          ...note,
+          employerIds: updatedNotes
+        };
+
+        // update cache
+        cache.writeFragment({
+          id: noteId,
+          fragment: NOTE_FRAGMENT,
+          data: updatedNote
+        });
+
+        return updatedNote;
       }
-      await cache.writeData({
-        data: {
-          newNotes: updatedNotes,
-          totalNotes: updatedTotal
-        }
-      });
-
-      return null;
     },
     updateFavoritesCache: async (_, variables, { cache }) => {
       const { mode, fairId, employerId, employerIds } = variables;
