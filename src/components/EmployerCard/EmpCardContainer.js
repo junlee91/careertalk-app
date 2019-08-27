@@ -9,8 +9,10 @@ import {
   GET_FAVORITES,
   GET_NOTES,
   GET_SOCIAL_PROVIDER,
-  LOCAL_LOG_OUT
+  LOCAL_LOG_OUT,
+  UPDATE_FAVORITES,
 } from '../../Apollo/sharedQueries';
+import { TOGGLE_LIKE } from '../../screens/EmployerList/EmployerListQueries';
 import EmpCardPresenter from './EmpCardPresenter';
 
 const propTypes = exact({
@@ -32,7 +34,6 @@ const propTypes = exact({
   showNote: PropTypes.bool,
   showLike: PropTypes.bool,
   showLabel: PropTypes.bool,
-  toggleLike: PropTypes.func,
   __typename: PropTypes.string
 });
 
@@ -56,8 +57,13 @@ const EmpCardContainer = props => {
     showNote,
     showLike,
     showLabel,
-    toggleLike,
   } = props;
+
+  /** Like Mutation */
+  const [toggleLikeMutation] = useMutation(TOGGLE_LIKE);
+
+  /** favorites cache */
+  const [updateFavoritesMutation] = useMutation(UPDATE_FAVORITES);
 
   // recheck if this employer has note in cache and update the isNoted state
   useEffect(() => {
@@ -110,6 +116,7 @@ const EmpCardContainer = props => {
     );
   }
 
+  // ---------------------------- Toggle Like ---------------------------- //
   /** Heart button clicked */
   const likeCompany = async () => {
     // only signed in users can like employer
@@ -117,22 +124,52 @@ const EmpCardContainer = props => {
       showAlert();
       return;
     }
-    let result;
-    if (isLikedS) {
-      setIsLiked(!isLikedS);
-      result = await toggleLike({ employerId: employer.id, name: employer.name, liked: false });
-    } else {
-      setIsLiked(!isLikedS);
-      result = await toggleLike({ employerId: employer.id, name: employer.name, liked: true });
+    let shouldLike = !isLikedS;
+    const fairId = careerfair_id;
+    const employerId = employer.id;
+
+    // update like state
+    setIsLiked(!isLikedS);
+
+    try {
+      const {
+        data: {
+          likeEmployer: { message, status }
+        },
+      } = await toggleLikeMutation({
+        variables: { fairId, employerId },
+      });
+      if (status) {
+        console.log(`${message} ${employer.name}`);
+        // Update favorites cache
+        if (shouldLike) {
+          updateFavoritesMutation({
+            variables: {
+              mode: 'LIKE',
+              fairId,
+              employerId,
+            }
+          });
+        } else {
+          updateFavoritesMutation({
+            variables: {
+              mode: 'UNLIKE',
+              fairId,
+              employerId,
+            }
+          });
+        }
+      }
+      return;
+    } catch (error) {
+      console.error(error.message);
     }
 
     // if toggle like request fails, revert back to original state
-    if (!result) {
-      setIsLiked(isLikedS);
-    }
-
-    return result;
+    setIsLiked(isLikedS);
+    return;
   };
+  // --------------------------------------------------------------------- //
 
   const navigateTo = key => {
     const params = {

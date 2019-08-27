@@ -6,7 +6,6 @@ import { FAIRS } from '../Fairs/fairsContainer';
 import { GET_NOTE, SAVE_NOTE, DELETE_NOTE } from './EmpDetailQueries';
 import { TOGGLE_LIKE } from '../EmployerList/EmployerListQueries';
 import {
-  UPDATE_NUM_OF_NOTES,
   GET_SOCIAL_PROVIDER,
   LOCAL_LOG_OUT,
   UPDATE_FAVORITES,

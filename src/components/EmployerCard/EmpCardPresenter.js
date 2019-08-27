@@ -79,7 +79,7 @@ const EmployerField = ({ navigateTo, employer, showLabel, hiringMajors, hiringTy
 );
 
 const FavIcon = ({ isLiked, likeCompany }) => (
-  <TouchableOpacity onPress={likeCompany}>
+  <TouchableOpacity onPressOut={likeCompany}>
     <FavButton isLiked={isLiked} />
   </TouchableOpacity>
 );
