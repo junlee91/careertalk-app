@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { GoogleSignin } from 'react-native-google-signin';
 import { useQuery, useMutation, useApolloClient } from 'react-apollo-hooks';
 
-import { GET_SOCIAL_PROVIDER, LOCAL_LOG_OUT, ME } from '../../Apollo/sharedQueries';
+import { GET_SOCIAL_PROVIDER, LOCAL_LOG_OUT, ME, GET_FAVORITES } from '../../Apollo/sharedQueries';
+import { EMPLOYERS } from '../EmployerList/EmployerListQueries';
 import { FAVORITE_EMPLOYERS } from './ProfileQueries';
 import Profile from './ProfilePresenter';
 
@@ -27,6 +28,79 @@ const ProfileContainer = ({ setIsLoggedInState }) => {
     }
   );
 
+  // Get employers in current fair from cache
+  const { refetch: getEmployersCache } = useQuery(EMPLOYERS, {
+    skip: true,
+  });
+  // Get favorite list from cache
+  const { data: favoritesCache } = useQuery(GET_FAVORITES);
+
+  // Compare two arrays and return true if they are different
+  const isDifferent = (A, B) => {
+    if (A.length !== B.length) return true;
+
+    const diffOne = A.filter(x => !B.includes(x));
+    const diffTwo = B.filter(x => !A.includes(x));
+
+    if (diffOne.length || diffTwo.length) return true;
+
+    return false;
+  }
+
+  // Reconstruct favorites list and update the list
+  const updateFavoritesList = async (fairId, currentLikedEmployerIds, previousFavorites) => {
+    const { data: { getEmployerList: { companies } } } = await getEmployersCache({
+      fetchPolicy: 'cache-only',
+      fairId,
+      isUser: socialProvider !== null,
+    });
+    const currentLikedEmployerIdsSet = new Set(currentLikedEmployerIds);
+    const newLikedEmployers = companies.filter(company => currentLikedEmployerIdsSet.has(company.employer.id));
+    const { getFavoriteList } = favoriteListData;
+
+    const newFavorites = {
+      ...previousFavorites,
+      liked_employers: newLikedEmployers
+    };
+    let newFavoriteList = [];
+
+    for (let i = 0; i < getFavoriteList.length; i++) {
+      if (getFavoriteList[i].careerfair.id === fairId) {
+        newFavoriteList.push(newFavorites);
+      } else {
+        newFavoriteList.push(getFavoriteList[i])
+      }
+    }
+
+    setFavoriteList(newFavoriteList);
+  };
+
+  // This part is called when favorite list is updated
+  useEffect(() => {
+    if (favoritesCache && favoriteListData) {
+      const { getFavoriteList } = favoriteListData;
+      const { favorites } = favoritesCache;
+      const currentFairId = favorites[0].id;
+      const currentLikedEmployerIds = favorites[0].employerIds;
+
+      const previousFavorites = getFavoriteList.find(
+        ({ careerfair }) => careerfair.id === currentFairId
+      );
+
+      if (previousFavorites) {
+        const { liked_employers } = previousFavorites;
+        const previousLikedEmployerIds = [];
+
+        liked_employers.forEach(({ employer }) => previousLikedEmployerIds.push(employer.id));
+
+        if (isDifferent(previousLikedEmployerIds, currentLikedEmployerIds)) {
+          updateFavoritesList(currentFairId, currentLikedEmployerIds, previousFavorites);
+        }
+      }
+    }
+  }, [favoritesCache]);
+
+  // update name state
   useEffect(() => {
     if (!getMeLoading && getMe) {
       const { me: { full_name, profile_url } } = getMe;
@@ -35,6 +109,7 @@ const ProfileContainer = ({ setIsLoggedInState }) => {
     }
   }, [getMeLoading]);
 
+  // update favorite list state
   useEffect(() => {
     if (!loading && favoriteListData) {
       const { getFavoriteList } = favoriteListData;
@@ -46,6 +121,7 @@ const ProfileContainer = ({ setIsLoggedInState }) => {
     }
   }, [loading]);
 
+  // handle signout
   logOutPressed = async () => {
     if (socialProvider === 'google') {
       try {
@@ -62,6 +138,7 @@ const ProfileContainer = ({ setIsLoggedInState }) => {
     client.resetStore();
   }
 
+  // refresh control
   const refresh = async () => {
     setFavoriteLoading(true);
     const { data: { getFavoriteList } } = await Promise.resolve(refreshFavorites());
