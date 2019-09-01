@@ -1,40 +1,11 @@
 import React from 'react';
+import { useQuery } from 'react-apollo-hooks';
+
 import Summary from './summaryPresenter';
+import { TOP_EMPLOYERS } from './summaryQueries';
 
-class Container extends React.Component {
-  state = {
-    loading: true,
-    topList: {}
-  }
-
-  componentDidMount() {
-    const { socialProvider, v2_getTop5, currentFair } = this.props;
-
-    // Make call only when user is logged in with social account
-    if (socialProvider) {
-      v2_getTop5(currentFair);
-    } else {
-      this.setState({
-        loading: false,
-        anonUser: true
-      });
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { topList } = nextProps;
-
-    if (topList) {
-      this.setState({
-        loading: false,
-        topList
-      });
-    }
-  }
-
-  render() {
-    return <Summary {...this.state} />;
-  }
+const Container = () => {
+  return <Summary />;
 }
 
 export default Container;

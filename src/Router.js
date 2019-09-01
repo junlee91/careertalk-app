@@ -9,7 +9,7 @@ import EmployerList from './screens/EmployerList';
 import EmployerDetail from './screens/EmployerDetail';
 // import CompanyDetail from './screens/CompanyDetail';
 import Profile from './screens/Profile';
-// import SummaryPage from './screens/Summary';
+import SummaryPage from './screens/Summary';
 // import TempAuth from './screens/TemporaryAuth';
 // import Settings from './screens/Settings';
 
@@ -60,13 +60,13 @@ const PrivateRouter = ({ setIsLoggedInState }) => (
             />
 
             {/* Tab 3 */}
-            {/* <Scene
+            <Scene
               key="summary"
               component={SummaryPage}
               title="Summary"
               hideNavBar
               icon={TabIcon}
-            /> */}
+            />
 
             {/* Tab 4 */}
             {/* Remove settings screen for v2 */}
