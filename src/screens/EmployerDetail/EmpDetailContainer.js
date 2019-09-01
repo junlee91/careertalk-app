@@ -100,7 +100,7 @@ const Container = ({ companyInfo, state, actions }) => {
     }
     const {
       careerfair_id: fairId,
-      employer: { id: employerId }
+      employer: { id: employerId, name }
     } = companyInfo;
     let shouldLike = !isLikedS;
 

@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native';
 
-import { GET_CACHED_EMPLOYERS } from './sharedQueries';
+import { GET_CACHED_EMPLOYERS, GET_FAVORITES } from './sharedQueries';
 import { FAVORITE_FRAGMENT, NOTE_FRAGMENT } from './fragments';
 
 /**
@@ -105,16 +105,20 @@ export const resolvers = {
       if (mode === null) return null;
 
       if (mode === 'SETUP') {
+        const { favorites } = cache.readQuery({ query: GET_FAVORITES });
         const newFavorite = {
           __typename: 'Favorite',
           id: fairId,
           employerIds,
         };
 
+        // filter before update the cache
+        const filteredPreviousFavorites = favorites.filter(({ id }) => id !== fairId);
+
         // update cache
         await cache.writeData({
           data: {
-            favorites: [newFavorite]
+            favorites: [...filteredPreviousFavorites, newFavorite]
           }
         });
 
