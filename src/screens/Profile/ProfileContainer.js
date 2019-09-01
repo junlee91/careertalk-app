@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { GoogleSignin } from 'react-native-google-signin';
 import { useQuery, useMutation, useApolloClient } from 'react-apollo-hooks';
 
-import { GET_SOCIAL_PROVIDER, LOCAL_LOG_OUT, ME, GET_FAVORITES } from '../../Apollo/sharedQueries';
+import { GET_SOCIAL_PROVIDER, LOCAL_LOG_OUT, ME, GET_FAVORITES, UPDATE_FAVORITES } from '../../Apollo/sharedQueries';
 import { EMPLOYERS } from '../EmployerList/EmployerListQueries';
 import { FAVORITE_EMPLOYERS } from './ProfileQueries';
 import Profile from './ProfilePresenter';
@@ -34,6 +34,8 @@ const ProfileContainer = ({ setIsLoggedInState }) => {
   });
   // Get favorite list from cache
   const { data: favoritesCache } = useQuery(GET_FAVORITES);
+  // Update favorite cache
+  const [updateFavoritesMutation] = useMutation(UPDATE_FAVORITES);
 
   // Compare two arrays and return true if they are different
   const isDifferent = (A, B) => {
@@ -80,23 +82,26 @@ const ProfileContainer = ({ setIsLoggedInState }) => {
     if (favoritesCache && favoriteListData) {
       const { getFavoriteList } = favoriteListData;
       const { favorites } = favoritesCache;
-      const currentFairId = favorites[0].id;
-      const currentLikedEmployerIds = favorites[0].employerIds;
 
-      const previousFavorites = getFavoriteList.find(
-        ({ careerfair }) => careerfair.id === currentFairId
-      );
+      favorites.forEach(({ id, employerIds }) => {
+        const currentFairId = id;
+        const currentLikedEmployerIds = employerIds;
 
-      if (previousFavorites) {
-        const { liked_employers } = previousFavorites;
-        const previousLikedEmployerIds = [];
+        const previousFavorites = getFavoriteList.find(
+          ({ careerfair }) => careerfair.id === currentFairId
+        );
 
-        liked_employers.forEach(({ employer }) => previousLikedEmployerIds.push(employer.id));
+        if (previousFavorites) {
+          const { liked_employers } = previousFavorites;
+          const previousLikedEmployerIds = [];
 
-        if (isDifferent(previousLikedEmployerIds, currentLikedEmployerIds)) {
-          updateFavoritesList(currentFairId, currentLikedEmployerIds, previousFavorites);
+          liked_employers.forEach(({ employer }) => previousLikedEmployerIds.push(employer.id));
+
+          if (isDifferent(previousLikedEmployerIds, currentLikedEmployerIds)) {
+            updateFavoritesList(currentFairId, currentLikedEmployerIds, previousFavorites);
+          }
         }
-      }
+      });
     }
   }, [favoritesCache]);
 
@@ -115,6 +120,22 @@ const ProfileContainer = ({ setIsLoggedInState }) => {
       const { getFavoriteList } = favoriteListData;
       setFavoriteLoading(false);
       setFavoriteList(getFavoriteList);
+
+      getFavoriteList.forEach(async item => {
+        const { careerfair: { id }, liked_employers } = item;
+        const likedEmployerIds = [];
+
+        liked_employers.forEach(({ employer }) => likedEmployerIds.push(employer.id));
+
+        await updateFavoritesMutation({
+          variables: {
+            mode: 'SETUP',
+            fairId: id,
+            employerIds: likedEmployerIds,
+          }
+        });
+      });
+
       if (getFavoriteList.length) {
         setIsFavoritePresent(true);
       }
