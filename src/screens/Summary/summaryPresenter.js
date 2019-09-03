@@ -12,11 +12,11 @@ const Summary = (props) => {
           <Text style={styles.headerTextStyle}>Top 5 Liked Companies</Text>
         </View>
       </InfoBox>
-      <ScrollView>
+      {/* <ScrollView>
         <InfoBox>
           {props.loading ? <Spinner size="large" /> : <ScrollViewContent {...props} />}
         </InfoBox>
-      </ScrollView>
+      </ScrollView> */}
       <PoweredBy poweredby="Logos provided by Clearbit" />
     </SafeAreaView>
   );
