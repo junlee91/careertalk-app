@@ -48,6 +48,7 @@ export default () => {
           defaults: {
             isLoggedIn,
             socialProvider,
+            currentFairId: null,
             notes: [],
             favorites: [],
             totalNotes: 0,
