@@ -51,6 +51,14 @@ export const resolvers = {
 
       return null;
     },
+    setCurrentFairId: async (_, { fairId }, { cache }) => {
+      cache.writeData({
+        data: {
+          currentFairId: fairId
+        }
+      });
+      return fairId;
+    },
     updateNotesCache: async (_, variables, { cache }) => {
       const { mode, fairId, employerId, employerIds } = variables;
       if (mode === null) return null;

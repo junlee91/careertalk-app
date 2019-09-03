@@ -20,6 +20,18 @@ export const GET_SOCIAL_PROVIDER = gql`
   }
 `;
 
+export const GET_CURRENT_FAIR_ID = gql`
+  {
+    currentFairId @client
+  }
+`;
+
+export const SET_CURRENT_FAIR_ID = gql`
+  mutation setCurrentFairId($fairId: String!) {
+    setCurrentFairId(fairId: $fairId) @client
+  }
+`;
+
 // ---------- FAVORITES ---------- //
 export const GET_FAVORITES = gql`
   {

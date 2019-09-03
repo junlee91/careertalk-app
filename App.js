@@ -48,8 +48,17 @@ export default () => {
           defaults: {
             isLoggedIn,
             socialProvider,
-            notes: [],
-            favorites: [],
+            currentFairId: null,
+            // __typename is needed for removing the warnings
+            notes: [{
+              __typename: 'Note',
+              id: null,
+            }],
+            favorites: [{
+              __typename: 'Favorite',
+              id: null,
+              employerIds: [],
+            }],
             totalNotes: 0,
           },
           resolvers

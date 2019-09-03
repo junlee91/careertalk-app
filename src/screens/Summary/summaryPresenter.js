@@ -1,43 +1,44 @@
 import React from 'react';
 import { SafeAreaView, View, Text, StyleSheet, ScrollView } from 'react-native';
 
-import CompanyItem from '../../components/CompanyItem';
+import EmployerCard from '../../components/EmployerCard';
 import { InfoBox, PoweredBy, Spinner, NoAccessTop5Text } from '../../components/commons';
 
-const Summary = (props) => {
+const Summary = ({ topList, socialProvider }) => {
   return (
     <SafeAreaView style={styles.container}>
       <InfoBox>
         <View style={styles.headerStyle}>
-          <Text style={styles.headerTextStyle}>Top 5 Liked Companies</Text>
+          <Text style={styles.headerTextStyle}>Top Liked Companies</Text>
         </View>
       </InfoBox>
-      {/* <ScrollView>
+      <ScrollView>
         <InfoBox>
-          {props.loading ? <Spinner size="large" /> : <ScrollViewContent {...props} />}
+          {socialProvider !== 'google' ? (
+            <NoAccessTop5Text />
+          ) : (
+            <ScrollViewContent topList={topList} />
+          )}
         </InfoBox>
-      </ScrollView> */}
+      </ScrollView>
       <PoweredBy poweredby="Logos provided by Clearbit" />
     </SafeAreaView>
   );
 };
 
-const ScrollViewContent = (props) => {
-  const { topList } = props;
-
-  return props.anonUser ? (
-    <NoAccessTop5Text />
+const ScrollViewContent = ({ topList }) => {
+  return !topList ? (
+    <Spinner size="large" />
   ) : (
     <View style={styles.contentStyle}>
-      {topList.filteredEmpls
-        && topList.filteredEmpls.map(c => (
-          <CompanyItem
+      {topList
+        && topList.map(c => (
+          <EmployerCard
+            {...c}
             key={c.employer.id}
-            id={c.employer.id}
-            company={c}
-            likeButton={false}
+            showLike={false}
+            showNote={false}
             showLabel={false}
-            noteIcon={false}
           />
         ))}
     </View>
