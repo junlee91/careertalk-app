@@ -36,7 +36,7 @@ const ProfileContainer = ({ setIsLoggedInState }) => {
     skip: true,
   });
   // Get favorite list from cache
-  const { data: favoritesCache } = useQuery(GET_FAVORITES);
+  const { data: favoritesCache } = useQuery(GET_FAVORITES, { skip: !socialProvider });
   // Update favorite cache
   const [updateFavoritesMutation] = useMutation(UPDATE_FAVORITES);
 
