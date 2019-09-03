@@ -1,5 +1,12 @@
 import React from 'react';
-import { SafeAreaView, View, Text, ScrollView, ActivityIndicator } from 'react-native';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  ScrollView,
+  ActivityIndicator,
+  RefreshControl
+} from 'react-native';
 import { Divider, Button } from 'react-native-elements';
 
 import {
@@ -18,10 +25,10 @@ const Profile = ({
   getMeLoading,
   logOutPressed,
   socialProvider,
-  favoriteLoading,
   favoriteList,
   isFavoritePresent,
-  refresh
+  refresh,
+  isRefreshing
 }) => {
   return (
     <SafeAreaView style={styles.container}>
@@ -42,34 +49,27 @@ const Profile = ({
           </View>
         </View>
       </InfoBox>
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={isRefreshing} onRefresh={refresh} tintColor="grey" />
+        }
+      >
         {socialProvider === null ? (
           <InfoBox>
             <NoAccessText />
           </InfoBox>
         ) : (
-          <FavoriteListLayer
-            isFavoritePresent={isFavoritePresent}
-            favoriteLoading={favoriteLoading}
-            favoriteList={favoriteList}
-          />
+          <FavoriteListLayer isFavoritePresent={isFavoritePresent} favoriteList={favoriteList} />
         )}
       </ScrollView>
-      {socialProvider && <Button title="Refresh" onPress={refresh} />}
       <PoweredBy poweredby="Logos provided by Clearbit" />
     </SafeAreaView>
   );
 };
 
-const FavoriteListLayer = ({ isFavoritePresent, favoriteLoading, favoriteList }) => (
+const FavoriteListLayer = ({ isFavoritePresent, favoriteList }) => (
   <>
-    {favoriteLoading ? (
-      <InfoBox>
-        <ActivityIndicator size="large" />
-      </InfoBox>
-    ) : (
-      <FavoriteList favoriteList={favoriteList} isFavoritePresent={isFavoritePresent} />
-    )}
+    <FavoriteList favoriteList={favoriteList} isFavoritePresent={isFavoritePresent} />
   </>
 );
 

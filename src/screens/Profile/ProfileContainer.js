@@ -15,6 +15,9 @@ const ProfileContainer = ({ setIsLoggedInState }) => {
   const [isFavoritePresent, setIsFavoritePresent] = useState(false);
   const [favoriteLoading, setFavoriteLoading] = useState(false);
 
+  /** refresh control state */
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
   const [localLogoutMutation] = useMutation(LOCAL_LOG_OUT);
   const { data: { socialProvider } } = useQuery(GET_SOCIAL_PROVIDER);
   const { data: getMe, loading: getMeLoading } = useQuery(ME, {
@@ -161,11 +164,15 @@ const ProfileContainer = ({ setIsLoggedInState }) => {
 
   // refresh control
   const refresh = async () => {
-    setFavoriteLoading(true);
-    const { data: { getFavoriteList } } = await Promise.resolve(refreshFavorites());
-    setFavoriteList(getFavoriteList);
-    setIsFavoritePresent(getFavoriteList.length > 0);
-    setFavoriteLoading(false);
+    setIsRefreshing(true);
+    if (socialProvider) {
+      setFavoriteLoading(true);
+      const { data: { getFavoriteList } } = await Promise.resolve(refreshFavorites());
+      setFavoriteList(getFavoriteList);
+      setIsFavoritePresent(getFavoriteList.length > 0);
+      setFavoriteLoading(false);
+    }
+    setIsRefreshing(false);
   }
 
   return (
@@ -179,6 +186,7 @@ const ProfileContainer = ({ setIsLoggedInState }) => {
       logOutPressed={logOutPressed}
       socialProvider={socialProvider}
       refresh={refresh}
+      isRefreshing={isRefreshing}
     />
   );
 };
