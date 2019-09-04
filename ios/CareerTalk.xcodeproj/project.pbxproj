@@ -53,6 +53,7 @@
 		98B2AF05865E4847AF1F96C5 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA1BB940A23142B8BDB13294 /* Feather.ttf */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		BF4F748521F80F6500EF7913 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF4F745B21F80F6500EF7913 /* GoogleService-Info.plist */; };
+		BFBDC9B9231F61820036D3A1 /* libRNCAsyncStorage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFBDC9B5231F616F0036D3A1 /* libRNCAsyncStorage.a */; };
 		BFF7877A22F3FF3A00A4741F /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFF7874922F3FF3A00A4741F /* JavaScriptCore.framework */; };
 		C1C03B012CEF77A2893EC6DD /* libPods-CareerTalkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10D39847BBAC261E31F9D19D /* libPods-CareerTalkTests.a */; };
 		E4D53C04B09D4F88B63772BD /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31C3A96A594A467EA010BCBD /* Ionicons.ttf */; };
@@ -328,6 +329,13 @@
 			remoteGlobalIDString = 3D7682761D8E76B80014119E;
 			remoteInfo = SplashScreen;
 		};
+		BFBDC9B4231F616F0036D3A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFBDC989231F616F0036D3A1 /* RNCAsyncStorage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNCAsyncStorage;
+		};
 		BFF7876F22F3FF3A00A4741F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -403,6 +411,7 @@
 		B5E8601FDBBED48703F73060 /* Pods-CareerTalkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CareerTalkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CareerTalkTests/Pods-CareerTalkTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B9B3843D56D040D294D5F1FC /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		BF4F745B21F80F6500EF7913 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BFBDC989231F616F0036D3A1 /* RNCAsyncStorage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCAsyncStorage.xcodeproj; path = "../node_modules/@react-native-community/async-storage/ios/RNCAsyncStorage.xcodeproj"; sourceTree = "<group>"; };
 		BFF7874922F3FF3A00A4741F /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		C085A5709301ED693EDD6EF6 /* Pods-CareerTalk-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CareerTalk-tvOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CareerTalk-tvOSTests/Pods-CareerTalk-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		C2E82968F695204866C3F136 /* Pods-CareerTalkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CareerTalkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CareerTalkTests/Pods-CareerTalkTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -432,6 +441,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFBDC9B9231F61820036D3A1 /* libRNCAsyncStorage.a in Frameworks */,
 				BFF7877A22F3FF3A00A4741F /* JavaScriptCore.framework in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -696,6 +706,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				BFBDC989231F616F0036D3A1 /* RNCAsyncStorage.xcodeproj */,
 				13B07FAE1A68108700A75B9A /* CareerTalk */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* CareerTalkTests */,
@@ -760,6 +771,14 @@
 			isa = PBXGroup;
 			children = (
 				BF63526E2140BF8C00D9BD06 /* libSplashScreen.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BFBDC98A231F616F0036D3A1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BFBDC9B5231F616F0036D3A1 /* libRNCAsyncStorage.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -931,6 +950,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = BFBDC98A231F616F0036D3A1 /* Products */;
+					ProjectRef = BFBDC989231F616F0036D3A1 /* RNCAsyncStorage.xcodeproj */;
 				},
 				{
 					ProductGroup = BF4F743621F80E7700EF7913 /* Products */;
@@ -1206,6 +1229,13 @@
 			fileType = archive.ar;
 			path = libSplashScreen.a;
 			remoteRef = BF63526D2140BF8C00D9BD06 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BFBDC9B5231F616F0036D3A1 /* libRNCAsyncStorage.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNCAsyncStorage.a;
+			remoteRef = BFBDC9B4231F616F0036D3A1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		BFF7877022F3FF3A00A4741F /* libjsi.a */ = {
