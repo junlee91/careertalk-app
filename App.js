@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, AsyncStorage } from 'react-native';
+import { Text, View } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import SplashScreen from 'react-native-splash-screen';
 
@@ -30,7 +31,7 @@ export default () => {
       const cache = new InMemoryCache();
       await persistCache({
         cache,
-        storage: AsyncStorage // TODO: this is deprecated
+        storage: AsyncStorage
       });
       const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
       const socialProvider = await AsyncStorage.getItem('socialProvider');

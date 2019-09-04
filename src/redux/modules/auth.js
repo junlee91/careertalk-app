@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { actionCreators as userActions } from './user';
 import { actionCreators as companyActions } from './company';
 import config from '../../../config.json';

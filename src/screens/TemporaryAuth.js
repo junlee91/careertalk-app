@@ -1,6 +1,7 @@
 import React from 'react';
 import { GoogleSignin } from 'react-native-google-signin';
-import { View, Text, Button, AsyncStorage } from 'react-native';
+import { View, Text, Button } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { useMutation } from 'react-apollo-hooks';
 
 import { LOCAL_LOG_OUT } from '../Apollo/sharedQueries';
