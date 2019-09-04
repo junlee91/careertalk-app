@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { GET_CACHED_EMPLOYERS, GET_FAVORITES } from './sharedQueries';
 import { FAVORITE_FRAGMENT, NOTE_FRAGMENT } from './fragments';

@@ -12,6 +12,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.6.1",
     "ajv": "^6.5.3",
     "apollo-boost": "^0.4.3",
     "apollo-cache-inmemory": "^1.6.2",
