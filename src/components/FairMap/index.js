@@ -4,25 +4,14 @@ import { Icon } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import ImageViewer from 'react-native-image-zoom-viewer';
 
-class FairMap extends Component {
-  componentWillMount() {
-    const { companyName, tables, mapUrl } = this.props;
-    const fairMap = [
-      {
-        url: mapUrl
-      }
-    ];
-
-    this.setState({
-      fairMap,
-      companyName,
-      tables
-    });
-  }
+const FairMap = ({ companyName, tables, mapUrl }) => {
+  const fairMap = [
+    {
+      url: mapUrl
+    }
+  ];
 
   _renderFooter = () => {
-    const { companyName, tables } = this.state;
-
     return (
       <View>
         <Text style={styles.titleText}>
@@ -33,20 +22,17 @@ class FairMap extends Component {
     );
   };
 
-  render() {
-    const { fairMap } = this.state;
-    return (
-      <ImageViewer
-        imageUrls={fairMap}
-        enableSwipeDown={Platform.OS === 'ios'}
-        onCancel={() => Actions.pop()}
-        renderIndicator={() => null}
-        renderFooter={this._renderFooter}
-        footerContainerStyle={styles.footerContainerStyle}
-      />
-    );
-  }
-}
+  return (
+    <ImageViewer
+      imageUrls={fairMap}
+      enableSwipeDown={Platform.OS === 'ios'}
+      onCancel={() => Actions.pop()}
+      renderIndicator={() => null}
+      renderFooter={this._renderFooter}
+      footerContainerStyle={styles.footerContainerStyle}
+    />
+  );
+};
 
 export const MapIcon = props => {
   return (
