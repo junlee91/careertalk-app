@@ -13,7 +13,7 @@ import SummaryPage from './screens/Summary';
 // import TempAuth from './screens/TemporaryAuth';
 // import Settings from './screens/Settings';
 
-// import FairMap from './components/FairMap';
+import FairMap from './components/FairMap';
 import { TabIcon } from './components/commons';
 
 const PublicRouter = ({ setIsLoggedInState }) => (
@@ -86,6 +86,7 @@ const PrivateRouter = ({ setIsLoggedInState }) => (
       </Router>
 
       <Scene key="employerDetail" component={EmployerDetail} hideNavBar />
+      <Scene key="fairMap" component={FairMap} title="Map" back hideNavBar />
     </Scene>
   </Router>
 );

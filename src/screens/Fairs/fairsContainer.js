@@ -16,6 +16,7 @@ export const FAIRS = gql`
       start_time
       end_time
       location
+      map_url
     }
   }
 `;
