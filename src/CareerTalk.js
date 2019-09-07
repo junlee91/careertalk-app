@@ -15,8 +15,7 @@ const CareerTalk = ({ isLoggedIn }) => {
     fetch(`${config.API_URL}/careertalk/version`)
       .then(resp => resp.json())
       .then(json => {
-        // TODO: change pjson.version
-        if (json.version === '2.0.1') {
+        if (json.version === pjson.version) {
           setLoading(false);
         } else {
           Alert.alert(
