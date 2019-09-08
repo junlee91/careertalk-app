@@ -138,6 +138,11 @@ export default ({ fairId }) => {
     }
   }
 
+  /** Dynamic search on searchTerm update */
+  useEffect(() => {
+    search();
+  }, [searchTerm]);
+
   const cancelSearch = () => {
     setSearchTerm(null);
     const filters = filterOptions || {
