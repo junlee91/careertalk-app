@@ -3,17 +3,19 @@ import { View, Text } from 'react-native';
 
 const NoAccessText = () => (
   <View style={styles.noAccessContentStyle}>
+    <Text style={styles.noAccessText}>Please sign in with google to view this field.</Text>
     <Text style={styles.noAccessText}>
-      You have no access to this page. Please login with social account to view this field.
+      Click on the Sign out button on the top right, and click on the google sign in button.
+    </Text>
+    <Text style={styles.noAccessText}>
+      You can like companies, take notes, and be more efficient during the career fair!
     </Text>
   </View>
 );
 
 const NoAccessTop5Text = () => (
   <View style={styles.noAccessContentStyle}>
-    <Text style={styles.noAccessText}>
-      Log in and check where your friends want to work for!
-    </Text>
+    <Text style={styles.noAccessText}>Log in and check where your friends want to work for!</Text>
   </View>
 );
 
@@ -28,7 +30,8 @@ const styles = {
   noAccessText: {
     fontSize: 15,
     fontWeight: '500',
-    fontFamily: 'Avenir Next'
+    fontFamily: 'Avenir Next',
+    marginTop: 10
   }
 };
 
