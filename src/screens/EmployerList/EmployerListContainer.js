@@ -38,8 +38,7 @@ export default ({ fairId }) => {
   const { data: { isLoggedIn } } = useQuery(ISLOGGEDIN_QUERY);
   const { data: { socialProvider } } = useQuery(GET_SOCIAL_PROVIDER);
   const { data, error, loading, refetch } = useQuery(EMPLOYERS, {
-    variables: { fairId, isUser: socialProvider !== null },
-    fetchPolicy: 'network-only',
+    variables: { fairId, isUser: socialProvider !== null }
   });
 
   /** notes cache */
