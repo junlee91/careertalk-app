@@ -1,18 +1,18 @@
 import React from 'react';
-import { SafeAreaView, View, Text, StyleSheet, ScrollView } from 'react-native';
+import { SafeAreaView, View, Text, StyleSheet, ScrollView, RefreshControl } from 'react-native';
 
 import EmployerCard from '../../components/EmployerCard';
 import { InfoBox, PoweredBy, Spinner, NoAccessTop5Text } from '../../components/commons';
 
-const Summary = ({ topList, socialProvider }) => {
+const Summary = ({ topList, socialProvider, onRefresh, refreshing }) => {
   return (
     <SafeAreaView style={styles.container}>
       <InfoBox>
         <View style={styles.headerStyle}>
-          <Text style={styles.headerTextStyle}>Top Liked Companies</Text>
+          <Text style={styles.headerTextStyle}>Top 5 Liked Companies</Text>
         </View>
       </InfoBox>
-      <ScrollView>
+      <ScrollView refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />}>
         <InfoBox>
           {socialProvider !== 'google' ? (
             <NoAccessTop5Text />
