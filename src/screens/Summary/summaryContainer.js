@@ -9,10 +9,11 @@ import { GET_CURRENT_FAIR_ID, GET_SOCIAL_PROVIDER } from '../../Apollo/sharedQue
 const Container = () => {
   const [fairId, setFairId] = useState(null);
   const [topList, setTopList] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
 
   const { data: { currentFairId } } = useQuery(GET_CURRENT_FAIR_ID);
   const { data: { socialProvider } } = useQuery(GET_SOCIAL_PROVIDER);
-  const { data: topEmployersData, loading } = useQuery(TOP_EMPLOYERS, {
+  const { data: topEmployersData, loading, refetch } = useQuery(TOP_EMPLOYERS, {
     variables: { fairId },
     skip: !fairId || !socialProvider,
   });
@@ -20,6 +21,20 @@ const Container = () => {
   const { refetch: getEmployersCache } = useQuery(EMPLOYERS, {
     skip: true,
   });
+
+  /** Refresh */
+  const onRefresh = async () => {
+    try {
+      setRefreshing(true);
+      await refetch({
+        variables: { fairId },
+        skip: !fairId || !socialProvider,
+      });
+    } catch (e) {
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
   /** update fairId state */
   useEffect(() => {
@@ -55,7 +70,14 @@ const Container = () => {
     }
   }, [topEmployersData])
 
-  return <Summary socialProvider={socialProvider} topList={topList} />;
+  return (
+    <Summary
+      socialProvider={socialProvider}
+      topList={topList}
+      onRefresh={onRefresh}
+      refreshing={refreshing}
+    />
+  );
 }
 
 export default Container;
