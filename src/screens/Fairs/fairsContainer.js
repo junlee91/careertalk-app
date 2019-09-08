@@ -23,13 +23,7 @@ export const FAIRS = gql`
 
 export default () => {
   const [fairs, setFairs] = useState(null);
-  const {
-    data,
-    loading,
-    error // TODO: error handle
-  } = useQuery(FAIRS, {
-    fetchPolicy: 'network-only'
-  });
+  const { data, loading } = useQuery(FAIRS);
 
   useEffect(() => {
     if (!loading && data.getFair) {

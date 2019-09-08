@@ -77,15 +77,10 @@ const Container = ({ companyInfo, state, actions }) => {
 
   const showAlert = () => {
     Alert.alert(
-      'Oops!',
+      'No Access Rights',
       'Please sign in with Google to take note',
       [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel'
-        },
-        { text: 'Sign out', onPress: logOut }
+        { text: 'OK', onPress: () => {} }
       ],
       { cancelable: false }
     );
