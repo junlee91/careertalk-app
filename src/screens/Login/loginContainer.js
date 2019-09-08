@@ -31,15 +31,14 @@ export default ({ setIsLoggedInState }) => {
   // Public signin
   _publicSignIn = async = () => {
     Alert.alert(
-      'Attention!',
-      'Using a public account will have limitations using the app.',
+      'Hi there',
+      'If you log in, you can like companies, take notes, and be more efficient during the career fair! Do you want to sign in instead?',
       [
         {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel'
+          text: 'No, continue anonymously',
+          onPress: () => loginFn(null),
         },
-        { text: 'OK', onPress: () => loginFn(null) }
+        { text: 'Yes, sign in with Google', onPress: () => _googleSignIn() }
       ],
       { cancelable: false }
     );

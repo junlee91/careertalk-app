@@ -77,8 +77,8 @@ const Container = ({ companyInfo, state, actions }) => {
 
   const showAlert = () => {
     Alert.alert(
-      'No Access Rights',
-      'Please sign in with Google to take note',
+      'Whoops!',
+      'You need to login to use this feature.',
       [
         { text: 'OK', onPress: () => {} }
       ],

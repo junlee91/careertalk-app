@@ -107,8 +107,8 @@ const EmpCardContainer = props => {
 
   const showAlert = () => {
     Alert.alert(
-      'No Access Rights',
-      'Login with social account to use this feature.',
+      'Whoops!',
+      'You need to login to use this feature.',
       [
         { text: 'OK', onPress: () => {} }
       ],
