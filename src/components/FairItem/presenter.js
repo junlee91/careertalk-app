@@ -11,19 +11,19 @@ const FairItem = (props) => {
     <>
       {Platform.OS === 'ios' ? (
         <View style={styles.bigCard}>
-          <TouchableOpacity onPressOut={() => { props.navigateTo(props.fair.id); }}>
+          <TouchableOpacity onPress={() => { props.navigateTo(props.fair.id); }}>
             <LogoImage {...fair} size="big" wide />
-            <NumOfCompanies {...props} />
-            <FairHeader {...props} />
           </TouchableOpacity>
+          <NumOfCompanies {...props} />
+          <FairHeader {...props} />
         </View>
       ) : (
         <Surface style={[stylesAndroid.surface, { elevation: 6 }]}>
-          <TouchableOpacity onPressOut={() => { props.navigateTo(props.fair.id); }}>
+          <TouchableOpacity onPress={() => { props.navigateTo(props.fair.id); }}>
             <LogoImage {...fair} size="big" wide />
-            <NumOfCompanies {...props} />
-            <FairHeader {...props} />
           </TouchableOpacity>
+          <NumOfCompanies {...props} />
+          <FairHeader {...props} />
         </Surface>
       )}
     </>
@@ -47,11 +47,11 @@ const FairHeader = (props) => {
   const dateString = `${fairDate} ${timeString}`;
 
   return (
-    <View>
+    <TouchableOpacity onPress={() => { props.navigateTo(fair.id); }}>
       <Text style={styles.fairHeaderText}>{fair.name}</Text>
       <Text style={styles.fairInfo}>{dateString}</Text>
       <Text style={styles.fairInfo}>{fair.location}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 

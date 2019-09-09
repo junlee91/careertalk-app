@@ -12,7 +12,7 @@ export default ({ fair }) => {
     setTimeout(() => {
       Actions.jump('_employerList', { fairId: id });
       setCurrentFairMutation({ variables: { fairId: id }});
-    }, 250);
+    }, 50);
   };
 
   return <FairItem fair={fair} navigateTo={_navigateTo} />;
