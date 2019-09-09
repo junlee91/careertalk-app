@@ -39,6 +39,11 @@ export const resolvers = {
         data: {
           isLoggedIn: true,
           socialProvider,
+          favorites: [{
+            __typename: 'Favorite',
+            id: null,
+            employerIds: [],
+          }],
         }
       });
 
