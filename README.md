@@ -6,4 +6,3 @@ Now available on [**App Store**](https://itunes.apple.com/us/app/careertalk-find
 
 [![Logo](images/logo_ignite.png)](https://github.com/junlee91/CareerTalk/blob/master/images/logo_ignite.png)
 
-Use [Wiki](https://github.com/CreativeSolutionLabs/CareerTalk/wiki) for frontend documentation.
